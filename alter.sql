@@ -116,7 +116,7 @@ ALTER TABLE PagoJuridico ADD CONSTRAINT PagoJuridico_MetodoPago_FK FOREIGN KEY (
 ALTER TABLE PagoNatural ADD CONSTRAINT PagoNatural_Compra_FK FOREIGN KEY (Compra_idCompra) REFERENCES Compra (idCompra);
 ALTER TABLE PagoNatural ADD CONSTRAINT PagoNatural_MetodoPago_FK FOREIGN KEY (MetodoPago_idMetodoPago) REFERENCES MetodoPago (idMetodoPago);
 
-ALTER TABLE PayPal ADD CONSTRAINT PayPal_MetodoPago_FK FOREIGN KEY (idTipoCaja) REFERENCES MetodoPago (idMetodoPago);
+--ALTER TABLE PayPal ADD CONSTRAINT PayPal_MetodoPago_FK FOREIGN KEY (idTipoCaja) REFERENCES MetodoPago (idMetodoPago);
 
 ALTER TABLE Pieza ADD CONSTRAINT Pieza_Color_FK FOREIGN KEY (Color_idColor) REFERENCES Color (idColor);
 

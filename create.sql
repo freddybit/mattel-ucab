@@ -907,8 +907,8 @@ CREATE TABLE Usuario (
      contraseña                      VARCHAR(255)  NOT NULL ,
      estado                          VARCHAR(20)  NOT NULL ,
      fechaRegistro                   DATE  NOT NULL ,
-     ClienteNatural_idClienteNatural NUMERIC  NOT NULL ,
-     Empleado_id                     NUMERIC  NOT NULL,
+     ClienteNatural_idClienteNatural NUMERIC ,
+     Empleado_id                     NUMERIC ,
 
     CONSTRAINT pk_usuario_01 PRIMARY KEY (idUsuario)
 );
@@ -929,22 +929,6 @@ CREATE TABLE ValoracionMercado (
 
     CONSTRAINT pk_valoracion_mercado_01 PRIMARY KEY (idValoracionMercado)
 );
-
---  ERROR: No Discriminator Column found in Arc FKArc_1 - constraint trigger for Arc cannot be generated
-
---  ERROR: No Discriminator Column found in Arc FKArc_1 - constraint trigger for Arc cannot be generated
-
---  ERROR: No Discriminator Column found in Arc FKArc_1 - constraint trigger for Arc cannot be generated
-
---  ERROR: No Discriminator Column found in Arc FKArc_1 - constraint trigger for Arc cannot be generated
-
---  ERROR: No Discriminator Column found in Arc FKArc_1 - constraint trigger for Arc cannot be generated
-
---  ERROR: No Discriminator Column found in Arc FKArc_1 - constraint trigger for Arc cannot be generated
-
---  ERROR: No Discriminator Column found in Arc FKArc_1 - constraint trigger for Arc cannot be generated
-
-
 
 -- Oracle SQL Developer Data Modeler Summary Report:
 --

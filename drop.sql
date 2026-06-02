@@ -97,4 +97,4 @@ DROP TABLE usuario CASCADE;
 DROP TABLE valoracionmercado CASCADE;
 
 /* BORRAR LA BASE DE DATOS */
-DROP DATABASE mattelucab;
+/*DROP DATABASE mattelucab;*/
