@@ -394,8 +394,8 @@ CREATE TABLE HistoricoRoles (
 CREATE TABLE Horario (
      idHorario  NUMERIC  NOT NULL UNIQUE,
      dia        VARCHAR(150) NOT NULL,
-     horaInicio DATE  NOT NULL,
-     horaFin    DATE  NOT NULL,
+      horaInicio TIME  NOT NULL,
+      horaFin    TIME  NOT NULL,
 
     CONSTRAINT pk_horario_01 PRIMARY KEY (idHorario)
 );

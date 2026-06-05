@@ -1,7 +1,4 @@
-/* =================================================================
-   ARCHIVO DML: ENTRADA GEOGRÁFICA COMPLETA (PAÍS -> ESTADOS -> MUNICIPIOS -> PARROQUIAS)
-   GENERADO AUTOMÁTICAMENTE DESDE venezuela-json (24 estados, 335 municipios, 1139 parroquias)
-   ================================================================= */
+
 -- 1. PAÍS (Venezuela)
 INSERT INTO Lugar (idLugar, nombre, tipo, codigoPostal, Lugar_idLugar) VALUES (1, 'Venezuela', 'País', 0, NULL);
 
