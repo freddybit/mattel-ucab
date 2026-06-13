@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es" class="h-full w-full">
+<head>
+  <meta charset="utf-8">
+  <title>MATTEL UCAB - Registro General de Producto</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8B1D54',
+            vibrant: '#E0218A',
+            ebony: '#17173D',
+            surface: '#F7F2F3',
+            'neutral-gray': '#5A5A84',
+            'on-surface': '#17173D',
+            'on-surface-variant': '#594049'
+          },
+          borderRadius: {
+            DEFAULT: '0.5rem',
+            lg: '1rem',
+            xl: '1.5rem',
+            full: '9999px'
+          },
+          fontFamily: {
+            headline: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+            label: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <style>
+    /* Aseguramos que la tipografía se aplique globalmente */
+    body { font-family: 'Inter', sans-serif; }
+    .font-headline { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+
+<body class="h-full w-full bg-surface text-ebony">
+  <app-root></app-root>
+</body>
+</html>

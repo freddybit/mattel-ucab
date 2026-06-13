@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  font-family: 'Inter', sans-serif;
+}
+
+.font-headline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.active-nav {
+  background-color: #17173D;
+  color: #ffffff;
+}
+
+.text-vibrant-pink {
+  color: #E0218A;
+}
