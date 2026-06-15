@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './paso4.html',
-  styleUrls: ['./paso4.css']
+  styleUrls: ['./paso4.css', '../../layout/layout.css'],
 })
 export class Paso4 {
   showModal = false;

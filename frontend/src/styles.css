@@ -1,0 +1,12 @@
+html,
+body,
+app-root {
+  height: 100%;
+  overflow: hidden;
+}
+
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}

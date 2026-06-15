@@ -1,200 +1,123 @@
-<header class="fixed top-0 w-full flex justify-between items-center px-12 h-16 bg-white z-50 border-b border-gray-200">
-  <div class="flex items-center gap-12">
-    <div class="text-xl font-black text-primary tracking-tighter font-headline">MATTEL UCAB</div>
-    <nav class="hidden md:flex gap-8">
-      <a class="text-ebony/70 hover:text-primary font-semibold text-sm transition-colors" href="#">PLM</a>
-      <a class="text-ebony/70 hover:text-primary font-semibold text-sm transition-colors" href="#">Logística</a>
-      <a class="text-ebony/70 hover:text-primary font-semibold text-sm transition-colors" href="#">Finanzas</a>
-      <a class="text-ebony/70 hover:text-primary font-semibold text-sm transition-colors" href="#">HR</a>
-      <a class="text-ebony/70 hover:text-primary font-semibold text-sm transition-colors" href="#">Seguridad</a>
-    </nav>
-  </div>
-  <div class="flex items-center gap-6">
-    <div class="flex gap-4 text-ebony">
-      <button type="button" class="material-symbols-outlined hover:bg-gray-100 p-2 rounded-full transition-all">notifications</button>
-      <button type="button" class="material-symbols-outlined hover:bg-gray-100 p-2 rounded-full transition-all">settings</button>
+<header class="bg-white px-12 py-8 border-b border-gray-100 shadow-sm shrink-0">
+  <div class="max-w-4xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
+    <div>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-[10px] font-black bg-ebony text-white px-2 py-0.5 uppercase tracking-widest">PASO 4 DE 4</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+        <span class="text-[10px] font-black text-neutral-gray uppercase tracking-widest">WIZARD DE CREACIÓN</span>
+      </div>
+      <h1 class="text-5xl font-bold font-headline text-ebony tracking-tight uppercase">RESUMEN FINAL</h1>
+      <p class="text-neutral-gray font-medium mt-4 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-vibrant animate-pulse"></span>
+        Revisión final de especificaciones antes del registro PLM
+      </p>
     </div>
-    <div class="w-10 h-10 border border-gray-300 flex items-center justify-center bg-gray-50 rounded-md">
-      <span class="material-symbols-outlined text-gray-400">person</span>
+    <div class="w-full md:w-64 space-y-2">
+      <div class="flex justify-between text-[10px] font-black text-ebony uppercase tracking-widest">
+        <span>PROGRESO</span>
+        <span>100%</span>
+      </div>
+      <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+        <div class="h-full bg-vibrant w-full"></div>
+      </div>
     </div>
   </div>
 </header>
 
-<div class="flex min-h-screen pt-16 bg-surface">
-  <aside class="h-[calc(100vh-64px)] w-64 flex flex-col fixed left-0 bg-white border-r border-gray-200 py-6 z-40">
-    <div class="px-6 mb-8 flex items-start gap-3">
-      <div class="w-10 h-10 border border-gray-400 bg-surface flex items-center justify-center">
-        <span class="material-symbols-outlined text-gray-400 text-sm">close</span>
-      </div>
-      <div>
-        <h2 class="text-xs font-bold text-ebony leading-tight uppercase">DLS-ADMIN</h2>
-        <p class="text-[10px] font-medium text-neutral-gray">V1.0.4-BLUEPRINT</p>
-      </div>
-    </div>
-    <nav class="flex flex-col gap-0.5" aria-label="Menú lateral">
-      <span class="active-nav py-3 px-6 flex items-center gap-3 font-semibold text-xs tracking-wider">
-        <span class="material-symbols-outlined text-sm">precision_manufacturing</span>
-        INGENIERIA
-      </span>
-      <a href="#" (click)="$event.preventDefault()" class="text-ebony/70 hover:bg-surface py-3 px-6 flex items-center gap-3 font-semibold text-xs tracking-wider transition-colors">
-        <span class="material-symbols-outlined text-sm">inventory_2</span>
-        ALMACEN
-      </a>
-      <a href="#" (click)="$event.preventDefault()" class="text-ebony/70 hover:bg-surface py-3 px-6 flex items-center gap-3 font-semibold text-xs tracking-wider transition-colors">
-        <span class="material-symbols-outlined text-sm">account_balance</span>
-        FINANZAS B2B
-      </a>
-      <a href="#" (click)="$event.preventDefault()" class="text-ebony/70 hover:bg-surface py-3 px-6 flex items-center gap-3 font-semibold text-xs tracking-wider transition-colors">
-        <span class="material-symbols-outlined text-sm">groups</span>
-        PERSONAL
-      </a>
-      <a href="#" (click)="$event.preventDefault()" class="text-ebony/70 hover:bg-surface py-3 px-6 flex items-center gap-3 font-semibold text-xs tracking-wider transition-colors">
-        <span class="material-symbols-outlined text-sm">settings</span>
-        CONFIGURACION
-      </a>
-      <a href="#" (click)="$event.preventDefault()" class="text-ebony/70 hover:bg-surface py-3 px-6 flex items-center gap-3 font-semibold text-xs tracking-wider transition-colors">
-        <span class="material-symbols-outlined text-sm">history</span>
-        TRAZABILIDAD
-      </a>
-    </nav>
-    <div class="mt-auto px-6 flex flex-col gap-4 border-t border-gray-100 pt-6">
-      <a href="#" (click)="$event.preventDefault()" class="flex items-center gap-3 text-ebony/70 hover:text-primary cursor-pointer transition-colors">
-        <span class="material-symbols-outlined text-lg">help</span>
-        <span class="text-xs font-bold">SOPORTE</span>
-      </a>
-      <a href="#" (click)="$event.preventDefault()" class="flex items-center gap-3 text-ebony/70 hover:text-primary cursor-pointer transition-colors">
-        <span class="material-symbols-outlined text-lg">list_alt</span>
-        <span class="text-xs font-bold">LOGS</span>
-      </a>
-    </div>
-  </aside>
-
-  <main class="ml-64 flex-grow flex flex-col min-h-screen blueprint-grid">
-    <header class="bg-white px-12 py-8 border-b border-gray-100 shadow-sm">
-      <div class="max-w-4xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <div class="flex items-center gap-3 mb-4">
-            <span class="text-[10px] font-black bg-ebony text-white px-2 py-0.5 uppercase tracking-widest">PASO 4 DE 4</span>
-            <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
-            <span class="text-[10px] font-black text-neutral-gray uppercase tracking-widest">Wizard de Creación</span>
-          </div>
-          <h1 class="text-5xl font-bold font-headline text-ebony tracking-tight uppercase">Resumen Final</h1>
-          <p class="text-neutral-gray font-medium mt-4 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-vibrant animate-pulse"></span>
-            Revisión final de especificaciones antes del registro PLM
-          </p>
-        </div>
-        <div class="w-full md:w-64 space-y-2">
-          <div class="flex justify-between text-[10px] font-black text-ebony uppercase tracking-widest">
-            <span>Progreso</span>
-            <span>100%</span>
-          </div>
-          <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-            <div class="h-full bg-vibrant w-full"></div>
-          </div>
+<div class="flex-1 p-12 overflow-y-auto blueprint-grid">
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white border border-gray-200 shadow-sm overflow-hidden">
+      <div class="h-32 bg-gradient-to-r from-industrial-maroon to-vibrant-pink relative flex items-end p-8">
+        <h2 class="text-4xl font-bold font-headline text-white leading-none">Resumen Final</h2>
+        <div class="absolute top-4 right-8 opacity-10">
+          <span class="material-symbols-outlined text-8xl text-white">verified</span>
         </div>
       </div>
-    </header>
-
-    <div class="flex-1 p-12">
-      <div class="max-w-4xl mx-auto">
-        <div class="bg-white border border-gray-200 shadow-sm overflow-hidden">
-          <div class="h-32 bg-gradient-to-r from-primary to-vibrant relative flex items-end p-8">
-            <h2 class="text-4xl font-bold font-headline text-white leading-none">Resumen Final</h2>
-            <div class="absolute top-4 right-8 opacity-10">
-              <span class="material-symbols-outlined text-8xl text-white">verified</span>
+      <div class="p-10 space-y-12">
+        <section>
+          <div class="flex items-center gap-3 mb-6">
+            <span class="material-symbols-outlined text-industrial-maroon">fingerprint</span>
+            <h3 class="text-xs font-black text-ebony uppercase tracking-widest">Identificación del Producto</h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-surface/50 p-6">
+            <div>
+              <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">Nombre del Producto</p>
+              <p class="text-lg font-bold text-ebony">Barbie Edición Especial 2026</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">SKU Base</p>
+              <p class="text-lg font-bold text-ebony">MTL-BAR-9999</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">Categoría</p>
+              <p class="text-lg font-bold text-ebony">Muñeca</p>
+            </div>
+            <div>
+              <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">Línea de Rareza</p>
+              <span class="inline-block mt-1 px-3 py-1 bg-white border-2 border-industrial-maroon text-industrial-maroon text-[10px] font-black uppercase">Platinum Label</span>
             </div>
           </div>
+        </section>
 
-          <div class="p-10 space-y-12">
-            <section>
-              <div class="flex items-center gap-3 mb-6">
-                <span class="material-symbols-outlined text-primary">fingerprint</span>
-                <h3 class="text-xs font-black text-ebony uppercase tracking-widest">Identificación del Producto</h3>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-surface/50 p-6">
-                <div>
-                  <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">Nombre del Producto</p>
-                  <p class="text-lg font-bold text-ebony">Barbie Edición Especial 2026</p>
-                </div>
-                <div>
-                  <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">SKU Base</p>
-                  <p class="text-lg font-bold text-ebony">MTL-BAR-9999</p>
-                </div>
-                <div>
-                  <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">Categoría</p>
-                  <p class="text-lg font-bold text-ebony">Muñeca</p>
-                </div>
-                <div>
-                  <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">Línea de Rareza</p>
-                  <span class="inline-block mt-1 px-3 py-1 bg-white border-2 border-primary text-primary text-[10px] font-black uppercase">
-                    Platinum Label
-                  </span>
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <div class="flex items-center gap-3 mb-6">
-                <span class="material-symbols-outlined text-primary">biotech</span>
-                <h3 class="text-xs font-black text-ebony uppercase tracking-widest">Genoma del Producto</h3>
-              </div>
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="p-4 bg-white border border-gray-100 shadow-sm">
-                  <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Esculpido</p>
-                  <p class="text-sm font-bold text-ebony">Mackie 1991</p>
-                </div>
-                <div class="p-4 bg-white border border-gray-100 shadow-sm">
-                  <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Tono Piel</p>
-                  <p class="text-sm font-bold text-ebony">Bronceado</p>
-                </div>
-                <div class="p-4 bg-white border border-gray-100 shadow-sm">
-                  <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Cuerpo</p>
-                  <p class="text-sm font-bold text-ebony">Curvy</p>
-                </div>
-                <div class="p-4 bg-white border border-gray-100 shadow-sm">
-                  <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Ojos</p>
-                  <p class="text-sm font-bold text-ebony">Verde</p>
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <div class="flex items-center gap-3 mb-6">
-                <span class="material-symbols-outlined text-primary">inventory_2</span>
-                <h3 class="text-xs font-black text-ebony uppercase tracking-widest">Receta BOM (Bill of Materials)</h3>
-              </div>
-              <div class="p-6 bg-pink-50 border-l-4 border-vibrant flex items-center justify-between">
-                <div>
-                  <p class="text-sm font-bold text-primary">3 Ítems seleccionados</p>
-                  <p class="text-[10px] text-neutral-gray font-medium uppercase mt-1">Vestido Gala Pink, Bolso Ejecutivo, Zapatos Tacón Alto</p>
-                </div>
-                <span class="material-symbols-outlined text-vibrant">check_circle</span>
-              </div>
-            </section>
+        <section>
+          <div class="flex items-center gap-3 mb-6">
+            <span class="material-symbols-outlined text-industrial-maroon">biotech</span>
+            <h3 class="text-xs font-black text-ebony uppercase tracking-widest">Genoma del Producto</h3>
           </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="p-4 bg-white border border-gray-100 shadow-sm">
+              <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Esculpido</p>
+              <p class="text-sm font-bold text-ebony">Mackie 1991</p>
+            </div>
+            <div class="p-4 bg-white border border-gray-100 shadow-sm">
+              <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Tono Piel</p>
+              <p class="text-sm font-bold text-ebony">Bronceado</p>
+            </div>
+            <div class="p-4 bg-white border border-gray-100 shadow-sm">
+              <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Cuerpo</p>
+              <p class="text-sm font-bold text-ebony">Curvy</p>
+            </div>
+            <div class="p-4 bg-white border border-gray-100 shadow-sm">
+              <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Ojos</p>
+              <p class="text-sm font-bold text-ebony">Verde</p>
+            </div>
+          </div>
+        </section>
 
-          <footer class="p-8 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
-            <button type="button" routerLink="/paso3" class="px-8 py-4 text-xs font-black uppercase tracking-widest text-neutral-gray hover:text-ebony flex items-center gap-3 transition-colors">
-              <span class="material-symbols-outlined text-sm">arrow_back</span>
-              Atrás
-            </button>
-            <button type="button" (click)="confirmarProducto()" class="px-10 py-4 bg-vibrant text-white font-black text-xs uppercase tracking-widest hover:bg-primary shadow-lg flex items-center gap-4 transition-all">
-              Confirmar y Crear Producto
-              <span class="material-symbols-outlined text-sm">check_circle</span>
-            </button>
-          </footer>
-        </div>
-
-        <div class="mt-12 p-6 bg-white/50 border border-dashed border-gray-300 rounded-lg flex gap-4">
-          <span class="material-symbols-outlined text-amber-500">info</span>
-          <p class="text-xs text-neutral-gray leading-relaxed">
-            Al confirmar, el producto será registrado en el catálogo global y se iniciarán los procesos de logística y finanzas correspondientes. Asegúrese de que todos los datos sean correctos.
-          </p>
-        </div>
+        <section>
+          <div class="flex items-center gap-3 mb-6">
+            <span class="material-symbols-outlined text-industrial-maroon">inventory_2</span>
+            <h3 class="text-xs font-black text-ebony uppercase tracking-widest">Receta BOM (Bill of Materials)</h3>
+          </div>
+          <div class="p-6 bg-pink-50 border-l-4 border-vibrant-pink flex items-center justify-between">
+            <div>
+              <p class="text-sm font-bold text-industrial-maroon">3 Ítems seleccionados</p>
+              <p class="text-[10px] text-neutral-gray font-medium uppercase mt-1">Vestido Gala Pink, Bolso Ejecutivo, Zapatos Tacón Alto</p>
+            </div>
+            <span class="material-symbols-outlined text-vibrant-pink">check_circle</span>
+          </div>
+        </section>
       </div>
+
+      <footer class="p-8 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
+        <button type="button" routerLink="/paso3" class="px-8 py-4 text-xs font-black uppercase tracking-widest text-neutral-gray hover:text-ebony flex items-center gap-3 transition-colors">
+          <span class="material-symbols-outlined text-sm">arrow_back</span>
+          ATRÁS
+        </button>
+        <button type="button" (click)="confirmarProducto()" class="px-10 py-4 bg-vibrant-pink text-white font-black text-xs uppercase tracking-widest hover:bg-industrial-maroon shadow-lg flex items-center gap-4 transition-all">
+          CONFIRMAR Y CREAR PRODUCTO
+          <span class="material-symbols-outlined text-sm">check_circle</span>
+        </button>
+      </footer>
     </div>
-  </main>
+
+    <div class="mt-12 p-6 bg-white/50 border border-dashed border-gray-300 rounded-lg flex gap-4">
+      <span class="material-symbols-outlined text-amber-500">info</span>
+      <p class="text-xs text-neutral-gray leading-relaxed">
+        Al confirmar, el producto será registrado en el catálogo global y se iniciarán los procesos de logística y finanzas correspondientes. Asegúrese de que todos los datos sean correctos.
+      </p>
+    </div>
+  </div>
 </div>
 
 @if (showModal) {
@@ -206,10 +129,10 @@
       <h3 class="text-2xl font-bold font-headline text-ebony mb-4 uppercase tracking-tight">¡Producto Creado!</h3>
       <p class="text-neutral-gray mb-10 text-sm font-medium">
         La unidad ha sido registrada exitosamente con el SKU:
-        <span class="text-primary font-bold">MTL-BAR-9999</span>
+        <span class="text-industrial-maroon font-bold">MTL-BAR-9999</span>
       </p>
-      <button type="button" routerLink="/paso1" (click)="showModal = false" class="w-full py-4 bg-ebony text-white font-black text-xs uppercase tracking-widest hover:bg-primary transition-colors">
-        Volver al Dashboard
+      <button type="button" routerLink="/ingenieria" (click)="showModal = false" class="w-full py-4 bg-ebony text-white font-black text-xs uppercase tracking-widest hover:bg-industrial-maroon transition-colors">
+        Volver a Ingeniería
       </button>
     </div>
   </div>

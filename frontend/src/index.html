@@ -2,7 +2,7 @@
 <html lang="es" class="h-full w-full">
 <head>
   <meta charset="utf-8">
-  <title>MATTEL UCAB - Registro General de Producto</title>
+  <title>MattelUCAB PLM - Tablero de Control Estratégico</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -15,11 +15,17 @@
           colors: {
             primary: '#8B1D54',
             vibrant: '#E0218A',
+            'vibrant-pink': '#E0218A',
             ebony: '#17173D',
             surface: '#F7F2F3',
+            'surface-muted': '#F8FAFC',
+            'surface-container-low': '#f5f2ff',
+            'surface-container-lowest': '#ffffff',
             'neutral-gray': '#5A5A84',
             'on-surface': '#17173D',
-            'on-surface-variant': '#594049'
+            'on-surface-variant': '#64748b',
+            'industrial-maroon': '#8B1D54',
+            'border-subtle': '#E5E7EB'
           },
           borderRadius: {
             DEFAULT: '0.5rem',
@@ -43,13 +49,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   
   <style>
-    /* Aseguramos que la tipografía se aplique globalmente */
+    html, body, app-root {
+      height: 100%;
+      overflow: hidden;
+    }
     body { font-family: 'Inter', sans-serif; }
     .font-headline { font-family: 'Plus Jakarta Sans', sans-serif; }
   </style>
 </head>
 
-<body class="h-full w-full bg-surface text-ebony">
+<body class="h-full w-full bg-surface text-ebony overflow-hidden">
   <app-root></app-root>
 </body>
 </html>

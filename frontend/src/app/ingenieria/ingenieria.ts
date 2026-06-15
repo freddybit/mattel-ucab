@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-paso2',
+  selector: 'app-ingenieria',
   standalone: true,
   imports: [RouterLink],
-  templateUrl: './paso2.html',
-  styleUrls: ['./paso2.css', '../../layout/layout.css'],
+  templateUrl: './ingenieria.html',
+  styleUrl: '../layout/layout.css',
 })
-export class Paso2 {}
+export class Ingenieria {}

@@ -1,0 +1,50 @@
+<aside class="w-[260px] h-screen fixed left-0 top-0 flex flex-col bg-[#11112D] text-white z-50">
+
+  <div class="px-8 py-5 flex items-center gap-4 border-b border-white/5 shrink-0">
+    <div class="w-10 h-10 bg-white/10 rounded flex items-center justify-center shrink-0">
+      <span class="material-symbols-outlined text-white/40">close</span>
+    </div>
+    <div>
+      <p class="text-[11px] font-bold text-white uppercase tracking-wider">DLS-ADMIN</p>
+      <p class="text-[9px] text-slate-400 font-medium">V1.0.4-BLUEPRINT</p>
+    </div>
+  </div>
+
+  <nav class="flex-1 flex flex-col min-h-0" aria-label="Menú principal">
+    <a routerLink="/dashboard" [class]="linkClass('dashboard')">
+      <span class="material-symbols-outlined text-xl">grid_view</span>
+      <span class="text-[11px] font-bold uppercase tracking-widest">Dashboard</span>
+    </a>
+    <a routerLink="/ingenieria" [class]="linkClass('ingenieria')">
+      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">settings_input_component</span>
+      <span class="text-[11px] font-bold uppercase tracking-widest">Ingeniería</span>
+    </a>
+    <a href="#" (click)="$event.preventDefault()" [class]="linkClass('almacen')">
+      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">inventory_2</span>
+      <span class="text-[11px] font-bold uppercase tracking-widest">Almacén</span>
+    </a>
+    <a href="#" (click)="$event.preventDefault()" [class]="linkClass('finanzas')">
+      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">account_balance_wallet</span>
+      <span class="text-[11px] font-bold uppercase tracking-widest">Finanzas B2B</span>
+    </a>
+    <a href="#" (click)="$event.preventDefault()" [class]="linkClass('personal')">
+      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">badge</span>
+      <span class="text-[11px] font-bold uppercase tracking-widest">Personal</span>
+    </a>
+    <a href="#" (click)="$event.preventDefault()" [class]="linkClass('configuracion')">
+      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">settings</span>
+      <span class="text-[11px] font-bold uppercase tracking-widest">Configuración</span>
+    </a>
+    <a routerLink="/trazabilidad" [class]="linkClass('trazabilidad')">
+      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">history</span>
+      <span class="text-[11px] font-bold uppercase tracking-widest">Trazabilidad</span>
+    </a>
+  </nav>
+
+  <div class="shrink-0 pb-6 border-t border-white/5 pt-4 bg-[#11112D]">
+    <a href="#" (click)="$event.preventDefault()" class="flex items-center gap-4 px-8 py-3 text-slate-500 hover:text-red-500 transition-all duration-200">
+      <span class="material-symbols-outlined text-lg">logout</span>
+      <span class="text-[10px] uppercase font-bold tracking-widest">Salir</span>
+    </a>
+  </div>
+</aside>

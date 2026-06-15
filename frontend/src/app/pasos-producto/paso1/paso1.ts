@@ -6,6 +6,6 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './paso1.html',
-  styleUrls: ['./paso1.css']
+  styleUrls: ['./paso1.css', '../../layout/layout.css'],
 })
-export class Paso1 { }
+export class Paso1 {}
