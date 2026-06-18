@@ -2253,3 +2253,235 @@ INSERT INTO PruebaEmpleado (idPruebaEmpleado, fechaInicio, fechaFin, Prueba_idPr
 (11, '2023-10-10', '2023-10-11', 5, 11), (12, '2023-10-18', '2023-10-19', 8, 12),
 (13, '2023-11-02', '2023-11-03', 12, 13), (14, '2023-11-15', '2023-11-16', 11, 14),
 (15, '2023-11-20', '2023-11-21', 7, 15);
+
+--------------------------------------------------------------------------------------------------
+-- LOTE MATERIA PRIMA
+
+INSERT INTO LoteMateriaPrima (idLoteMateriaPrima, costoAdquisicion, nombre, descripcion, Material_idMaterial) VALUES
+(1, 15000, 'Lote Algodón Premium', 'Rollos de tela cruda para vestuario escala 1/6.', 1),
+(2, 22500, 'Lote Metal Die-Cast', 'Aleación para chasis de vehículos de juguete.', 2),
+(3, 18000, 'Lote PVC Blando Alpha', 'Polímero base para inyección de cabezas y rostros.', 3),
+(4, 9500,  'Lote Poliéster Color', 'Fardos de poliéster para estampados.', 4),
+(5, 17200, 'Lote PVC Blando Beta', 'Variante de polímero con mayor flexibilidad.', 5),
+(6, 31000, 'Lote Kanekalon Rubio', 'Hebras sintéticas de alta calidad para enraizado.', 6),
+(7, 4500,  'Lote Cartón Corrugado', 'Material reciclado para cajas master B2B.', 7),
+(8, 18000, 'Lote PVC Blando Gamma', 'Polímero para extremidades flex (Click-Clack).', 8),
+(9, 28000, 'Lote Resina Epóxica', 'Resina pesada para edición coleccionista Silkstone.', 9),
+(10, 14000, 'Lote Poliuretano A', 'Espuma rígida para accesorios de playsets.', 10),
+(11, 14500, 'Lote Poliuretano B', 'Variante de espuma para mobiliario Dreamhouse.', 11),
+(12, 9800,  'Lote Poliéster Extra', 'Tela con acabado brillante para línea Fashionistas.', 12),
+(13, 34000, 'Lote Nylon Capilar', 'Hebras de nylon para resistencia al calor.', 13),
+(14, 8700,  'Lote Tela Sintética', 'Tejido base para interiores de camper y carpas.', 14),
+(15, 16000, 'Lote Poliuretano C', 'Compuesto inyectable para mascotas miniatura.', 15);
+
+--------------------------------------------------------------------------------------------------
+-- LOTE DE PRODUCCION
+
+INSERT INTO LoteProduccion (idLote, fechaInicio, fechaFin) VALUES
+(1, '2023-01-05', '2023-01-20'),
+(2, '2023-02-01', '2023-02-15'),
+(3, '2023-03-10', '2023-03-25'),
+(4, '2023-04-05', '2023-04-20'),
+(5, '2023-05-15', '2023-05-30'),
+(6, '2023-06-01', '2023-06-10'),
+(7, '2023-07-10', '2023-07-25'),
+(8, '2023-08-05', '2023-08-15'),
+(9, '2023-09-01', '2023-09-10'),
+(10, '2023-09-15', '2023-09-30'),
+(11, '2023-10-01', '2023-10-15'),
+(12, '2023-10-20', '2023-10-31'),
+(13, '2023-11-05', '2023-11-20'),
+(14, '2023-11-25', '2023-12-05'),
+(15, '2023-12-10', '2023-12-22');
+
+--------------------------------------------------------------------------------------------------
+-- INSUMO DE PRODUCCION
+
+INSERT INTO InsumoProduccion (idInsumoProduccion, cantidad, LoteMateriaPrima_idLoteMateriaPrima, LoteProduccion_idLote) VALUES
+(1, 500, 3, 1),  -- El Lote 1 usó 500kg del Lote de PVC Blando
+(2, 100, 6, 1),  -- El Lote 1 usó 100kg de Kanekalon
+(3, 450, 1, 2),  -- El Lote 2 usó Tela Algodón
+(4, 800, 2, 3),  -- El Lote 3 usó Metal Die-Cast
+(5, 300, 9, 4),  -- El Lote 4 usó Resina Epóxica
+(6, 600, 10, 5), -- El Lote 5 usó Poliuretano
+(7, 200, 4, 6),  -- El Lote 6 usó Poliéster
+(8, 150, 13, 7), -- El Lote 7 usó Nylon
+(9, 700, 5, 8),  -- El Lote 8 usó PVC Beta
+(10, 550, 8, 9), -- El Lote 9 usó PVC Gamma
+(11, 400, 11, 10),
+(12, 350, 12, 11),
+(13, 900, 7, 12), -- Uso de cartón corrugado
+(14, 250, 14, 13),
+(15, 650, 15, 14);
+
+--------------------------------------------------------------------------------------------------
+-- UNIDAD PRODUCIDA
+
+INSERT INTO UnidadProducida (idUnidadProducidad, fechaSalida, nombre, LoteProduccion_idLote) VALUES
+(1, '2023-01-21', 'Unidad Test B59-001', 1),
+(2, '2023-01-21', 'Unidad Test B59-002', 1),
+(3, '2023-02-16', 'Unidad Malibu-010', 2),
+(4, '2023-03-26', 'Unidad Vehículo-045', 3),
+(5, '2023-04-21', 'Unidad Silkstone-001', 4),
+(6, '2023-05-31', 'Unidad Playset-099', 5),
+(7, '2023-06-11', 'Unidad Fashion-012', 6),
+(8, '2023-07-26', 'Unidad Hair-055', 7),
+(9, '2023-08-16', 'Unidad Flex-023', 8),
+(10, '2023-09-11', 'Unidad Flex-024', 9),
+(11, '2023-10-01', 'Unidad Accesorio-101', 10),
+(12, '2023-10-16', 'Unidad Accesorio-102', 11),
+(13, '2023-11-01', 'Unidad MasterBox-01', 12),
+(14, '2023-11-21', 'Unidad Textil-088', 13),
+(15, '2023-12-06', 'Unidad Mascota-005', 14);
+
+--------------------------------------------------------------------------------------------------
+-- TIPO UBICACIÓN STOCK
+
+INSERT INTO TipoUbicacionStock (idTipoUbicacionStock, nombre, direccion, Lugar_idLugar, UnidadProducida_idUnidadProducidad) VALUES
+(1, 'Fabrica de Origen', 'Planta Central, Galpón 4', 8, 1),
+(2, 'Fabrica de Origen', 'Planta Central, Galpón 5', 8, 2),
+(3, 'Hub Regional', 'Zona Franca, Almacén B2B', 15, 3),
+(4, 'Transito', 'Ruta Logística Nacional', 8, 4),
+(5, 'Fabrica de Origen', 'Bodega de Materiales A', 8, 5),
+(6, 'Hub Regional', 'Centro de Distribución Mayorista', 15, 6),
+(7, 'Transito', 'Contenedor Aduanero', 15, 7),
+(8, 'Fabrica de Origen', 'Sótano Archivo Prototipos', 8, 8),
+(9, 'Hub Regional', 'Almacén E-Commerce Local', 15, 9),
+(10, 'Fabrica de Origen', 'Taller Textil Auxiliar', 8, 10),
+(11, 'Transito', 'Despacho a Retailer', 15, 11),
+(12, 'Fabrica de Origen', 'Zona de Cuarentena QA', 8, 12),
+(13, 'Hub Regional', 'Bóveda de Coleccionistas', 15, 13),
+(14, 'Fabrica de Origen', 'Planta Empaquetado Final', 8, 14),
+(15, 'Transito', 'Ruta Internacional Exportación', 8, 15);
+
+--------------------------------------------------------------------------------------------------
+-- HISTÓRICO EMPLEADO
+
+INSERT INTO HistoricoEmpleado (idHistoricoEmpleado, fechaInicio, fechaFin, salarioBase, Empleado_idEmpleado, Departamento_idDepartamento, PuestoTrabajo_id, TipoUbicacionStock_idTipoUbicacionStock) VALUES
+(1, '2020-01-15', NULL, 4500.00, 1, 1, 1, 8),   -- Director de Diseño en Archivo Prototipos
+(2, '2021-03-01', NULL, 3200.00, 2, 2, 2, 8),   -- Escultor en Archivo Prototipos
+(3, '2022-05-10', NULL, 3800.00, 3, 3, 3, 5),   -- Ing Químico en Bodega de Materiales
+(4, '2019-02-20', NULL, 2800.00, 4, 4, 4, 1),   -- Tornero CNC en Planta Central
+(5, '2023-01-05', NULL, 2200.00, 5, 5, 5, 1),   -- Operador Inyectora en Planta Central
+(6, '2018-11-12', NULL, 2500.00, 6, 7, 6, 2),   -- Técnico Enraizado en Planta Ensamblaje
+(7, '2024-02-01', NULL, 2400.00, 7, 8, 7, 2),   -- Artista Tampografía en Planta Ensamblaje
+(8, '2020-08-15', '2023-12-31', 1900.00, 8, 6, 8, 2), -- Ensamblador (Ex-empleado)
+(9, '2021-09-10', NULL, 2100.00, 9, 9, 9, 10),  -- Costurera en Taller Textil
+(10, '2022-04-01', NULL, 3500.00, 10, 10, 10, 12),-- Inspector Estrés en Zona Cuarentena
+(11, '2017-06-20', NULL, 1800.00, 11, 11, 11, 14),-- Empacador en Planta Empaquetado
+(12, '2023-10-15', NULL, 4100.00, 12, 12, 12, 3), -- Coord Logística en Almacén B2B
+(13, '2024-01-10', NULL, 3900.00, 13, 14, 13, 13),-- Analista Mercado en Bóveda Coleccionistas
+(14, '2019-05-05', NULL, 3100.00, 14, 15, 14, 3), -- Esp Reclutamiento (Asignado Hub)
+(15, '2020-11-01', NULL, 4800.00, 15, 1, 15, 8);  -- Analista IT en Torre Creativa
+
+--------------------------------------------------------------------------------------------------
+-- PRODUCTO
+
+INSERT INTO Producto (idProducto, nombre, descripcion, fechaSalida, Diseño_idDiseño, LoteProduccion_idLote, precioLanzamiento, limiteCompraPorUsuario, BackOrder_idBackOrder) VALUES
+(1, 'Barbie Original 1959', 'Reedición de aniversario en blíster de colección.', '2023-01-25', 1, 1, 39.99, 2, NULL),
+(2, 'Barbie Malibu 1971', 'Edición de verano con accesorios de playa.', '2023-02-20', 2, 2, 24.99, 5, NULL),
+(3, 'Barbie Totally Hair', 'Muñeca de pelo largo con gel fijador incluido.', '2023-10-15', 3, 5, 29.99, 3, NULL),
+(4, 'Ken Original 1961', 'Figura de acción articulada con ropa de tela.', '2023-09-25', 5, 3, 29.99, 5, NULL),
+(5, 'Dreamhouse 3 Pisos', 'Casa interactiva con luces y sonidos.', '2023-10-05', 6, 4, 199.99, 1, NULL),
+(6, 'Barbie Peaches n Cream', 'Edición vintage de los años 80.', '2023-10-20', 4, 6, 34.99, 2, NULL),
+(7, 'Barbie Holiday 2021', 'Vestido de gala dorado, edición limitada anual.', '2023-10-25', 7, 7, 49.99, 2, NULL),
+(8, 'Inspiring Women: Frida', 'Colección de mujeres inspiradoras. Caja con libro.', '2023-10-30', 8, 8, 39.99, 1, NULL),
+(9, 'Fashionista Vitíligo', 'Línea inclusiva con empaque reutilizable.', '2023-11-05', 9, 9, 14.99, 10, NULL),
+(10, 'Color Reveal Sirena', 'Tubo sorpresa que se revela con agua tibia.', '2023-11-15', 10, 10, 19.99, 5, NULL),
+(11, 'Barbie Camper RV 3-en-1', 'Vehículo de lujo que se transforma en bote.', '2023-11-20', 11, 11, 89.99, 2, NULL),
+(12, 'Barbie Extra #1', 'Look atrevido con mascota y accesorios oversize.', '2023-11-25', 12, 12, 29.99, 4, NULL),
+(13, 'Skipper Babysitters', 'Muñeca y bebé con cuna y teteros.', '2023-11-30', 13, 13, 22.99, 5, NULL),
+(14, 'Barbie Dia de Muertos', 'Edición de lujo con detalles bordados a mano.', '2023-12-10', 14, 14, 79.99, 1, NULL),
+(15, 'Ken en Silla de Ruedas', 'Línea de diversidad. Incluye rampa compatible.', '2023-12-25', 15, 15, 19.99, 5, NULL);
+
+
+--------------------------------------------------------------------------------------------------
+-- PIEZA PRODUCTO
+
+INSERT INTO PiezaProducto (idPiezaProducto, Pieza_idPieza, Producto_idProducto) VALUES
+(1, 1, 1),   -- Cabeza Base en Barbie Original (Producto 1)
+(2, 2, 1),   -- Torso Superior en Barbie Original (Producto 1)
+(3, 11, 1),  -- Ojo Cyan en Barbie Original (Producto 1)
+(4, 10, 3),  -- Cabello Kanekalon en Barbie Totally Hair (Producto 3)
+(5, 1, 4),   -- Cabeza Base en Ken Original (Producto 4)
+(6, 2, 4),   -- Torso Superior en Ken Original (Producto 4)
+(7, 4, 4),   -- Brazo Izquierdo en Ken Original (Producto 4)
+(8, 5, 4),   -- Brazo Derecho en Ken Original (Producto 4)
+(9, 6, 2),   -- Pierna Izquierda en Barbie Malibu (Producto 2)
+(10, 7, 2),  -- Pierna Derecha en Barbie Malibu (Producto 2)
+(11, 10, 12),-- Cabello Kanekalon en Barbie Extra (Producto 12)
+(12, 1, 14), -- Cabeza Base en Dia de Muertos (Producto 14)
+(13, 10, 14),-- Cabello Kanekalon en Dia de Muertos (Producto 14)
+(14, 8, 15), -- Articulación Hombro en Ken Silla de Ruedas (Producto 15)
+(15, 9, 15); -- Articulación Rodilla en Ken Silla de Ruedas (Producto 15)
+
+--------------------------------------------------------------------------------------------------
+-- OBJETIVO GLOBAL PRODUCTO
+
+TRUNCATE TABLE ObjetivoGlobalProducto CASCADE;
+INSERT INTO ObjetivoGlobalProducto (idObjetivoGlobalProducto, objetivoSuperado, Producto_idProducto, ObjetivoGlobal_idObjetivoGlobal) VALUES
+(1, 'Y', 1, 1),
+(2, 'N', 2, 2),
+(3, 'Y', 3, 3),
+(4, 'Y', 4, 4),
+(5, 'N', 5, 5),
+(6, 'Y', 6, 6),
+(7, 'Y', 7, 7),
+(8, 'Y', 8, 8),
+(9, 'N', 9, 9),
+(10, 'Y', 10, 10),
+(11, 'N', 11, 11),
+(12, 'Y', 12, 12),
+(13, 'N', 13, 13),
+(14, 'Y', 14, 14),
+(15, 'Y', 15, 15);
+
+--------------------------------------------------------------------------------------------------
+-- PACK (Agrupaciones de productos)
+
+INSERT INTO Pack (idPack, Producto_idProducto, Producto_idProducto2) VALUES
+(1, 1, 4),   -- Pack Barbie + Ken
+(2, 5, 2),   -- Pack Dreamhouse + Barbie Malibu
+(3, 11, 13), -- Pack Camper RV + Skipper Babysitters
+(4, 3, 12),  -- Pack "Hair & Fashion" (Totally Hair + Extra)
+(5, 7, 14),  -- Pack "Coleccionistas" (Holiday + Dia de Muertos)
+(6, 4, 15),  -- Pack Inclusión Ken (Original + Silla de ruedas)
+(7, 2, 10),  -- Pack Sirena & Playa (Malibu + Sirena)
+(8, 6, 8),   -- Pack Retro & Historia (Peaches + Frida)
+(9, 9, 15),  -- Pack Inclusión Total (Fashionista Vitiligo + Ken Silla)
+(10, 1, 3),  -- Pack "Iconos de Mattel" (Original + Totally Hair)
+(11, 4, 2),  -- Pack Pareja Verano (Ken + Malibu)
+(12, 5, 11), -- Pack "Mi Casa, Mi Auto" (Dreamhouse + RV)
+(13, 12, 9), -- Pack Modas Locas (Extra + Fashionista)
+(14, 7, 6),  -- Pack Gala (Holiday + Peaches)
+(15, 14, 8); -- Pack "Tributo a México" (Dia de Muertos + Frida)
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- DEPENDE DE LA PARTE DE ANDREA (CLIENTES)...
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------
+-- TELEFONO
+
+INSERT INTO Telefono (idTelefono, codigoPais, codigoOperadora, numeroAbonado, ClienteJuridico_idClienteJuridico, ClienteNatural_idClienteNatural) VALUES
+(1, 1, 555, 1001001, 1, NULL),
+(2, 49, 170, 2002002, 2, NULL),
+(3, 1, 305, 3003003, 3, NULL),
+(4, 81, 90, 4004004, 4, NULL),
+(5, 1, 212, 5005005, 5, NULL),
+(6, 81, 80, 6006006, 6, NULL),
+(7, 52, 55, 7007007, 7, NULL),
+(8, 1, 415, 8008008, 8, NULL),
+(9, 1, 650, 9009009, 9, NULL),
+(10, 31, 20, 1010101, 10, NULL),
+(11, 44, 207, 1111111, 11, NULL),
+(12, 1, 786, 1212121, 12, NULL),
+(13, 1, 213, 1313131, 13, NULL),
+(14, 1, 917, 1414141, 14, NULL),
+(15, 1, 310, 1515151, 15, NULL);

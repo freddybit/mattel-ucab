@@ -4,8 +4,6 @@
 --   site:      Oracle Database 11g
 --   type:      Oracle Database 11g
 
-
-
 -- predefined type, no DDL - MDSYS.SDO_GEOMETRY
 
 -- predefined type, no DDL - XMLTYPE
@@ -679,7 +677,7 @@ CREATE TABLE Producto (
      LoteProduccion_idLote           NUMERIC  NOT NULL ,
      precioLanzamiento               NUMERIC  NOT NULL ,
      limiteCompraPorUsuario          NUMERIC  NOT NULL ,
-     BackOrder_idBackOrder           NUMERIC  NOT NULL,
+     BackOrder_idBackOrder           NUMERIC,
 
     CONSTRAINT pk_producto_01 PRIMARY KEY (idProducto)
 );
@@ -848,8 +846,8 @@ CREATE TABLE Telefono (
      codigoPais                        NUMERIC  NOT NULL ,
      codigoOperadora                   NUMERIC  NOT NULL ,
      numeroAbonado                     NUMERIC  NOT NULL ,
-     ClienteJuridico_idClienteJuridico NUMERIC  NOT NULL ,
-     ClienteNatural_idClienteNatural   NUMERIC  NOT NULL,
+     ClienteJuridico_idClienteJuridico NUMERIC,
+     ClienteNatural_idClienteNatural   NUMERIC,
 
     CONSTRAINT arc_telefono_01 CHECK ( (  (ClienteNatural_idClienteNatural IS NOT NULL
                                AND (ClienteJuridico_idClienteJuridico IS NULL) ) OR (  (ClienteJuridico_idClienteJuridico IS NOT NULL)
