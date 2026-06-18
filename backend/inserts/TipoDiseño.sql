@@ -1,0 +1,15 @@
+insert into TipoDiseño (idTipoDiseño, nombre) values (1, 'Muñeca Articulada');
+insert into TipoDiseño (idTipoDiseño, nombre) values (2, 'Muñeca Estática');
+insert into TipoDiseño (idTipoDiseño, nombre) values (3, 'Playset (Escenario)');
+insert into TipoDiseño (idTipoDiseño, nombre) values (4, 'Vehículo Terrestre');
+insert into TipoDiseño (idTipoDiseño, nombre) values (5, 'Vehículo Acuático');
+insert into TipoDiseño (idTipoDiseño, nombre) values (6, 'Vehículo Aéreo');
+insert into TipoDiseño (idTipoDiseño, nombre) values (7, 'Prenda de Vestir (Ropa)');
+insert into TipoDiseño (idTipoDiseño, nombre) values (8, 'Accesorio Pequeño');
+insert into TipoDiseño (idTipoDiseño, nombre) values (9, 'Mascota / Animal');
+insert into TipoDiseño (idTipoDiseño, nombre) values (10, 'Casa de Muñecas');
+insert into TipoDiseño (idTipoDiseño, nombre) values (11, 'Dispositivo Electrónico (Toy)');
+insert into TipoDiseño (idTipoDiseño, nombre) values (12, 'Figura de Acción (Masculina)');
+insert into TipoDiseño (idTipoDiseño, nombre) values (13, 'Muebles a Escala');
+insert into TipoDiseño (idTipoDiseño, nombre) values (14, 'Juego de Construcción');
+insert into TipoDiseño (idTipoDiseño, nombre) values (15, 'Coleccionable Diorama');

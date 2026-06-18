@@ -1,5 +1,129 @@
 
+/* BORRAR SECUENCIAS */
+
+DROP SEQUENCE Ambiente_SEQ;
+DROP SEQUENCE AsignacionMeta_SEQ;
+DROP SEQUENCE Asistencia_SEQ;
+DROP SEQUENCE AutorDiseño_SEQ;
+DROP SEQUENCE BackOrder_SEQ;
+DROP SEQUENCE ChequeCorporativo_SEQ;
+DROP SEQUENCE ClasificacionExclusividad_SEQ;
+DROP SEQUENCE ClasificacionHistorica_SEQ;
+DROP SEQUENCE ClienteJuridico_SEQ;
+DROP SEQUENCE ClienteNatural_SEQ;
+DROP SEQUENCE Color_SEQ;
+DROP SEQUENCE ComisionVenta_SEQ;
+DROP SEQUENCE Compra_SEQ;
+DROP SEQUENCE CompraDescuento_SEQ;
+DROP SEQUENCE Conciliacion_SEQ;
+DROP SEQUENCE CondicionFisica_SEQ;
+DROP SEQUENCE Courier_SEQ;
+DROP SEQUENCE CriptoActivo_SEQ;
+DROP SEQUENCE CurriculumVitae_SEQ;
+DROP SEQUENCE Departamento_SEQ;
+DROP SEQUENCE Descuento_SEQ;
+DROP SEQUENCE DespachoNatural_SEQ;
+DROP SEQUENCE DetalleCompraJuridico_SEQ;
+DROP SEQUENCE DetalleCompraNatural_SEQ;
+DROP SEQUENCE DevolucionJuridica_SEQ;
+DROP SEQUENCE DevolucionNatural_SEQ;
+DROP SEQUENCE Diseño_SEQ;
+DROP SEQUENCE DiseñoAmbiente_SEQ;
+DROP SEQUENCE Efectivo_SEQ;
+DROP SEQUENCE Empleado_SEQ;
+DROP SEQUENCE EstadoOrden_SEQ;
+DROP SEQUENCE Estatus_SEQ;
+DROP SEQUENCE Fase_SEQ;
+DROP SEQUENCE FaseEmpleado_SEQ;
+DROP SEQUENCE HistoricoEmpleado_SEQ;
+DROP SEQUENCE HistoricoEstado_SEQ;
+DROP SEQUENCE HistoricoEstatus_SEQ;
+DROP SEQUENCE Horario_SEQ;
+DROP SEQUENCE InsumoProduccion_SEQ;
+DROP SEQUENCE ListaPrecioMayorista_SEQ;
+DROP SEQUENCE LoteMateriaPrima_SEQ;
+DROP SEQUENCE LoteProduccion_SEQ;
+DROP SEQUENCE Lugar_SEQ;
+DROP SEQUENCE ManifiestoCarga_SEQ;
+DROP SEQUENCE Material_SEQ;
+DROP SEQUENCE MaterialDiseño_SEQ;
+DROP SEQUENCE Membresia_SEQ;
+DROP SEQUENCE MetaMensual_SEQ;
+DROP SEQUENCE MoldeRostro_SEQ;
+DROP SEQUENCE MonitorActividadSopechosa_SEQ;
+DROP SEQUENCE ObjetivoGlobal_SEQ;
+DROP SEQUENCE ObjetivoGlobalProducto_SEQ;
+DROP SEQUENCE OrdenCompra_SEQ;
+DROP SEQUENCE OrdenCompraDescuento_SEQ;
+DROP SEQUENCE OrdenVenta_SEQ;
+DROP SEQUENCE Pack_SEQ;
+DROP SEQUENCE PagoJuridico_SEQ;
+DROP SEQUENCE PagoNatural_SEQ;
+DROP SEQUENCE PayPal_SEQ;
+DROP SEQUENCE Permiso_SEQ;
+DROP SEQUENCE Pieza_SEQ;
+DROP SEQUENCE PiezaProducto_SEQ;
+DROP SEQUENCE Producto_SEQ;
+DROP SEQUENCE Profesion_SEQ;
+DROP SEQUENCE Prueba_SEQ;
+DROP SEQUENCE PruebaEmpleado_SEQ;
+DROP SEQUENCE PuestoTrabajo_SEQ;
+DROP SEQUENCE Puja_SEQ;
+DROP SEQUENCE Regalia_SEQ;
+DROP SEQUENCE Restriccion_SEQ;
+DROP SEQUENCE RestriccionDiseño_SEQ;
+DROP SEQUENCE Rol_SEQ;
+DROP SEQUENCE RolPermiso_SEQ;
+DROP SEQUENCE Sancion_SEQ;
+DROP SEQUENCE StockClienteNatural_SEQ;
+DROP SEQUENCE Subasta_SEQ;
+DROP SEQUENCE SubEnsamblaje_SEQ;
+DROP SEQUENCE Swift_SEQ;
+DROP SEQUENCE TarjetaCredito_SEQ;
+DROP SEQUENCE TarjetaDebito_SEQ;
+DROP SEQUENCE Telefono_SEQ;
+DROP SEQUENCE TipoCuerpo_SEQ;
+DROP SEQUENCE TipoDiseño_SEQ;
+DROP SEQUENCE TipoPieza_SEQ;
+DROP SEQUENCE TipoRelacion_SEQ;
+DROP SEQUENCE TipoUbicacionStock_SEQ;
+DROP SEQUENCE TonoPiel_SEQ;
+DROP SEQUENCE Transporte_SEQ;
+DROP SEQUENCE Turno_SEQ;
+DROP SEQUENCE TurnoEmpleado_SEQ;
+DROP SEQUENCE TurnoHorario_SEQ;
+DROP SEQUENCE UnidadProducida_SEQ;
+DROP SEQUENCE Usuario_SEQ;
+DROP SEQUENCE ValoracionMercado_SEQ;
+
+DROP SEQUENCE IF EXISTS
+    Ambiente_SEQ, AsignacionMeta_SEQ, Asistencia_SEQ, AutorDiseño_SEQ,
+    BackOrder_SEQ, ChequeCorporativo_SEQ, ClasificacionExclusividad_SEQ,
+    ClasificacionHistorica_SEQ, ClienteJuridico_SEQ, ClienteNatural_SEQ,
+    Color_SEQ, ComisionVenta_SEQ, Compra_SEQ, CompraDescuento_SEQ,
+    Conciliacion_SEQ, CondicionFisica_SEQ, Courier_SEQ, CriptoActivo_SEQ,
+    CurriculumVitae_SEQ, Departamento_SEQ, Descuento_SEQ, DespachoNatural_SEQ,
+    DetalleCompraJuridico_SEQ, DetalleCompraNatural_SEQ, DevolucionJuridica_SEQ,
+    DevolucionNatural_SEQ, Diseño_SEQ, DiseñoAmbiente_SEQ, Efectivo_SEQ,
+    Empleado_SEQ, EstadoOrden_SEQ, Estatus_SEQ, Fase_SEQ, FaseEmpleado_SEQ,
+    HistoricoEmpleado_SEQ, HistoricoEstado_SEQ, HistoricoEstatus_SEQ, Horario_SEQ,
+    InsumoProduccion_SEQ, ListaPrecioMayorista_SEQ, LoteMateriaPrima_SEQ,
+    LoteProduccion_SEQ, Lugar_SEQ, ManifiestoCarga_SEQ, Material_SEQ,
+    MaterialDiseño_SEQ, Membresia_SEQ, MetaMensual_SEQ, MoldeRostro_SEQ,
+    MonitorActividadSopechosa_SEQ, ObjetivoGlobal_SEQ, ObjetivoGlobalProducto_SEQ,
+    OrdenCompra_SEQ, OrdenCompraDescuento_SEQ, OrdenVenta_SEQ, Pack_SEQ,
+    PagoJuridico_SEQ, PagoNatural_SEQ, PayPal_SEQ, Permiso_SEQ, Pieza_SEQ,
+    PiezaProducto_SEQ, Producto_SEQ, Profesion_SEQ, Prueba_SEQ, PruebaEmpleado_SEQ,
+    PuestoTrabajo_SEQ, Puja_SEQ, Regalia_SEQ, Restriccion_SEQ, RestriccionDiseño_SEQ,
+    Rol_SEQ, RolPermiso_SEQ, Sancion_SEQ, StockClienteNatural_SEQ, Subasta_SEQ,
+    SubEnsamblaje_SEQ, Swift_SEQ, TarjetaCredito_SEQ, TarjetaDebito_SEQ, Telefono_SEQ,
+    TipoCuerpo_SEQ, TipoDiseño_SEQ, TipoPieza_SEQ, TipoRelacion_SEQ,
+    TipoUbicacionStock_SEQ, TonoPiel_SEQ, Transporte_SEQ, Turno_SEQ,
+    TurnoEmpleado_SEQ, TurnoHorario_SEQ, UnidadProducida_SEQ, Usuario_SEQ,
+    ValoracionMercado_SEQ CASCADE;
+
 /* BORRAR TABLAS */
+
 DROP TABLE Ambiente CASCADE;
 DROP TABLE AsignacionMeta CASCADE;
 DROP TABLE Asistencia CASCADE;
@@ -94,5 +218,6 @@ DROP TABLE TurnoHorario CASCADE;
 DROP TABLE UnidadProducida CASCADE;
 DROP TABLE Usuario CASCADE;
 DROP TABLE ValoracionMercado CASCADE;
+
 /* BORRAR LA BASE DE DATOS */
  --DROP DATABASE mattelucab;--

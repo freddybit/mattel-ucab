@@ -1,0 +1,16 @@
+idTipoUbicacionStock,nombre
+1,Almacén Central de Materia Prima
+2,Planta de Inyección
+3,Planta de Ensamblaje
+4,Planta de Empaquetado
+5,Centro de Distribución B2B
+6,Centro de Distribución B2C
+7,Tienda Minorista
+8,Almacén de Tránsito (Aduana)
+9,Centro de Devoluciones (RMA)
+10,Almacén de Piezas Defectuosas
+11,Bodega de Prototipos I+D
+12,Bóveda de Coleccionables
+13,Almacén de Herramientas y Moldes
+14,Almacén de Químicos y Pinturas
+15,Centro de Liquidación

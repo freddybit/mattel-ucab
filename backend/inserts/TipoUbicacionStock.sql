@@ -1,0 +1,15 @@
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (1, 'Almacén Central de Materia Prima');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (2, 'Planta de Inyección');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (3, 'Planta de Ensamblaje');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (4, 'Planta de Empaquetado');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (5, 'Centro de Distribución B2B');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (6, 'Centro de Distribución B2C');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (7, 'Tienda Minorista');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (8, 'Almacén de Tránsito (Aduana)');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (9, 'Centro de Devoluciones (RMA)');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (10, 'Almacén de Piezas Defectuosas');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (11, 'Bodega de Prototipos I+D');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (12, 'Bóveda de Coleccionables');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (13, 'Almacén de Herramientas y Moldes');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (14, 'Almacén de Químicos y Pinturas');
+insert into TipoUbicacionStock (idTipoUbicacionStock, nombre) values (15, 'Centro de Liquidación');

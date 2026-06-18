@@ -1536,5 +1536,194 @@ INSERT INTO Lugar (idLugar, nombre, tipo, codigoPostal, Lugar_idLugar) VALUES
 (1497, 'Santa Rosalía', 'Parroquia', 0, 360),
 (1498, 'Santa Teresa', 'Parroquia', 0, 360),
 (1499, 'Sucre (Catia)', 'Parroquia', 0, 360);
+SELECT setval('Lugar_SEQ', 1499);
 
 -- TOTAL: 1 país + 24 estados + 335 municipios + 1139 parroquias = 1499 registros
+
+/*
+1. Seguridad y Catálogos Base
+Estas tablas deben generarse primero, ya que no dependen de otras.
+*/
+
+-- 2. INSERCIÓN DE CATÁLOGOS BASE (IDs Explícitos para control total)
+-- Permisos
+INSERT INTO Permiso (idPermiso, nombre) VALUES
+(1, 'CONSULTAR'),
+(2, 'MODIFICAR'),
+(3, 'CREAR'),
+(4, 'BORRAR');
+
+-- Roles
+INSERT INTO Rol (idRol, nombre, descripcion) VALUES
+(1, 'Administrador', 'Acceso total al sistema Dream Legacy'),
+(2, 'Ingeniero I+D', 'Gestión de diseños y moldes'),
+(3, 'Analista Mercado', 'Solo lectura de reportes y subastas');
+
+-- 3. MATRIZ DE INTERSECCIÓN (RolPermiso)
+-- Administrador: Tiene los 4 permisos
+INSERT INTO RolPermiso (idRolPermiso, Rol_idRol, Permisos_idPermiso) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4);
+
+-- Ingeniero I+D: Consultar (1), Modificar (2), Crear (3)
+INSERT INTO RolPermiso (idRolPermiso, Rol_idRol, Permisos_idPermiso) VALUES
+(5, 2, 1),
+(6, 2, 2),
+(7, 2, 3);
+
+-- Analista Mercado: Solo Consultar (1)
+INSERT INTO RolPermiso (idRolPermiso, Rol_idRol, Permisos_idPermiso) VALUES
+(8, 3, 1);
+
+-- 4. SINCRONIZACIÓN DE SECUENCIAS
+SELECT setval('Permiso_SEQ', 4);
+SELECT setval('Rol_SEQ', 3);
+SELECT setval('RolPermiso_SEQ', 8);
+
+-- 5. EMPLEADOS
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (1, 30503267, 'Sydel', null, 'Monro', 'Bucksey', '4/7/1962', '94 Kennedy Place', 433);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (2, 21073402, 'Patti', null, 'Schieferstein', 'MacQueen', '12/21/1985', '7 Merchant Alley', 1275);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (3, 32752246, 'Valli', 'Alvie', 'Witchard', null, '2/15/1962', '15979 Schurz Parkway', 893);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (4, 32308723, 'Virgina', 'Roobbie', 'Skells', null, '12/27/1968', '17667 Melrose Junction', 1338);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (5, 12821962, 'Jocelyn', null, 'Huddle', 'Pleat', '8/4/1992', '7 Mandrake Drive', 835);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (6, 21848060, 'Guglielmo', 'Ericha', 'Grindrod', 'Quartley', '1/27/1988', '3905 Quincy Plaza', 835);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (7, 19118271, 'Rhea', null, 'Wilde', 'Searl', '9/15/2001', '62 Springview Circle', 1409);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (8, 19027899, 'Druci', null, 'Chicchelli', 'Pember', '3/5/1963', '4 Westerfield Center', 1448);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (9, 25259990, 'Lynda', 'Luce', 'Avieson', 'Franzetti', '3/6/1969', '54 Waxwing Plaza', 1357);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (10, 22460927, 'Kelsy', 'Simonne', 'Attenborrow', 'Trussman', '11/15/2005', '332 Annamark Parkway', 885);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (11, 13996069, 'Lisa', 'Adair', 'Scoone', null, '3/31/1999', '01928 Mesta Way', 397);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (12, 11825907, 'Ruby', null, 'Norker', 'Nibloe', '6/28/2006', '2 Lighthouse Bay Court', 1131);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (13, 12895665, 'Denice', 'Deck', 'Hillyatt', null, '5/10/2005', '70 Cottonwood Junction', 1375);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (14, 12965631, 'Cari', 'Lana', 'Knappe', null, '11/20/1969', '08 South Point', 1100);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (15, 12331581, 'Ashely', null, 'Gunby', 'Zoane', '12/13/1968', '87658 Hanson Street', 916);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (16, 18574002, 'Tobe', null, 'Maundrell', null, '3/13/1963', '8764 Donald Way', 1323);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (17, 28603402, 'Christoph', 'Veronique', 'Armin', 'Romeuf', '4/9/1976', '59 Orin Parkway', 824);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (18, 21366129, 'Hershel', 'Aindrea', 'Trimmill', null, '9/20/2000', '945 Sheridan Crossing', 695);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (19, 12754870, 'Marnie', 'Maiga', 'Scritch', 'Gilvary', '12/1/1962', '947 Eagan Way', 1380);
+insert into Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar) values (20, 17705892, 'Julita', 'Roze', 'Jereatt', null, '2/28/1993', '42 Westridge Hill', 1159);
+
+-- 6. USUARIOS DE EMPLEADOS
+
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (1, 'jhatherleigh0', 'ctorbett0@yellowbook.com', 'jT7\ljkL', 'ACTIVO', '5/11/2026', 3, null, 1);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (2, 'dosgood1', 'hwhitcombe1@microsoft.com', 'xW2@rBQfB`V<', 'ACTIVO', '12/20/2020', 3, null, 2);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (3, 'dketchell2', 'gwhitworth2@loc.gov', 'bA9(7<2n`+i', 'INACTIVO', '2/14/2020', 1, null, 3);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (4, 'trummins3', 'clegrice3@homestead.com', 'fD7&zwUw!', 'ACTIVO', '4/25/2019', 2, null, 4);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (5, 'dpeschke4', 'llaurie4@imageshack.us', 'eM2!/#M5<#be.@', 'INACTIVO', '3/17/2021', 1, null, 5);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (6, 'dgiacubbo5', 'tbarwick5@amazon.de', 'qM8&,O"9', 'INACTIVO', '1/10/2018', 1, null, 6);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (7, 'kantonchik6', 'piddison6@springer.com', 'vE3&<C0=L+jZ', 'ACTIVO', '5/23/2022', 1, null, 7);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (8, 'mphayre7', 'mdrivers7@nydailynews.com', 'iA9&`wVe+H7', 'ACTIVO', '7/20/2024', 1, null, 8);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (9, 'gmynard8', 'jeagan8@rakuten.co.jp', 'nI2/$isK|', 'ACTIVO', '5/5/2019', 3, null, 9);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (10, 'bgenery9', 'mpeplow9@un.org', 'tE9){xzZri$2xu', 'INACTIVO', '5/15/2024', 2, null, 10);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (11, 'cdaybella', 'tmillotta@loc.gov', 'nL8!FFT1.@', 'INACTIVO', '6/14/2025', 3, null, 11);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (12, 'dlippattb', 'jodellb@dyndns.org', 'bW7>`b(@lG', 'INACTIVO', '11/11/2018', 1, null, 12);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (13, 'bsymcockc', 'msconcec@addtoany.com', 'xS4=ET!''', 'INACTIVO', '1/27/2023', 1, null, 13);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (14, 'blantiffd', 'ralend@discovery.com', 'oJ4(zcBK_S?K+j''H', 'ACTIVO', '7/1/2016', 3, null, 14);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (15, 'astormse', 'mmossone@dot.gov', 'kP0+mripg', 'INACTIVO', '7/20/2017', 3, null, 15);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (16, 'mondrusekf', 'cguirauf@woothemes.com', 'cA7>UW5Y', 'INACTIVO', '4/2/2020', 1, null, 16);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (17, 'fclenchg', 'bkyndg@myspace.com', 'hB1?Q$UID"#mi', 'INACTIVO', '11/27/2024', 1, null, 17);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (18, 'hbispoh', 'ahaslochh@quantcast.com', 'qF0''ZDQ,h$', 'ACTIVO', '10/13/2018', 2, null, 18);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (19, 'kgiottoii', 'ftomaszkiewiczi@over-blog.com', 'gK4=b)"xoq<}{\3', 'ACTIVO', '11/26/2022', 2, null, 19);
+insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Rol_idRol, ClienteNatural_idClienteNatural, Empleado_idEmpleado) values (20, 'nmcdermidj', 'nmassonj@taobao.com', 'lL2''mW5Q3Q5', 'INACTIVO', '12/7/2023', 2, null, 20);
+
+--------------------------------------------------------------------------------------------------
+-- 2. Talento Humano (15 Tablas)
+--------------------------------------------------------------------------------------------------
+
+
+-- CLASIFICACION HISTORICA
+
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (1, 'Vintage Era', 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (2, 'Mod Era', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (3, 'Malibu Era', 'Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (4, 'Superstar Era', 'Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (5, 'Collectible Era', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (6, 'Modern Era', 'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (7, 'Fashionistas Era', 'Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (8, 'Y2K Revival', 'Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (9, 'Silkstone Era', 'Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (10, 'Reproduction Era', 'Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (11, 'BMR1959', 'Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (12, 'Pre-Mattel Origin', 'Integer non velit.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (13, 'Anniversary Editions', 'Phasellus in felis. Donec semper sapien a libero. Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (14, 'Holiday Editions', 'Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
+insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (15, 'Pop Culture Era', 'Nunc purus.');
+
+-- CLASIFICACION DE EXCLUSIVIDAD
+
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (1, 'Playline', 'In hac habitasse platea dictumst.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (2, 'Pink Label', 'Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor. Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (3, 'Black Label', 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (4, 'Silver Label', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (5, 'Gold Label', 'Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (6, 'Platinum Label', 'Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (7, 'Direct Exclusive (Mattel Creations)', 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (8, 'Fan Club Exclusive (BFC)', 'Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (9, 'Convention Exclusive', 'Aliquam non mauris. Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (10, 'Store Exclusive (Target/Walmart)', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (11, 'Regional Exclusive (Europe/Asia)', 'In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (12, 'Limited Run', 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (13, 'OOAK (One of a Kind)', 'Nunc purus. Phasellus in felis. Donec semper sapien a libero. Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius. Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (14, 'Signature Collection', 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est. Phasellus sit amet erat.');
+insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (15, 'Employee Exclusive', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.');
+
+-- MOLDE DE ROSTRO
+
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (1, 'Millie', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam. Nam tristique tortor eu pede.', '1977-06-30');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (2, 'CEO / Generation Girl', 'In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.', '2008-12-10');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (3, 'Superstar', 'Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor. Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.', '1985-10-26');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (4, 'Mackie', 'Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor.', '2016-10-23');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (5, 'Neysa', 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.', '2021-01-03');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (6, 'Ken (Original)', 'Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante.', '2015-10-04');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (7, 'Ryan', 'Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.', '1960-11-01');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (8, 'Steffie', 'Etiam pretium iaculis justo.', '2006-11-07');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (9, 'Teresa', 'Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien.', '2009-08-28');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (10, 'Lea / Kayla', 'Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus.', '1967-07-30');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (11, 'Asha', 'Nullam varius. Nulla facilisi. Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.', '1985-11-05');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (12, 'Goddess / Angel', 'Nulla mollis molestie lorem.', '1990-06-16');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (13, 'Mbili', 'Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.', '1960-03-29');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (14, 'Lara', 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', '1977-06-19');
+insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (15, 'Karl', 'Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', '2017-06-28');
+
+-- TONO PIEL
+
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (1, 'Nostalgic (Pale)', '2025-07-07', 'Claro', 15);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (2, 'Neutra', '2025-09-11', 'Claro', 16);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (3, 'LA Tan', '2025-12-29', 'Medio', 53);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (4, 'Aphrodite', '2025-06-27', 'Oscuro', 13);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (5, 'Brooklyn', '2026-05-13', 'Oscuro', 22);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (6, 'Asha (Deep Brown)', '2026-03-11', 'Oscuro', 7);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (7, 'Mbili (Medium Brown)', '2025-11-12', 'Claro', 32);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (8, 'Pazette (Dark Brown)', '2026-06-06', 'Oscuro', 34);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (9, 'Mari (Olive)', '2026-05-29', 'Oscuro', 64);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (10, 'Lea (Light Tan)', '2026-01-14', 'Claro', 71);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (11, 'Kayla (Light Olive)', '2025-10-30', 'Medio', 14);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (12, 'Kira (Warm Tan)', '2026-02-26', 'Claro', 7);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (13, 'Teresa (Medium Tan)', '2025-10-31', 'Oscuro', 83);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (14, 'Porcelain', '2025-11-29', 'Claro', 68);
+insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (15, 'Fantasy (Blue/Green/Pink)', '2025-09-24', 'Claro', 54);
+
+-- TIPO DE DISEÑO
+
+insert into TipoDiseño (idTipoDiseño, nombre) values (1, 'Muñeca Articulada');
+insert into TipoDiseño (idTipoDiseño, nombre) values (2, 'Muñeca Estática');
+insert into TipoDiseño (idTipoDiseño, nombre) values (3, 'Playset (Escenario)');
+insert into TipoDiseño (idTipoDiseño, nombre) values (4, 'Vehículo Terrestre');
+insert into TipoDiseño (idTipoDiseño, nombre) values (5, 'Vehículo Acuático');
+insert into TipoDiseño (idTipoDiseño, nombre) values (6, 'Vehículo Aéreo');
+insert into TipoDiseño (idTipoDiseño, nombre) values (7, 'Prenda de Vestir (Ropa)');
+insert into TipoDiseño (idTipoDiseño, nombre) values (8, 'Accesorio Pequeño');
+insert into TipoDiseño (idTipoDiseño, nombre) values (9, 'Mascota / Animal');
+insert into TipoDiseño (idTipoDiseño, nombre) values (10, 'Casa de Muñecas');
+insert into TipoDiseño (idTipoDiseño, nombre) values (11, 'Dispositivo Electrónico (Toy)');
+insert into TipoDiseño (idTipoDiseño, nombre) values (12, 'Figura de Acción (Masculina)');
+insert into TipoDiseño (idTipoDiseño, nombre) values (13, 'Muebles a Escala');
+insert into TipoDiseño (idTipoDiseño, nombre) values (14, 'Juego de Construcción');
+insert into TipoDiseño (idTipoDiseño, nombre) values (15, 'Coleccionable Diorama');
+
+-- TIPO DE UBICACION STOCK
+
+
+
+
