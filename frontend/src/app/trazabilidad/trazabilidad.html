@@ -1,207 +1,25 @@
-<!-- trazabilidad content -->
-  <div class="max-w-6xl mx-auto p-10 flex flex-col gap-10 pb-12">
-
-    <div>
-      <h1 class="text-3xl font-extrabold text-on-background leading-tight">Trazabilidad</h1>
-      <div class="flex gap-8 border-b border-border-subtle mt-6">
-        <button class="pb-4 font-label-caps text-label-caps active-tab uppercase transition-colors" id="tab-motor" (click)="switchTab('motor')">Motor de Trazabilidad</button>
-        <button class="pb-4 font-label-caps text-label-caps text-on-surface-variant hover:text-industrial-maroon uppercase transition-colors" id="tab-reportes" (click)="switchTab('reportes')">Reportes Oficiales</button>
-      </div>
-    </div>
-
-    <div class="space-y-10" id="content-motor">
-
-      <section class="bg-white p-10 rounded-none border border-border-subtle shadow-sm">
-        <h3 class="text-lg font-bold text-on-surface mb-6">Ingresar Lote de Materia Prima</h3>
-        <div class="flex flex-col md:flex-row gap-4">
-          <div class="flex-1 relative">
-            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">barcode_scanner</span>
-            <input class="w-full pl-12 pr-4 py-4 bg-surface-muted border border-border-subtle focus:border-vibrant-pink focus:ring-0 rounded-none text-sm transition-all" placeholder="Ej: MAT-2024-POLY-882" type="text"/>
-          </div>
-          <button class="bg-industrial-maroon hover:bg-vibrant-pink text-white px-10 py-4 rounded-none text-[11px] font-black flex items-center justify-center gap-2 transition-all duration-300 uppercase tracking-widest">
-            <span>Ejecutar Análisis</span>
-            <span class="material-symbols-outlined text-[18px]">query_stats</span>
-          </button>
-        </div>
-        <p class="mt-4 text-xs text-on-surface-variant italic">Ingrese el identificador único del lote para rastrear su impacto en la cadena de producción global.</p>
-      </section>
-
-      <section class="bg-white rounded-none border border-border-subtle shadow-sm overflow-hidden">
-        <div class="p-6 border-b border-border-subtle flex justify-between items-center bg-surface-muted/30">
-          <h3 class="text-lg font-bold text-on-surface">Productos Terminados Afectados</h3>
-          <div class="relative">
-            <input class="bg-white border border-border-subtle rounded-none pl-8 pr-4 py-1.5 text-xs focus:border-vibrant-pink focus:ring-0" placeholder="Filtrar SKU..." type="text"/>
-            <span class="material-symbols-outlined absolute left-2 top-1.5 text-[16px] text-on-surface-variant">filter_list</span>
-          </div>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse">
-            <thead class="bg-surface-muted text-on-surface-variant font-label-caps text-[10px] uppercase">
-              <tr>
-                <th class="px-6 py-4 cursor-pointer hover:bg-border-subtle">SKU <span class="text-[8px]">▲▼</span></th>
-                <th class="px-6 py-4 cursor-pointer hover:bg-border-subtle">Nombre del Producto <span class="text-[8px]">▲▼</span></th>
-                <th class="px-6 py-4 cursor-pointer hover:bg-border-subtle">Lote Producción <span class="text-[8px]">▲▼</span></th>
-                <th class="px-6 py-4">Fecha de Ensamblaje</th>
-                <th class="px-6 py-4">Estado</th>
-                <th class="px-6 py-4 text-right">Acción</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-border-subtle">
-              <tr class="hover:bg-surface-muted/50 transition-colors">
-                <td class="px-6 py-4 font-mono text-[13px] font-semibold text-industrial-maroon">MTL-HGD-2024</td>
-                <td class="px-6 py-4 text-sm font-semibold">Barbie Signature Holiday 2024</td>
-                <td class="px-6 py-4 text-sm">PROD-X921</td>
-                <td class="px-6 py-4 text-sm text-on-surface-variant">12/03/2024</td>
-                <td class="px-6 py-4"><span class="px-2 py-1 bg-error-container text-on-error-container text-[10px] rounded font-bold uppercase">Cuarentena</span></td>
-                <td class="px-6 py-4 text-right"><button class="material-symbols-outlined text-vibrant-pink hover:scale-110 transition-transform">visibility</button></td>
-              </tr>
-              <tr class="hover:bg-surface-muted/50 transition-colors">
-                <td class="px-6 py-4 font-mono text-[13px] font-semibold text-industrial-maroon">HW-BTR-009</td>
-                <td class="px-6 py-4 text-sm font-semibold">Hot Wheels Batmobile Classic</td>
-                <td class="px-6 py-4 text-sm">PROD-X884</td>
-                <td class="px-6 py-4 text-sm text-on-surface-variant">10/03/2024</td>
-                <td class="px-6 py-4"><span class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed text-[10px] rounded font-bold uppercase">Despachado</span></td>
-                <td class="px-6 py-4 text-right"><button class="material-symbols-outlined text-vibrant-pink hover:scale-110 transition-transform">visibility</button></td>
-              </tr>
-              <tr class="hover:bg-surface-muted/50 transition-colors">
-                <td class="px-6 py-4 font-mono text-[13px] font-semibold text-industrial-maroon">FP-LTP-001</td>
-                <td class="px-6 py-4 text-sm font-semibold">Laugh &amp; Learn Smart Laptop</td>
-                <td class="px-6 py-4 text-sm">PROD-X110</td>
-                <td class="px-6 py-4 text-sm text-on-surface-variant">08/03/2024</td>
-                <td class="px-6 py-4"><span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] rounded font-bold uppercase">En Tránsito</span></td>
-                <td class="px-6 py-4 text-right"><button class="material-symbols-outlined text-vibrant-pink hover:scale-110 transition-transform">visibility</button></td>
-              </tr>
-              <tr class="hover:bg-surface-muted/50 transition-colors">
-                <td class="px-6 py-4 font-mono text-[13px] font-semibold text-industrial-maroon">MT-MOTU-S1</td>
-                <td class="px-6 py-4 text-sm font-semibold">He-Man Origins Action Figure</td>
-                <td class="px-6 py-4 text-sm">PROD-X442</td>
-                <td class="px-6 py-4 text-sm text-on-surface-variant">05/03/2024</td>
-                <td class="px-6 py-4"><span class="px-2 py-1 bg-error-container text-on-error-container text-[10px] rounded font-bold uppercase">Retenido</span></td>
-                <td class="px-6 py-4 text-right"><button class="material-symbols-outlined text-vibrant-pink hover:scale-110 transition-transform">visibility</button></td>
-              </tr>
-              <tr class="hover:bg-surface-muted/50 transition-colors">
-                <td class="px-6 py-4 font-mono text-[13px] font-semibold text-industrial-maroon">BL-GD-KIT</td>
-                <td class="px-6 py-4 text-sm font-semibold">Mega Bloks Garden Build Set</td>
-                <td class="px-6 py-4 text-sm">PROD-X219</td>
-                <td class="px-6 py-4 text-sm text-on-surface-variant">02/03/2024</td>
-                <td class="px-6 py-4"><span class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed text-[10px] rounded font-bold uppercase">Despachado</span></td>
-                <td class="px-6 py-4 text-right"><button class="material-symbols-outlined text-vibrant-pink hover:scale-110 transition-transform">visibility</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="p-6 bg-surface-muted flex flex-col md:flex-row justify-between items-center gap-4">
-          <span class="text-sm text-on-surface-variant">Mostrando 1-5 de 24 registros</span>
-          <div class="flex gap-1">
-            <button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-white hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
-            <button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-industrial-maroon text-white font-bold text-sm">1</button>
-            <button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-white hover:bg-surface-container transition-colors text-sm">2</button>
-            <button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-white hover:bg-surface-container transition-colors text-sm">3</button>
-            <button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-white hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <div class="grid grid-cols-1 gap-6" id="content-reportes">
-      <div class="bg-white p-8 rounded-none border border-border-subtle flex flex-col md:flex-row items-center justify-between gap-6 hover:border-vibrant-pink transition-all shadow-sm">
-        <div class="flex-1">
-          <h3 class="text-lg font-bold text-on-surface mb-1">Ocupación Logística</h3>
-          <p class="text-xs text-on-surface-variant mb-6">Análisis de Face Sculpt vs. Paletas en Almacén.</p>
-          <div class="flex flex-wrap gap-4">
-            <select class="bg-surface-muted border border-border-subtle focus:border-vibrant-pink focus:ring-0 rounded-none p-2 text-sm min-w-[200px]">
-              <option>Seleccionar Hub Regional</option>
-            </select>
-            <select class="bg-surface-muted border border-border-subtle focus:border-vibrant-pink focus:ring-0 rounded-none p-2 text-sm min-w-[200px]">
-              <option>Filtrar por Era Histórica</option>
-            </select>
-          </div>
-        </div>
-        <button class="bg-industrial-maroon hover:bg-vibrant-pink text-white px-8 py-3 rounded-none text-[11px] font-black flex items-center gap-2 transition-all duration-300 uppercase tracking-widest shrink-0">
-          <span class="material-symbols-outlined text-sm">picture_as_pdf</span>
-          Generar Reporte
-        </button>
-      </div>
-      <div class="bg-white p-8 rounded-none border border-border-subtle flex flex-col md:flex-row items-center justify-between gap-6 hover:border-vibrant-pink transition-all shadow-sm">
-        <div class="flex-1">
-          <h3 class="text-lg font-bold text-on-surface mb-1">Auditoría de Similitud BOM</h3>
-          <p class="text-xs text-on-surface-variant mb-6">Detección de genomas compartidos &gt; 80%.</p>
-          <div class="space-y-4 max-w-md">
-            <div class="relative">
-              <input class="w-full bg-surface-muted border border-border-subtle focus:border-vibrant-pink focus:ring-0 rounded-none p-2 pl-8 text-sm" placeholder="Ingresar SKU de referencia" type="text"/>
-              <span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-sm text-on-surface-variant">search</span>
-            </div>
-            <div class="bom-similitud-bar">
-              <div class="flex justify-between items-center gap-4 mb-3">
-                <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest flex items-center gap-1.5" for="bom-similitud-range">
-                  <span class="material-symbols-outlined text-base text-vibrant-pink" aria-hidden="true">percent</span>
-                  Umbral de similitud mínima
-                </label>
-                <div class="bom-similitud-value shrink-0" aria-live="polite">
-                  <span class="bom-similitud-value-number">{{ similitudPorcentaje }}</span>
-                  <span class="bom-similitud-value-symbol">%</span>
-                </div>
-              </div>
-              <div class="relative">
-                <div class="bom-similitud-track" aria-hidden="true">
-                  <div class="bom-similitud-fill" [style.width.%]="similitudPorcentaje"></div>
-                </div>
-                <input
-                  id="bom-similitud-range"
-                  class="bom-similitud-slider"
-                  type="range"
-                  min="0"
-                  max="100"
-                  step="1"
-                  [value]="similitudPorcentaje"
-                  (input)="similitudPorcentaje = +$any($event.target).value"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  [attr.aria-valuenow]="similitudPorcentaje"
-                  aria-valuetext="{{ similitudPorcentaje }} por ciento"
-                />
-                <div
-                  class="bom-similitud-thumb"
-                  [style.left.%]="similitudPorcentaje"
-                  aria-hidden="true"
-                ></div>
-              </div>
-              <div class="bom-similitud-scale" aria-hidden="true">
-                <span [class.active]="similitudPorcentaje === 0">0%</span>
-                <span [class.active]="similitudPorcentaje === 25">25%</span>
-                <span [class.active]="similitudPorcentaje === 50">50%</span>
-                <span [class.active]="similitudPorcentaje === 75">75%</span>
-                <span [class.active]="similitudPorcentaje === 100">100%</span>
-              </div>
-              <p class="mt-2 text-[10px] text-on-surface-variant italic">Arrastre la barra para definir el porcentaje mínimo de coincidencia BOM.</p>
-            </div>
-          </div>
-        </div>
-        <button class="bg-industrial-maroon hover:bg-vibrant-pink text-white px-8 py-3 rounded-none text-[11px] font-black flex items-center gap-2 transition-all duration-300 uppercase tracking-widest shrink-0">
-          <span class="material-symbols-outlined text-sm">picture_as_pdf</span>
-          Generar Reporte
-        </button>
-      </div>
-      <div class="bg-white p-8 rounded-none border border-border-subtle flex flex-col md:flex-row items-center justify-between gap-6 hover:border-vibrant-pink transition-all shadow-sm">
-        <div class="flex-1">
-          <h3 class="text-lg font-bold text-on-surface mb-1">Control de Taxonomía Incompleta</h3>
-          <p class="text-xs text-on-surface-variant mb-6">Detección de SKUs con atributos de diseño faltantes.</p>
-          <div class="flex flex-wrap items-center gap-6">
-            <select class="bg-surface-muted border border-border-subtle focus:border-vibrant-pink focus:ring-0 rounded-none p-2 text-sm min-w-[200px]">
-              <option>Seleccionar Lote de Producción</option>
-            </select>
-            <label class="flex items-center gap-2 cursor-pointer">
-              <input checked class="rounded text-vibrant-pink focus:ring-vibrant-pink border-border-subtle" type="checkbox"/>
-              <span class="text-xs text-on-surface">Auditar solo lotes en tránsito logístico</span>
-            </label>
-          </div>
-        </div>
-        <button class="bg-industrial-maroon hover:bg-vibrant-pink text-white px-8 py-3 rounded-none text-[11px] font-black flex items-center gap-2 transition-all duration-300 uppercase tracking-widest shrink-0">
-          <span class="material-symbols-outlined text-sm">picture_as_pdf</span>
-          Generar Reporte
-        </button>
-      </div>
-    </div>
-
+<div class="max-w-6xl mx-auto p-10 flex flex-col gap-10 pb-12">
+  <div>
+    <h1 class="text-3xl font-extrabold text-on-background leading-tight">Trazabilidad</h1>
+    <nav class="flex gap-8 border-b border-border-subtle mt-6" aria-label="Secciones de trazabilidad">
+      <a
+        routerLink="motor"
+        routerLinkActive="active-tab"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="trazabilidad-tab pb-4 font-label-caps text-label-caps uppercase transition-colors"
+      >
+        Motor de Trazabilidad
+      </a>
+      <a
+        routerLink="reportes"
+        routerLinkActive="active-tab"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="trazabilidad-tab pb-4 font-label-caps text-label-caps uppercase transition-colors"
+      >
+        Reportes Oficiales
+      </a>
+    </nav>
   </div>
-<!-- end trazabilidad content -->
+
+  <router-outlet />
+</div>

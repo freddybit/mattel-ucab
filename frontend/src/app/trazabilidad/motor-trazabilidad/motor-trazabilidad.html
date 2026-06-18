@@ -1,0 +1,92 @@
+<div class="space-y-10">
+  <section class="bg-white p-10 rounded-none border border-border-subtle shadow-sm">
+    <h3 class="text-lg font-bold text-on-surface mb-6">Ingresar Lote de Materia Prima</h3>
+    <div class="flex flex-col md:flex-row gap-4">
+      <div class="flex-1 relative">
+        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">barcode_scanner</span>
+        <input class="w-full pl-12 pr-4 py-4 bg-surface-muted border border-border-subtle focus:border-vibrant-pink focus:ring-0 rounded-none text-sm transition-all" placeholder="Ej: MAT-2026-POLY-882" type="text"/>
+      </div>
+      <button class="bg-industrial-maroon hover:bg-vibrant-pink text-white px-10 py-4 rounded-none text-[11px] font-black flex items-center justify-center gap-2 transition-all duration-300 uppercase tracking-widest">
+        <span>Ejecutar Análisis</span>
+        <span class="material-symbols-outlined text-[18px]">query_stats</span>
+      </button>
+    </div>
+    <p class="mt-4 text-xs text-on-surface-variant italic">Ingrese el identificador único del lote para rastrear su impacto en la cadena de producción global.</p>
+  </section>
+
+  <section class="bg-white rounded-none border border-border-subtle shadow-sm overflow-hidden">
+    <div class="p-6 border-b border-border-subtle flex justify-between items-center bg-surface-muted/30">
+      <h3 class="text-lg font-bold text-on-surface">Productos Terminados Afectados</h3>
+      <div class="relative">
+        <input class="bg-white border border-border-subtle rounded-none pl-8 pr-4 py-1.5 text-xs focus:border-vibrant-pink focus:ring-0" placeholder="Filtrar SKU..." type="text"/>
+        <span class="material-symbols-outlined absolute left-2 top-1.5 text-[16px] text-on-surface-variant">filter_list</span>
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-surface-muted text-on-surface-variant font-label-caps text-[10px] uppercase">
+          <tr>
+            <th class="px-6 py-4 cursor-pointer hover:bg-border-subtle">SKU <span class="text-[8px]">▲▼</span></th>
+            <th class="px-6 py-4 cursor-pointer hover:bg-border-subtle">Nombre del Producto <span class="text-[8px]">▲▼</span></th>
+            <th class="px-6 py-4 cursor-pointer hover:bg-border-subtle">Lote Producción <span class="text-[8px]">▲▼</span></th>
+            <th class="px-6 py-4">Fecha de Ensamblaje</th>
+            <th class="px-6 py-4">Estado</th>
+            <th class="px-6 py-4 text-right">Acción</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border-subtle">
+          <tr class="hover:bg-surface-muted/50 transition-colors">
+            <td class="px-6 py-4 font-mono text-[13px] font-semibold text-industrial-maroon">MTL-HGD-2026</td>
+            <td class="px-6 py-4 text-sm font-semibold">Barbie Signature Holiday 2026</td>
+            <td class="px-6 py-4 text-sm">PROD-X921</td>
+            <td class="px-6 py-4 text-sm text-on-surface-variant">18/06/2026</td>
+            <td class="px-6 py-4"><span class="px-2 py-1 bg-error-container text-on-error-container text-[10px] rounded font-bold uppercase">Cuarentena</span></td>
+            <td class="px-6 py-4 text-right"><button class="material-symbols-outlined text-vibrant-pink hover:scale-110 transition-transform">visibility</button></td>
+          </tr>
+          <tr class="hover:bg-surface-muted/50 transition-colors">
+            <td class="px-6 py-4 font-mono text-[13px] font-semibold text-industrial-maroon">HW-BTR-009</td>
+            <td class="px-6 py-4 text-sm font-semibold">Hot Wheels Batmobile Classic</td>
+            <td class="px-6 py-4 text-sm">PROD-X884</td>
+            <td class="px-6 py-4 text-sm text-on-surface-variant">15/06/2026</td>
+            <td class="px-6 py-4"><span class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed text-[10px] rounded font-bold uppercase">Despachado</span></td>
+            <td class="px-6 py-4 text-right"><button class="material-symbols-outlined text-vibrant-pink hover:scale-110 transition-transform">visibility</button></td>
+          </tr>
+          <tr class="hover:bg-surface-muted/50 transition-colors">
+            <td class="px-6 py-4 font-mono text-[13px] font-semibold text-industrial-maroon">FP-LTP-001</td>
+            <td class="px-6 py-4 text-sm font-semibold">Laugh &amp; Learn Smart Laptop</td>
+            <td class="px-6 py-4 text-sm">PROD-X110</td>
+            <td class="px-6 py-4 text-sm text-on-surface-variant">12/06/2026</td>
+            <td class="px-6 py-4"><span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] rounded font-bold uppercase">En Tránsito</span></td>
+            <td class="px-6 py-4 text-right"><button class="material-symbols-outlined text-vibrant-pink hover:scale-110 transition-transform">visibility</button></td>
+          </tr>
+          <tr class="hover:bg-surface-muted/50 transition-colors">
+            <td class="px-6 py-4 font-mono text-[13px] font-semibold text-industrial-maroon">MT-MOTU-S1</td>
+            <td class="px-6 py-4 text-sm font-semibold">He-Man Origins Action Figure</td>
+            <td class="px-6 py-4 text-sm">PROD-X442</td>
+            <td class="px-6 py-4 text-sm text-on-surface-variant">10/06/2026</td>
+            <td class="px-6 py-4"><span class="px-2 py-1 bg-error-container text-on-error-container text-[10px] rounded font-bold uppercase">Retenido</span></td>
+            <td class="px-6 py-4 text-right"><button class="material-symbols-outlined text-vibrant-pink hover:scale-110 transition-transform">visibility</button></td>
+          </tr>
+          <tr class="hover:bg-surface-muted/50 transition-colors">
+            <td class="px-6 py-4 font-mono text-[13px] font-semibold text-industrial-maroon">BL-GD-KIT</td>
+            <td class="px-6 py-4 text-sm font-semibold">Mega Bloks Garden Build Set</td>
+            <td class="px-6 py-4 text-sm">PROD-X219</td>
+            <td class="px-6 py-4 text-sm text-on-surface-variant">08/06/2026</td>
+            <td class="px-6 py-4"><span class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed text-[10px] rounded font-bold uppercase">Despachado</span></td>
+            <td class="px-6 py-4 text-right"><button class="material-symbols-outlined text-vibrant-pink hover:scale-110 transition-transform">visibility</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="p-6 bg-surface-muted flex flex-col md:flex-row justify-between items-center gap-4">
+      <span class="text-sm text-on-surface-variant">Mostrando 1-5 de 24 registros</span>
+      <div class="flex gap-1">
+        <button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-white hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+        <button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-industrial-maroon text-white font-bold text-sm">1</button>
+        <button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-white hover:bg-surface-container transition-colors text-sm">2</button>
+        <button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-white hover:bg-surface-container transition-colors text-sm">3</button>
+        <button class="w-8 h-8 flex items-center justify-center border border-border-subtle bg-white hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+      </div>
+    </div>
+  </section>
+</div>

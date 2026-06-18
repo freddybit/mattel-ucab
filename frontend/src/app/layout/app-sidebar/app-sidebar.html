@@ -2,11 +2,11 @@
 
   <div class="px-8 py-5 flex items-center gap-4 border-b border-white/5 shrink-0">
     <div class="w-10 h-10 bg-white/10 rounded flex items-center justify-center shrink-0">
-      <span class="material-symbols-outlined text-white/40">close</span>
+      <span class="material-symbols-outlined text-white/60">person</span>
     </div>
     <div>
-      <p class="text-[11px] font-bold text-white uppercase tracking-wider">DLS-ADMIN</p>
-      <p class="text-[9px] text-slate-400 font-medium">V1.0.4-BLUEPRINT</p>
+      <p class="text-[11px] font-bold text-white uppercase tracking-wider">MattelUCAB PLM</p>
+      <p class="text-[9px] text-slate-400 font-medium">{{ userName }}</p>
     </div>
   </div>
 
@@ -19,6 +19,18 @@
       <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">settings_input_component</span>
       <span class="text-[11px] font-bold uppercase tracking-widest">Ingeniería</span>
     </a>
+    <a routerLink="/trazabilidad" [class]="linkClass('trazabilidad')">
+      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">history</span>
+      <span class="text-[11px] font-bold uppercase tracking-widest">Trazabilidad</span>
+    </a>
+    <a routerLink="/personal" [class]="linkClass('personal')">
+      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">badge</span>
+      <span class="text-[11px] font-bold uppercase tracking-widest">Personal</span>
+    </a>
+    <a routerLink="/seguridad" [class]="linkClass('seguridad')">
+      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">security</span>
+      <span class="text-[11px] font-bold uppercase tracking-widest">Seguridad</span>
+    </a>
     <a href="#" (click)="$event.preventDefault()" [class]="linkClass('almacen')">
       <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">inventory_2</span>
       <span class="text-[11px] font-bold uppercase tracking-widest">Almacén</span>
@@ -27,22 +39,10 @@
       <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">account_balance_wallet</span>
       <span class="text-[11px] font-bold uppercase tracking-widest">Finanzas B2B</span>
     </a>
-    <a href="#" (click)="$event.preventDefault()" [class]="linkClass('personal')">
-      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">badge</span>
-      <span class="text-[11px] font-bold uppercase tracking-widest">Personal</span>
-    </a>
-    <a href="#" (click)="$event.preventDefault()" [class]="linkClass('configuracion')">
-      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">settings</span>
-      <span class="text-[11px] font-bold uppercase tracking-widest">Configuración</span>
-    </a>
-    <a routerLink="/trazabilidad" [class]="linkClass('trazabilidad')">
-      <span class="material-symbols-outlined text-xl group-hover:text-vibrant-pink">history</span>
-      <span class="text-[11px] font-bold uppercase tracking-widest">Trazabilidad</span>
-    </a>
   </nav>
 
   <div class="shrink-0 pb-6 border-t border-white/5 pt-4 bg-[#11112D]">
-    <a href="#" (click)="$event.preventDefault()" class="flex items-center gap-4 px-8 py-3 text-slate-500 hover:text-red-500 transition-all duration-200">
+    <a routerLink="/" class="flex items-center gap-4 px-8 py-3 text-slate-500 hover:text-red-500 transition-all duration-200">
       <span class="material-symbols-outlined text-lg">logout</span>
       <span class="text-[10px] uppercase font-bold tracking-widest">Salir</span>
     </a>

@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './dashboard.html',
-  styleUrl: '../layout/layout.css',
+  styleUrls: ['../layout/layout.css'],
+  styles: [':host { display: block; }'],
 })
 export class Dashboard {}
