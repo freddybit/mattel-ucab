@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './ingenieria.html',
-  styleUrl: '../layout/layout.css',
+  styleUrls: ['../layout/layout.css'],
+  styles: [':host { display: block; }'],
 })
 export class Ingenieria {}

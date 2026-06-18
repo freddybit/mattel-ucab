@@ -1,0 +1,101 @@
+<div class="grid grid-cols-1 gap-6">
+  <div class="bg-white p-8 rounded-none border border-border-subtle flex flex-col md:flex-row items-center justify-between gap-6 hover:border-vibrant-pink transition-all shadow-sm">
+    <div class="flex-1">
+      <h3 class="text-lg font-bold text-on-surface mb-1">Ocupación Logística</h3>
+      <p class="text-xs text-on-surface-variant mb-6">Análisis de Face Sculpt vs. Paletas en Almacén.</p>
+      <div class="flex flex-wrap gap-4">
+        <select class="bg-surface-muted border border-border-subtle focus:border-vibrant-pink focus:ring-0 rounded-none p-2 text-sm min-w-[200px]">
+          <option>Seleccionar Hub Regional</option>
+        </select>
+        <select class="bg-surface-muted border border-border-subtle focus:border-vibrant-pink focus:ring-0 rounded-none p-2 text-sm min-w-[200px]">
+          <option>Filtrar por Era Histórica</option>
+        </select>
+      </div>
+    </div>
+    <button class="bg-industrial-maroon hover:bg-vibrant-pink text-white px-8 py-3 rounded-none text-[11px] font-black flex items-center gap-2 transition-all duration-300 uppercase tracking-widest shrink-0">
+      <span class="material-symbols-outlined text-sm">picture_as_pdf</span>
+      Generar Reporte
+    </button>
+  </div>
+
+  <div class="bg-white p-8 rounded-none border border-border-subtle flex flex-col md:flex-row items-center justify-between gap-6 hover:border-vibrant-pink transition-all shadow-sm">
+    <div class="flex-1">
+      <h3 class="text-lg font-bold text-on-surface mb-1">Auditoría de Similitud BOM</h3>
+      <p class="text-xs text-on-surface-variant mb-6">Detección de genomas compartidos &gt; 80%.</p>
+      <div class="space-y-4 max-w-md">
+        <div class="relative">
+          <input class="w-full bg-surface-muted border border-border-subtle focus:border-vibrant-pink focus:ring-0 rounded-none p-2 pl-8 text-sm" placeholder="Ingresar SKU de referencia" type="text"/>
+          <span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-sm text-on-surface-variant">search</span>
+        </div>
+        <div class="bom-similitud-bar">
+          <div class="flex justify-between items-center gap-4 mb-3">
+            <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest flex items-center gap-1.5" for="bom-similitud-range">
+              <span class="material-symbols-outlined text-base text-vibrant-pink" aria-hidden="true">percent</span>
+              Umbral de similitud mínima
+            </label>
+            <div class="bom-similitud-value shrink-0" aria-live="polite">
+              <span class="bom-similitud-value-number">{{ similitudPorcentaje }}</span>
+              <span class="bom-similitud-value-symbol">%</span>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="bom-similitud-track" aria-hidden="true">
+              <div class="bom-similitud-fill" [style.width.%]="similitudPorcentaje"></div>
+            </div>
+            <input
+              id="bom-similitud-range"
+              class="bom-similitud-slider"
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              [value]="similitudPorcentaje"
+              (input)="similitudPorcentaje = +$any($event.target).value"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [attr.aria-valuenow]="similitudPorcentaje"
+              aria-valuetext="{{ similitudPorcentaje }} por ciento"
+            />
+            <div
+              class="bom-similitud-thumb"
+              [style.left.%]="similitudPorcentaje"
+              aria-hidden="true"
+            ></div>
+          </div>
+          <div class="bom-similitud-scale" aria-hidden="true">
+            <span [class.active]="similitudPorcentaje === 0">0%</span>
+            <span [class.active]="similitudPorcentaje === 25">25%</span>
+            <span [class.active]="similitudPorcentaje === 50">50%</span>
+            <span [class.active]="similitudPorcentaje === 75">75%</span>
+            <span [class.active]="similitudPorcentaje === 100">100%</span>
+          </div>
+          <p class="mt-2 text-[10px] text-on-surface-variant italic">Arrastre la barra para definir el porcentaje mínimo de coincidencia BOM.</p>
+        </div>
+      </div>
+    </div>
+    <button class="bg-industrial-maroon hover:bg-vibrant-pink text-white px-8 py-3 rounded-none text-[11px] font-black flex items-center gap-2 transition-all duration-300 uppercase tracking-widest shrink-0">
+      <span class="material-symbols-outlined text-sm">picture_as_pdf</span>
+      Generar Reporte
+    </button>
+  </div>
+
+  <div class="bg-white p-8 rounded-none border border-border-subtle flex flex-col md:flex-row items-center justify-between gap-6 hover:border-vibrant-pink transition-all shadow-sm">
+    <div class="flex-1">
+      <h3 class="text-lg font-bold text-on-surface mb-1">Control de Taxonomía Incompleta</h3>
+      <p class="text-xs text-on-surface-variant mb-6">Detección de SKUs con atributos de diseño faltantes.</p>
+      <div class="flex flex-wrap items-center gap-6">
+        <select class="bg-surface-muted border border-border-subtle focus:border-vibrant-pink focus:ring-0 rounded-none p-2 text-sm min-w-[200px]">
+          <option>Seleccionar Lote de Producción</option>
+        </select>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input checked class="rounded text-vibrant-pink focus:ring-vibrant-pink border-border-subtle" type="checkbox"/>
+          <span class="text-xs text-on-surface">Auditar solo lotes en tránsito logístico</span>
+        </label>
+      </div>
+    </div>
+    <button class="bg-industrial-maroon hover:bg-vibrant-pink text-white px-8 py-3 rounded-none text-[11px] font-black flex items-center gap-2 transition-all duration-300 uppercase tracking-widest shrink-0">
+      <span class="material-symbols-outlined text-sm">picture_as_pdf</span>
+      Generar Reporte
+    </button>
+  </div>
+</div>

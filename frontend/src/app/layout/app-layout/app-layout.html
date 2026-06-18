@@ -2,7 +2,7 @@
 
 <div class="ml-[260px] h-screen flex flex-col bg-surface-muted text-on-surface">
   <app-header />
-  <main [class]="mainClasses" class="flex-1 min-h-0">
+  <main #mainContainer [class]="mainClasses" class="flex-1 min-h-0">
     <router-outlet />
   </main>
 </div>

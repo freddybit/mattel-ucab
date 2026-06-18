@@ -1,14 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 export type SidebarItem =
   | 'dashboard'
   | 'ingenieria'
-  | 'almacen'
-  | 'finanzas'
+  | 'trazabilidad'
   | 'personal'
-  | 'configuracion'
-  | 'trazabilidad';
+  | 'seguridad'
+  | 'almacen'
+  | 'finanzas';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,6 +19,12 @@ export type SidebarItem =
 })
 export class AppSidebar {
   @Input() activeItem: SidebarItem = 'dashboard';
+
+  userName: string;
+
+  constructor(private userService: UserService) {
+    this.userName = this.userService.getUser().name;
+  }
 
   isActive(item: SidebarItem): boolean {
     return this.activeItem === item;
