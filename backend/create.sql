@@ -748,16 +748,14 @@ CREATE TABLE Restriccion (
 );
 
 CREATE TABLE RestriccionDiseño (
-     idRestriccion             NUMERIC  NOT NULL UNIQUE,
+     idRestriccionDiseño       NUMERIC  NOT NULL UNIQUE,
      nombre                    VARCHAR(150)  NOT NULL ,
      descripcion               VARCHAR(600)  NOT NULL ,
      Diseño_idDiseño           NUMERIC  NOT NULL ,
      Restriccion_idRestriccion NUMERIC  NOT NULL ,
      TipoCuerpo_idTipoCuerpo   NUMERIC  NOT NULL,
-     RestriccionDiseño_idRestriccion NUMERIC NOT NULL,
-     RestriccionDiseño_idDiseño NUMERIC NOT NULL,
 
-    CONSTRAINT pk_restriccion_diseño_01 PRIMARY KEY (idRestriccion, Diseño_idDiseño)
+    CONSTRAINT pk_restriccion_diseño_01 PRIMARY KEY (idRestriccionDiseño, Diseño_idDiseño)
 );
 
 CREATE TABLE Rol (

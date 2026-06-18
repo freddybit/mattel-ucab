@@ -1,0 +1,15 @@
+insert into Color (idColor, codigoHexadecimal, nombre) values (1, '#E0218A', 'Barbie Pink');
+insert into Color (idColor, codigoHexadecimal, nombre) values (2, '#FF1493', 'Hot Pink');
+insert into Color (idColor, codigoHexadecimal, nombre) values (3, '#FFB6C1', 'Pastel Pink');
+insert into Color (idColor, codigoHexadecimal, nombre) values (4, '#00FFFF', 'Cyan');
+insert into Color (idColor, codigoHexadecimal, nombre) values (5, '#FF00FF', 'Magenta');
+insert into Color (idColor, codigoHexadecimal, nombre) values (6, '#32CD32', 'Lime Green');
+insert into Color (idColor, codigoHexadecimal, nombre) values (7, '#E6E6FA', 'Lavender');
+insert into Color (idColor, codigoHexadecimal, nombre) values (8, '#EE82EE', 'Violet');
+insert into Color (idColor, codigoHexadecimal, nombre) values (9, '#98FF98', 'Mint');
+insert into Color (idColor, codigoHexadecimal, nombre) values (10, '#FFD700', 'Gold');
+insert into Color (idColor, codigoHexadecimal, nombre) values (11, '#C0C0C0', 'Silver');
+insert into Color (idColor, codigoHexadecimal, nombre) values (12, '#B76E79', 'Rose Gold');
+insert into Color (idColor, codigoHexadecimal, nombre) values (13, '#F3E5AB', 'Pearlescent White');
+insert into Color (idColor, codigoHexadecimal, nombre) values (14, '#0F0F0F', 'Onyx Black');
+insert into Color (idColor, codigoHexadecimal, nombre) values (15, '#FFFFFF', 'Clear Translucent');

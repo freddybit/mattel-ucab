@@ -1,0 +1,15 @@
+insert into TipoPieza (idTipoPieza, nombre) values (1, 'Cabeza');
+insert into TipoPieza (idTipoPieza, nombre) values (2, 'Torso Superior');
+insert into TipoPieza (idTipoPieza, nombre) values (3, 'Torso Inferior');
+insert into TipoPieza (idTipoPieza, nombre) values (4, 'Brazo Izquierdo');
+insert into TipoPieza (idTipoPieza, nombre) values (5, 'Brazo Derecho');
+insert into TipoPieza (idTipoPieza, nombre) values (6, 'Pierna Izquierda');
+insert into TipoPieza (idTipoPieza, nombre) values (7, 'Pierna Derecha');
+insert into TipoPieza (idTipoPieza, nombre) values (8, 'Articulación Hombro');
+insert into TipoPieza (idTipoPieza, nombre) values (9, 'Articulación Rodilla');
+insert into TipoPieza (idTipoPieza, nombre) values (10, 'Cabello');
+insert into TipoPieza (idTipoPieza, nombre) values (11, 'Ojos (Insert)');
+insert into TipoPieza (idTipoPieza, nombre) values (12, 'Mano Izquierda');
+insert into TipoPieza (idTipoPieza, nombre) values (13, 'Mano Derecha');
+insert into TipoPieza (idTipoPieza, nombre) values (14, 'Pie Izquierdo');
+insert into TipoPieza (idTipoPieza, nombre) values (15, 'Pie Derecho');

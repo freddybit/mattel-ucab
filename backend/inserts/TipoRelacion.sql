@@ -1,0 +1,15 @@
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (1, 'Hermana Mayor', 1, 2);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (2, 'Hermana Menor', 3, 4);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (3, 'Novio', 5, 6);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (4, 'Ex-Novio', 7, 8);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (5, 'Mejor Amiga', 9, 10);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (6, 'Prima', 11, 12);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (7, 'Mascota', 13, 14);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (8, 'Enemiga/Rival', 15, 1);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (9, 'Compañera de Banda', 2, 3);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (10, 'Compañera de Trabajo', 4, 5);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (11, 'Alumno/Estudiante', 6, 7);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (12, 'Maestro/Mentor', 8, 9);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (13, 'Hermano Menor', 10, 11);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (14, 'Aliado Mágico', 12, 13);
+insert into TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) values (15, 'Clon/Variante', 14, 15);

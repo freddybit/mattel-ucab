@@ -131,7 +131,6 @@ ALTER TABLE Puja ADD CONSTRAINT Puja_Subasta_FK FOREIGN KEY ( Subasta_idSubasta 
 
 ALTER TABLE RestriccionDiseño ADD CONSTRAINT RestriccionDiseño_Diseño_FK FOREIGN KEY ( Diseño_idDiseño ) REFERENCES Diseño ( idDiseño );
 ALTER TABLE RestriccionDiseño ADD CONSTRAINT RestriccionDiseño_Restriccion_FK FOREIGN KEY ( Restriccion_idRestriccion ) REFERENCES Restriccion ( idRestriccion );
-ALTER TABLE RestriccionDiseño ADD CONSTRAINT RestriccionDiseño_RestriccionDiseño_FK FOREIGN KEY ( RestriccionDiseño_idRestriccion, RestriccionDiseño_idDiseño ) REFERENCES RestriccionDiseño ( idRestriccion, Diseño_idDiseño );
 ALTER TABLE RestriccionDiseño ADD CONSTRAINT RestriccionDiseño_TipoCuerpo_FK FOREIGN KEY ( TipoCuerpo_idTipoCuerpo ) REFERENCES TipoCuerpo ( idTipoCuerpo );
 
 ALTER TABLE RolPermiso ADD CONSTRAINT RolPermiso_Rol_FK FOREIGN KEY ( Rol_idRol ) REFERENCES Rol ( idRol );

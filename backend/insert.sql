@@ -1631,7 +1631,7 @@ insert into Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, e
 -- 2. Talento Humano (15 Tablas)
 --------------------------------------------------------------------------------------------------
 
-
+--------------------------------------------------------------------------------------------------
 -- CLASIFICACION HISTORICA
 
 insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (1, 'Vintage Era', 'Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.');
@@ -1650,6 +1650,7 @@ insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcio
 insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (14, 'Holiday Editions', 'Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.');
 insert into ClasificacionHistorica (idClasificacionHistorica, nombre, descripcion) values (15, 'Pop Culture Era', 'Nunc purus.');
 
+--------------------------------------------------------------------------------------------------
 -- CLASIFICACION DE EXCLUSIVIDAD
 
 insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (1, 'Playline', 'In hac habitasse platea dictumst.');
@@ -1668,6 +1669,7 @@ insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, desc
 insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (14, 'Signature Collection', 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est. Phasellus sit amet erat.');
 insert into ClasificacionExclusividad (idClasificacionExclusividad, nombre, descripcion) values (15, 'Employee Exclusive', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.');
 
+--------------------------------------------------------------------------------------------------
 -- MOLDE DE ROSTRO
 
 insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (1, 'Millie', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam. Nam tristique tortor eu pede.', '1977-06-30');
@@ -1686,6 +1688,7 @@ insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values
 insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (14, 'Lara', 'Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.', '1977-06-19');
 insert into MoldeRostro (idMoldeRostro, nombre, descripcion, añoPatente) values (15, 'Karl', 'Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', '2017-06-28');
 
+--------------------------------------------------------------------------------------------------
 -- TONO PIEL
 
 insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (1, 'Nostalgic (Pale)', '2025-07-07', 'Claro', 15);
@@ -1704,6 +1707,7 @@ insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, lumi
 insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (14, 'Porcelain', '2025-11-29', 'Claro', 68);
 insert into TonoPiel (idTonoPiel, nombre, escalaFitzpatrick, valorClaridad, luminosidad) values (15, 'Fantasy (Blue/Green/Pink)', '2025-09-24', 'Claro', 54);
 
+--------------------------------------------------------------------------------------------------
 -- TIPO DE DISEÑO
 
 insert into TipoDiseño (idTipoDiseño, nombre) values (1, 'Muñeca Articulada');
@@ -1722,8 +1726,530 @@ insert into TipoDiseño (idTipoDiseño, nombre) values (13, 'Muebles a Escala');
 insert into TipoDiseño (idTipoDiseño, nombre) values (14, 'Juego de Construcción');
 insert into TipoDiseño (idTipoDiseño, nombre) values (15, 'Coleccionable Diorama');
 
--- TIPO DE UBICACION STOCK
+--------------------------------------------------------------------------------------------------
+-- DISEÑO
+
+TRUNCATE TABLE diseño CASCADE;
+
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (1, 'Barbie Original 1959 (Bathing Suit)', 'Primera edición histórica. Muñeca con traje de baño a rayas blancas y negras, gafas de sol y zapatos abiertos.', 14, 7, 9, 6, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (2, 'Barbie Malibu 1971', 'La icónica muñeca de playa con piel bronceada, cabello rubio liso y traje de baño azul celeste.', 1, 8, 11, 6, 6, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (3, 'Barbie Totally Hair 1992', 'La muñeca más vendida de la historia, caracterizada por su cabello hasta los tobillos y minivestido psicodélico.', 8, 6, 2, 11, 3, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (4, 'Barbie Peaches ''n Cream 1984', 'Edición clásica de los 80s con un elegante vestido de gala color durazno y accesorios a juego.', 4, 1, 1, 2, 12, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (5, 'Ken Original 1961', 'Primer modelo del novio de Barbie, con traje de baño rojo, toalla amarilla y sandalias.', 8, 2, 6, 5, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (6, 'Barbie Dreamhouse Playset (3 Pisos)', 'Estructura modular de casa de muñecas con ascensor funcional, piscina y accesorios de mobiliario.', 10, 15, 9, 12, 14, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (7, 'Barbie Holiday 2021 (Gold Dress)', 'Edición especial de Navidad con un espectacular vestido metálico dorado y detalles de pedrería.', 3, 11, 6, 1, 13, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (8, 'Barbie Inspiring Women: Frida Kahlo', 'Figura coleccionable que rinde homenaje a la icónica pintora mexicana con vestuario tradicional.', 15, 11, 1, 1, 3, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (9, 'Barbie Fashionistas #144 (Vitíligo)', 'Muñeca de la línea inclusiva Fashionistas que presenta vitíligo, fomentando la diversidad corporal.', 5, 10, 5, 9, 11, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (10, 'Barbie Color Reveal (Serie Sirena)', 'Innovador concepto de empaque ciego donde la muñeca revela su diseño al sumergirse en agua tibia.', 6, 7, 1, 4, 13, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (11, 'Barbie Camper RV 3-en-1', 'Vehículo recreativo transformable que se abre para revelar múltiples áreas de juego y una barca.', 12, 9, 15, 9, 11, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (12, 'Barbie Extra #1 (Abrigo Arcoíris)', 'Línea de moda urbana exagerada, incluye mascota cerdito y múltiples accesorios brillantes.', 3, 7, 8, 8, 9, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (13, 'Skipper Babysitters Inc. Playset', 'Set de juego que incluye a la hermana menor Skipper, un bebé y accesorios para el cuidado infantil.', 15, 1, 6, 5, 13, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (14, 'Barbie Dia de Muertos 2022', 'Edición de coleccionista con maquillaje de calavera tradicional y vestido bordado floral premium.', 14, 8, 11, 7, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (15, 'Ken Fashionistas #152 (Silla de Ruedas)', 'Muñeco Ken de la línea inclusiva, equipado con una silla de ruedas funcional y rampa.', 6, 7, 2, 14, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (16, 'Barbie Astronauta 1965', 'Histórico diseño lanzado cuatro años antes de que el hombre llegara a la luna. Traje espacial plateado.', 14, 4, 10, 11, 8, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (17, 'Barbie Made to Move (Curvy)', 'Cuerpo con 22 puntos de articulación diseñado para posabilidad extrema, en silueta Curvy.', 14, 14, 3, 8, 12, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (18, 'Barbie Corvette Convertible', 'Vehículo deportivo a escala 1/6 con detalles cromados y asientos para dos muñecas.', 7, 15, 4, 9, 6, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (19, 'Barbie Signature: Bob Mackie Gold', 'Edición ultra exclusiva diseñada por Bob Mackie, con lentejuelas bordadas a mano y plumas.', 15, 9, 1, 2, 8, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (20, 'Teresa Rollerblade 1992', 'Amiga de Barbie con patines en línea funcionales que emiten chispas al rodar gracias a fricción interna.', 3, 7, 5, 6, 6, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (21, 'Barbie Veterinaria de la Selva', 'Set de profesiones que incluye crías de animales salvajes, mesa de examinación y estetoscopio.', 8, 10, 4, 3, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (22, 'Barbie BMR1959 (Neon Jumpsuit)', 'Colección streetwear que celebra los 60 años de la marca con moda urbana de los años 90.', 12, 4, 3, 2, 8, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (23, 'Chelsea Club Treehouse Playset', 'Casa del árbol a escala de la hermana pequeña Chelsea, con tobogán y perrito de mascota.', 2, 5, 5, 6, 10, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (24, 'Barbie Silkstone Lingerie Model', 'Modelo coleccionista hecho de resina Silkstone pesada, simulando porcelana. Ropa interior vintage.', 12, 3, 4, 12, 11, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (25, 'Barbie Doctora de Bebés', 'Línea "Puedes ser lo que quieras". Incluye estación médica, incubadoras y dos muñecos bebés.', 7, 2, 10, 9, 10, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (26, 'Barbie Dream Boat (Avión/Crucero)', 'Vehículo de gran formato que se expande para formar un jet privado con compartimentos de lujo.', 2, 2, 6, 9, 11, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (27, 'Midge Pregnant (Happy Family 2002)', 'Polémica edición de la amiga Midge con pancita de embarazo magnética desprendible.', 12, 13, 2, 12, 11, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (28, 'Barbie Inspiring Women: Rosa Parks', 'Edición histórica celebrando los derechos civiles, con abrigo clásico y sombrero.', 13, 11, 11, 15, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (29, 'Barbie Glam Convertible (Rosa)', 'Clásico auto convertible de dos plazas en rosa brillante, ruedas giratorias y cinturones de seguridad.', 6, 14, 9, 15, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (30, 'Ken Earring Magic 1993', 'El modelo Ken más vendido de los 90s, con chaleco morado, cabello rubio y pendiente circular.', 8, 5, 9, 5, 5, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (31, 'Barbie Princesa Dreamtopia', 'Línea de fantasía. Vestido con luces LED interactivas en la falda y corona de arcoíris.', 11, 8, 2, 8, 1, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (32, 'Barbie Crystal Fantasy Collection (Amethyst)', 'Colección de diseñador inspirada en cristales naturales, maquillaje etéreo e incrustaciones.', 6, 9, 4, 3, 3, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (33, 'Barbie Fashionistas #167 (Prótesis)', 'Inclusión y diversidad. Muñeca con pierna protésica extraíble y estilo casual moderno.', 9, 7, 3, 10, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (34, 'Barbie Pop Star 1986', 'Muñeca estrella de rock con micrófono de utilería, calentadores neón y guitarra eléctrica.', 7, 8, 13, 1, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (35, 'Barbie Sirena Luces Brillantes', 'Aleta de plástico translúcido que se ilumina al presionar el collar, sellada contra agua.', 15, 9, 1, 10, 6, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (36, 'Barbie Signature: Tina Turner', 'Serie de mujeres inspiradoras. Incluye chaqueta de denim y look característico de los escenarios.', 8, 13, 12, 9, 12, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (37, 'Stacie Team Stacie Gymnastics', 'Set deportivo de la hermana Stacie, con barra de equilibrio funcional y medalla.', 10, 6, 15, 10, 4, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (38, 'Barbie Día de Spa y Mascarillas', 'Playset con masilla moldeable para crear mascarillas faciales, bata y estación de tocador.', 9, 2, 14, 6, 14, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (39, 'Barbie Repro: 1977 Superstar', 'Reproducción fiel para coleccionistas del icónico molde Superstar y vestido de satén fucsia.', 12, 1, 11, 13, 10, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (40, 'Barbie Ambulancia Clínica Móvil', 'Furgoneta transformable de más de 60 cm con sirenas funcionales, sala de espera y rayos X.', 12, 10, 4, 7, 15, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (41, 'Ken Fashionistas #164 (Cabello Largo)', 'Molde moderno con cabello enraizado largo rubio, camisa floral y cuerpo Broad.', 10, 11, 11, 8, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (42, 'Barbie Extra Minis Playset', 'Boutique plegable con perchero rodante, espejos y accesorios miniatura para la línea Extra.', 6, 5, 3, 4, 12, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (43, 'Barbie Jueza 1993', 'Pieza vintage de empoderamiento femenino. Toga negra oficial y mazo de tribunal.', 11, 15, 7, 13, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (44, 'Barbie Signature: David Bowie', 'Edición tributo al estilo de los años 90 de Bowie. Cabello rojo enraizado, traje a medida.', 5, 15, 11, 8, 1, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (45, 'Barbie Gimnasta Rítmica', 'Cuerpo Made to Move, incluye aros, cintas y batón. Diseño orientado a Juegos Olímpicos.', 4, 13, 6, 8, 8, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (46, 'Barbie Color Reveal (Serie Neón)', 'Tubo sorpresa donde la pintura hidrosoluble revela estampados reactivos a luz UV.', 12, 11, 4, 8, 3, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (47, 'Barbie Cafetería Pastelería', 'Playset interactivo. Funciones mecánicas para "hornear" plastilina con moldes de tartas.', 14, 5, 8, 8, 13, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (48, 'Ken Sireno (Merman)', 'Pieza de la línea Dreamtopia. Molde masculino con aleta colorida moldeada y corona.', 5, 2, 7, 1, 9, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (49, 'Barbie Repro: 1986 Rockers', 'Regreso a la era glam. Incluye cassette miniatura de colección y teclado keytar.', 2, 10, 8, 3, 10, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (50, 'Barbie Caballo Andador Interactivo', 'Accesorio motorizado. Caballo blanco con articulaciones autónomas y crin peinable.', 2, 6, 13, 12, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (51, 'Barbie Piloto Comercial', 'Promoción de carreras STEM. Uniforme azul, sombrero de capitán y maleta rodante.', 4, 7, 3, 10, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (52, 'Barbie Signature: Eleanor Roosevelt', 'Recreación histórica. Incluye vestido de época y empaque tipo libro biográfico.', 1, 12, 2, 11, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (53, 'Barbie Creadora de Emojis', 'Prendas con tecnología de transferencia térmica para estampar gráficos mediante fricción.', 8, 14, 1, 9, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (54, 'Barbie Gran Princesa (43 cm)', 'Muñeca de tamaño ampliado. Cepillo de gran formato para estilizar cabello extra largo.', 10, 15, 14, 6, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (55, 'Ken Surfista (Malibu)', 'Figura playera. Tabla de surf de plástico sólido con anclajes para los pies del muñeco.', 14, 8, 15, 15, 3, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (56, 'Barbie Fashionistas #119 (Petite)', 'Nuevo cuerpo Petite introducido en 2016. Cabello azul corto y vestido a cuadros.', 3, 6, 13, 14, 8, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (57, 'Barbie Exploradora de Marte', 'Lanzamiento especial con casco presurizado de plástico ABS y mochila de soporte vital.', 15, 8, 12, 15, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (58, 'Barbie Scooter Ciclomotor', 'Vehículo de dos ruedas motorizado en rosa pastel, con casco y cesta trasera para mascota.', 11, 15, 3, 8, 4, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (59, 'Barbie Signature: Elvis Presley', 'Traje ajustado "American Eagle" lleno de cristales, botas blancas y peinado icónico.', 13, 8, 15, 15, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (60, 'Christie Original 1968', 'Primera amiga afroamericana de Barbie. Traje de baño de una pieza y corte de cabello Mod.', 4, 14, 14, 7, 4, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (61, 'Barbie Helicóptero de Lujo', 'Estructura rígida de gran volumen. Espacio para pilotos y pasajeros, carrito de snacks incluido.', 1, 7, 5, 3, 10, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (62, 'Barbie Extra #5 (Chaqueta Flecos)', 'Línea de tendencias audaces. Trenzas arcoíris extra largas, vehículo de mascota incorporado.', 2, 3, 1, 2, 8, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (63, 'Barbie Cuidadora de Pandas', 'Estación de rescate en la selva, hamacas columpio de bambú, báscula y pandas de PVC.', 14, 9, 6, 12, 15, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (64, 'Barbie Repro: Day-to-Night 1985', 'Innovación en moda transformable. Vestido de oficina que se revierte en traje de noche fucsia.', 10, 15, 1, 10, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (65, 'Ken BMR1959 (Topknot)', 'Streetwear moderno de colección. Molde facial detallado, moño superior enraizado y chaqueta verde.', 10, 6, 1, 15, 1, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (66, 'Barbie Food Truck', 'Playset de granito plástico. Máquina de batidos, plancha de hamburguesas y accesorios miniatura.', 10, 3, 10, 14, 3, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (67, 'Barbie Fashionistas #135 (Alopecia)', 'Avance en representación. Muñeca sin cabello con maxiaretes dorados y vestido floral.', 8, 2, 12, 10, 3, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (68, 'Barbie Armario de Ensueño (Closet)', 'Mobiliario modular transportable con estantes, cajones, espejos y ganchos de ropa.', 9, 8, 8, 11, 3, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (69, 'Barbie Ingeniería Robótica', 'Iniciativa educativa. Incluye robot articulado, laptop y gafas protectoras para ensamblaje.', 10, 5, 9, 7, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (70, 'Barbie Signature: Iris Apfel', 'Colección Mujeres Inspiradoras. Traje sastre texturizado y broche de perlas fiel a la época.', 13, 8, 2, 10, 4, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (71, 'Barbie Club de Chelsea: Cama', 'Módulo de habitación infantil. Cama nido doble, osito de felpa y estrella brillante de noche.', 11, 14, 1, 5, 10, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (72, 'Barbie Boutique de Mascotas', 'Estación de lavado canino con mecanismo de espuma usando agua real y jabón.', 13, 12, 11, 1, 11, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (73, 'Barbie Extra Muñeca + Auto', 'Bundle de lujo. Deportivo plateado brillante con puertas en ala de gaviota y piscina canina.', 10, 2, 1, 3, 8, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (74, 'Ken Fashionistas #174 (Cuerpo Broad)', 'Cuerpo modificado más ancho. Sudadera gráfica de cuadros y estilo urbano contemporáneo.', 4, 1, 15, 5, 4, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (75, 'Barbie Repro: Black Francie 1967', 'Tributo a la historia. Francie con atuendo geométrico vibrante y pestañas enraizadas reales.', 3, 13, 10, 4, 3, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (76, 'Barbie Supermercado Móvil', 'Estructura desplegable de mercado, escáner registradora, cinta transportadora y estanterías.', 5, 6, 15, 11, 13, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (77, 'Barbie Color Reveal (Serie Fiesta)', 'Acabados perlados y esponja reactiva a temperatura para revelar maquillaje festivo en el rostro.', 13, 15, 13, 7, 4, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (78, 'Barbie Bióloga Marina', 'Estación de laboratorio acuático. Telescopio, tubos de ensayo y flora marina de colores vivos.', 8, 2, 15, 7, 13, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (79, 'Barbie Signature: Celia Cruz', 'Muñeca tributo a la Reina de la Salsa. Micrófono vintage, vestido de rumbera y pedrería.', 8, 11, 13, 3, 13, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (80, 'Barbie Estudio de Diseño 3D', 'Playset creativo enfocado a moda DIY. Impresora 3D figurativa y textiles estampables.', 11, 2, 3, 6, 1, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (81, 'Stacie Scooters de Verano', 'Vehículo patinete plegable a escala 1/6 con clips de agarre de silicona para sostener a la muñeca.', 1, 7, 6, 15, 1, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (82, 'Barbie Repro: Dream Date 1984', 'Remake ochentero de la línea Date. Cabello voluminoso con laca y atuendo de lentejuelas.', 12, 6, 14, 7, 12, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (83, 'Barbie Floristería Mágica', 'Mecanismo de empaque que extruye flores de plastilina reutilizable. Estantes y jarrones.', 12, 11, 5, 7, 14, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (84, 'Ken Cuidado de Perritos', 'Centro de baño canino, esponjas y bañera que retiene el agua para simular el aseo.', 15, 6, 5, 11, 7, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (85, 'Barbie Extra #12 (Abrigo Floral)', 'Acento en modas exageradas, incluye bolso de DJ portátil de la mascota con detalles neón.', 2, 5, 13, 5, 4, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (86, 'Barbie Signature: Mark Ryden', 'Colaboración de diseñador, vestuario surrealista, pelaje sintético premium y bolsa peculiar.', 9, 5, 15, 2, 3, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (87, 'Barbie Piscina Glamour', 'Molde de piscina azul traslúcido, trampolín, tumbonas de plástico ABS y toldo extraíble.', 9, 13, 13, 11, 9, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (88, 'Chelsea Feria de Diversiones', 'Playset mecánico. Noria y coches de choque operables manualmente mediante una manivela.', 6, 11, 12, 5, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (89, 'Barbie Cuidado de Elefantes', 'Centro de rescate asiático. Báscula pesada, hojas de bambú y elefantes de resina plástica.', 8, 4, 4, 5, 6, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (90, 'Barbie Astronauta Exploración', 'Conjunto exploratorio lunar. Herramientas de extracción, rocas lunares y bandera de la paz.', 9, 9, 15, 14, 13, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (91, 'Barbie Repro: 1962 Bubblecut', 'Edición clásica homenajeando el icónico peinado Bubblecut, vestido de punto dorado retro.', 5, 5, 13, 11, 6, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (92, 'Barbie Signature: Laverne Cox', 'Pieza histórica de activismo. Traje de gala en capas, peinado volumétrico y gran caja vitrina.', 4, 13, 1, 5, 14, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (93, 'Barbie Pizzería Móvil', 'Estación rodante de cocina de masa. Horno con efecto luz simulada de fuego e ingredientes miniatura.', 15, 13, 7, 10, 9, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (94, 'Ken Médico de Campo', 'Profesiones STEM. Ken equipado con maletín de primeros auxilios y férulas removibles de PVC.', 12, 11, 1, 14, 11, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (95, 'Barbie Color Reveal (Sorpresa Lluvia)', 'Capa especial que se deshace bajo la lluvia. Paraguas funcional con apertura de botón.', 8, 8, 9, 13, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (96, 'Barbie BMR1959 (Puffer Jacket)', 'Moda de archivo coleccionable, chaquetón plateado sobredimensionado y gafas geométricas.', 5, 4, 10, 2, 12, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (97, 'Barbie Dreamtopia Castillo de Dulces', 'Playset vertical de 3 pisos ambientado en repostería fantástica, escalera de caracol azucarada.', 9, 3, 8, 10, 2, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (98, 'Barbie Paseo Perruno', 'Mecanismo de acción para enseñar adiestramiento. Cuerda articulada y perro paseador dinámico.', 12, 13, 2, 1, 3, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (99, 'Barbie Signature: Maya Angelou', 'Homenaje a la poetisa norteamericana. Diadema tradicional, libro en miniatura y vestido sastre.', 11, 4, 6, 10, 1, null);
+insert into Diseño (idDiseño, nombre, descripcion, ClasificacionHistorica_idClasificacionHistorica, ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, TipoDiseño_idTipoDiseño, Diseño_idDiseño) values (100, 'Barbie Fashionistas #175 (Tall)', 'Cuerpo modificado más alto y alargado, zapatos de piso modernos y camisa teñida tipo tie-dye.', 8, 6, 4, 13, 10, null);
 
 
+--------------------------------------------------------------------------------------------------
+-- TIPO DE RELACION
 
+TRUNCATE TABLE TipoRelacion CASCADE;
 
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (1, 'Novios', 1, 5);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (2, 'Hermanas (Mayor/Menor)', 1, 13);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (3, 'Hermanas (Mayor/Toddler)', 1, 23);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (4, 'Hermanas (Mayor/Tween)', 1, 37);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (5, 'Mejores Amigas', 1, 27);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (6, 'Amigas Históricas', 1, 60);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (7, 'Amigas Íntimas', 1, 20);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (8, 'Dueña / Mascota', 12, 12);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (9, 'Hermanas (Medianas)', 13, 37);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (10, 'Evolución de Personaje', 5, 30);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (11, 'Evolución de Personaje', 1, 2);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (12, 'Variante de Era', 39, 64);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (13, 'Amigos / Compañeros', 15, 74);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (14, 'Compañeros de Playa', 2, 55);
+INSERT INTO TipoRelacion (idTipoRelacion, nombreRelacion, Diseño_idDiseño, Diseño_idDiseño2) VALUES (15, 'Colección Compartida', 22, 65);
+
+--------------------------------------------------------------------------------------------------
+-- COLOR
+
+insert into Color (idColor, codigoHexadecimal, nombre) values (1, '#E0218A', 'Barbie Pink');
+insert into Color (idColor, codigoHexadecimal, nombre) values (2, '#FF1493', 'Hot Pink');
+insert into Color (idColor, codigoHexadecimal, nombre) values (3, '#FFB6C1', 'Pastel Pink');
+insert into Color (idColor, codigoHexadecimal, nombre) values (4, '#00FFFF', 'Cyan');
+insert into Color (idColor, codigoHexadecimal, nombre) values (5, '#FF00FF', 'Magenta');
+insert into Color (idColor, codigoHexadecimal, nombre) values (6, '#32CD32', 'Lime Green');
+insert into Color (idColor, codigoHexadecimal, nombre) values (7, '#E6E6FA', 'Lavender');
+insert into Color (idColor, codigoHexadecimal, nombre) values (8, '#EE82EE', 'Violet');
+insert into Color (idColor, codigoHexadecimal, nombre) values (9, '#98FF98', 'Mint');
+insert into Color (idColor, codigoHexadecimal, nombre) values (10, '#FFD700', 'Gold');
+insert into Color (idColor, codigoHexadecimal, nombre) values (11, '#C0C0C0', 'Silver');
+insert into Color (idColor, codigoHexadecimal, nombre) values (12, '#B76E79', 'Rose Gold');
+insert into Color (idColor, codigoHexadecimal, nombre) values (13, '#F3E5AB', 'Pearlescent White');
+insert into Color (idColor, codigoHexadecimal, nombre) values (14, '#0F0F0F', 'Onyx Black');
+insert into Color (idColor, codigoHexadecimal, nombre) values (15, '#FFFFFF', 'Clear Translucent');
+
+--------------------------------------------------------------------------------------------------
+-- MATERIAL
+
+insert into Material (idMaterial, nombre, descripcion) values (1, 'Tela Algodón', 'Vivamus tortor. Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.');
+insert into Material (idMaterial, nombre, descripcion) values (2, 'Metal Die-Cast', 'In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.');
+insert into Material (idMaterial, nombre, descripcion) values (3, 'PVC Blando', 'Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh.');
+insert into Material (idMaterial, nombre, descripcion) values (4, 'Poliéster', 'Vestibulum rutrum rutrum neque. Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.');
+insert into Material (idMaterial, nombre, descripcion) values (5, 'PVC Blando', 'Phasellus in felis. Donec semper sapien a libero.');
+insert into Material (idMaterial, nombre, descripcion) values (6, 'Kanekalon (Cabello)', 'Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.');
+insert into Material (idMaterial, nombre, descripcion) values (7, 'Cartón Reciclado', 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius. Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus.');
+insert into Material (idMaterial, nombre, descripcion) values (8, 'PVC Blando', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti. Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.');
+insert into Material (idMaterial, nombre, descripcion) values (9, 'Resina Epóxica', 'Sed ante.');
+insert into Material (idMaterial, nombre, descripcion) values (10, 'Poliuretano', 'Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh.');
+insert into Material (idMaterial, nombre, descripcion) values (11, 'Poliuretano', 'Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.');
+insert into Material (idMaterial, nombre, descripcion) values (12, 'Poliéster', 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti.');
+insert into Material (idMaterial, nombre, descripcion) values (13, 'Nylon (Cabello)', 'Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim.');
+insert into Material (idMaterial, nombre, descripcion) values (14, 'Tela Sintética', 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia.');
+insert into Material (idMaterial, nombre, descripcion) values (15, 'Poliuretano', 'Vivamus tortor. Duis mattis egestas metus. Aenean fermentum.');
+
+--------------------------------------------------------------------------------------------------
+-- RESTRICCION
+
+insert into Restriccion (idRestriccion, nombre, descripcion) values (1, 'Edad +3', 'Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (2, 'Edad +6', 'Donec posuere metus vitae ipsum. Aliquam non mauris. Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (3, 'Piezas Pequeñas (Asfixia)', 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (4, 'Uso Baterías', 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (5, 'Peligro Enredo', 'Suspendisse potenti. Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (6, 'Requiere Ensamblaje', 'Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (7, 'Pintura No Tóxica', 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (8, 'Lejos del Fuego', 'Nulla facilisi. Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (9, 'No Sumergir', 'Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (10, 'Lavar a Mano', 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (11, 'No Planchar', 'Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (12, 'Fragil (Coleccionista)', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (13, 'Certificación CE', 'Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (14, 'Certificación ASTM', 'Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.');
+insert into Restriccion (idRestriccion, nombre, descripcion) values (15, 'Edición Limitada', 'Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci.');
+
+--------------------------------------------------------------------------------------------------
+-- TIPO DE CUERPO
+
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (1, 'Original', 'Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (2, 'Broad (Ken)', 'In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi. Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (3, 'Model Muse', 'Nullam varius. Nulla facilisi. Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (4, 'Made to Move', 'Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (5, 'Ever Flex', 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (6, 'Skipper', 'In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (7, 'Made to Move', 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (8, 'Pivotal', 'Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (9, 'Petite', 'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (10, 'Stacie', 'Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (11, 'Model Muse', 'Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (12, 'Petite', 'Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (13, 'Stacie', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (14, 'Made to Move', 'In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.');
+insert into TipoCuerpo (idTipoCuerpo, nombre, descripcion) values (15, 'Pivotal', 'Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat.');
+
+--------------------------------------------------------------------------------------------------
+-- TIPO DE PIEZA
+
+insert into TipoPieza (idTipoPieza, nombre) values (1, 'Cabeza');
+insert into TipoPieza (idTipoPieza, nombre) values (2, 'Torso Superior');
+insert into TipoPieza (idTipoPieza, nombre) values (3, 'Torso Inferior');
+insert into TipoPieza (idTipoPieza, nombre) values (4, 'Brazo Izquierdo');
+insert into TipoPieza (idTipoPieza, nombre) values (5, 'Brazo Derecho');
+insert into TipoPieza (idTipoPieza, nombre) values (6, 'Pierna Izquierda');
+insert into TipoPieza (idTipoPieza, nombre) values (7, 'Pierna Derecha');
+insert into TipoPieza (idTipoPieza, nombre) values (8, 'Articulación Hombro');
+insert into TipoPieza (idTipoPieza, nombre) values (9, 'Articulación Rodilla');
+insert into TipoPieza (idTipoPieza, nombre) values (10, 'Cabello');
+insert into TipoPieza (idTipoPieza, nombre) values (11, 'Ojos (Insert)');
+insert into TipoPieza (idTipoPieza, nombre) values (12, 'Mano Izquierda');
+insert into TipoPieza (idTipoPieza, nombre) values (13, 'Mano Derecha');
+insert into TipoPieza (idTipoPieza, nombre) values (14, 'Pie Izquierdo');
+insert into TipoPieza (idTipoPieza, nombre) values (15, 'Pie Derecho');
+
+--------------------------------------------------------------------------------------------------
+-- AMBIENTE
+
+INSERT INTO Ambiente (idAmbiente, nombre, descripcion) VALUES
+(1, 'Dreamhouse', 'Casa de ensueño icónica de 3 pisos con ascensor.'),
+(2, 'Malibu Beach', 'Costa soleada con arena, olas y palmeras de plástico.'),
+(3, 'Glam Pool', 'Piscina de verano con tobogán y tumbonas.'),
+(4, 'Camper Van', 'Entorno de camping y carretera para vehículos recreativos.'),
+(5, 'Dream Plane', 'Interior de jet privado de lujo y cabina de piloto.'),
+(6, 'Vet Clinic', 'Clínica veterinaria con estación de cuidado y rayos X.'),
+(7, 'Bakery Shop', 'Pastelería con hornos interactivos y estantes de dulces.'),
+(8, 'Space Station', 'Entorno de gravedad cero para la línea de astronautas.'),
+(9, 'Mermaid Cove', 'Reino submarino de Dreamtopia para sirenas.'),
+(10, 'Fairy Kingdom', 'Bosque encantado con flora mágica y alas brillantes.'),
+(11, 'Equestrian Center', 'Establo y pista de obstáculos para caballos interactivos.'),
+(12, 'School Classroom', 'Aula con pizarra, pupitres y accesorios educativos STEM.'),
+(13, 'Concert Stage', 'Escenario de rock con luces LED y micrófonos.'),
+(14, 'Fashion Runway', 'Pasarela de moda con iluminación frontal y backstage.'),
+(15, 'Boutique', 'Tienda de ropa con espejos, probadores y percheros.');
+
+--------------------------------------------------------------------------------------------------
+-- PIEZA
+
+INSERT INTO Pieza (idPieza, nombre, descripcion, Color_idColor, TipoPieza_idTipoPieza) VALUES
+(1, 'Cabeza Base Pearlescent', 'Cabeza moldeada lista para enraizado de cabello y pintura facial.', 13, 1),
+(2, 'Torso Superior Original', 'Torso de plástico duro con anclajes para cuello y hombros.', 1, 2),
+(3, 'Torso Inferior Articulado', 'Pelvis con sistema de rotación para piernas.', 1, 3),
+(4, 'Brazo Izquierdo Recto', 'Brazo estándar sin articulación de codo.', 13, 4),
+(5, 'Brazo Derecho Flexionado', 'Brazo moldeado en ángulo de 90 grados.', 13, 5),
+(6, 'Pierna Izquierda Click-Clack', 'Pierna de vinilo con mecanismo interno de doble flexión.', 13, 6),
+(7, 'Pierna Derecha Click-Clack', 'Pierna de vinilo con mecanismo interno de doble flexión.', 13, 7),
+(8, 'Articulación Hombro Esférica', 'Bola de tensión para rotación de 360 grados.', 13, 8),
+(9, 'Articulación Rodilla Doble', 'Mecanismo expuesto para la línea Made to Move.', 13, 9),
+(10, 'Cabello Kanekalon Rubio', 'Lote de hebras sintéticas color Gold para enraizado.', 10, 10),
+(11, 'Ojo Cyan (Inserto Acrílico)', 'Pieza ocular para modelos con mirada incrustada.', 4, 11),
+(12, 'Mano Izquierda Abierta', 'Mano con dedos separados para sostener accesorios.', 13, 12),
+(13, 'Mano Derecha con Anclaje', 'Mano con orificio para sujetar cepillos o carteras.', 13, 13),
+(14, 'Pie Izquierdo Tacón', 'Pie arqueado moldeado para calzado de tacón alto.', 13, 14),
+(15, 'Pie Derecho Tacón', 'Pie arqueado moldeado para calzado de tacón alto.', 13, 15);
+
+--------------------------------------------------------------------------------------------------
+-- SUB-ENSAMBLAJE
+
+INSERT INTO SubEnsamblaje (idSubEnsamblaje, cantidad, Pieza_idPieza, Pieza_idPieza2) VALUES
+(1, 1, 1, 2),   -- Cabeza (1) anclada a Torso Superior (2)
+(2, 1, 2, 3),   -- Torso Superior (2) anclado a Torso Inferior (3)
+(3, 1, 2, 4),   -- Torso Superior (2) anclado a Brazo Izquierdo (4)
+(4, 1, 2, 5),   -- Torso Superior (2) anclado a Brazo Derecho (5)
+(5, 1, 3, 6),   -- Torso Inferior (3) anclado a Pierna Izquierda (6)
+(6, 1, 3, 7),   -- Torso Inferior (3) anclado a Pierna Derecha (7)
+(7, 1, 4, 8),   -- Brazo Izquierdo (4) a Articulación Hombro (8)
+(8, 1, 5, 8),   -- Brazo Derecho (5) a Articulación Hombro (8)
+(9, 1, 6, 9),   -- Pierna Izquierda (6) a Articulación Rodilla (9)
+(10, 1, 7, 9),  -- Pierna Derecha (7) a Articulación Rodilla (9)
+(11, 150, 10, 1),-- 150 hebras de Cabello (10) enraizadas a Cabeza (1)
+(12, 2, 11, 1), -- 2 Ojos Acrílicos (11) insertados en Cabeza (1)
+(13, 1, 4, 12), -- Brazo Izquierdo (4) a Mano Izquierda (12)
+(14, 1, 5, 13), -- Brazo Derecho (5) a Mano Derecha (13)
+(15, 1, 6, 14); -- Pierna Izquierda (6) a Pie Izquierdo (14)
+
+--------------------------------------------------------------------------------------------------
+-- MATERIAL DISEÑO
+
+INSERT INTO MaterialDiseño (idMaterialDiseño, cantidad, Diseño_idDiseño, Pieza_idPieza, Material_idMaterial) VALUES
+(1, 50, 1, 1, 3),   -- Barbie 1959: Cabeza (1) usa 50g de PVC Blando (3)
+(2, 120, 1, 2, 1),  -- Barbie 1959: Torso (2) usa 120g de Tela/Algodón (1)
+(3, 30, 3, 10, 6),  -- Totally Hair: Cabello (10) usa 30g de Kanekalon (6)
+(4, 60, 5, 1, 3),   -- Ken Original: Cabeza usa PVC Blando
+(5, 150, 5, 2, 2),  -- Ken Original: Torso usa Metal/Plástico Duro (2)
+(6, 20, 12, 1, 5),  -- Barbie Extra: Cabeza usa variante de PVC (5)
+(7, 10, 17, 8, 10), -- Made to Move: Hombro usa Poliuretano duro (10)
+(8, 10, 17, 9, 10), -- Made to Move: Rodilla usa Poliuretano duro (10)
+(9, 45, 60, 1, 3),  -- Christie Original: Cabeza PVC Blando
+(10, 35, 60, 10, 6),-- Christie Original: Cabello Kanekalon
+(11, 25, 30, 4, 11),-- Ken Earring Magic: Brazo Poliuretano (11)
+(12, 25, 30, 5, 11),-- Ken Earring Magic: Brazo Poliuretano (11)
+(13, 15, 14, 10, 13),-- Dia de Muertos: Cabello Nylon (13)
+(14, 90, 74, 2, 15),-- Ken Broad: Torso Poliuretano especial (15)
+(15, 80, 100, 6, 8);-- Fashionista Tall: Piernas de PVC (8)
+
+--------------------------------------------------------------------------------------------------
+-- RESTRICCION-DISEÑO
+
+INSERT INTO RestriccionDiseño (idRestriccionDiseño, nombre, descripcion, Diseño_idDiseño, Restriccion_idRestriccion, TipoCuerpo_idTipoCuerpo) VALUES
+(1, 'Norma +3 Barbie Clásica', 'Evaluación de seguridad por piezas medianas desprendibles.', 1, 1, 1),
+(2, 'Alerta Piezas Ken Original', 'Precaución por calzado miniatura que representa riesgo de asfixia.', 5, 3, 2),
+(3, 'Norma Baterías Corvette', 'El circuito del motor del vehículo requiere supervisión de un adulto.', 18, 4, 1),
+(4, 'Coleccionista Silkstone Premium', 'Material pesado imitación porcelana, prohibido para menores de 14 años.', 24, 12, 3),
+(5, 'Ensamblaje Dreamhouse 3 Pisos', 'Requiere herramientas y armado estructural por parte de un adulto.', 6, 6, 1),
+(6, 'Norma +3 Edición Skipper', 'Restricción preventiva por incluir accesorios de guardería pequeños.', 13, 1, 6),
+(7, 'Certificación CE Barbie Extra', 'Sello de conformidad obligatoria para distribución en la Unión Europea.', 12, 13, 1),
+(8, 'Exclusividad Limitada Bob Mackie', 'Lote numerado con restricción de venta masiva en tiendas playline.', 19, 15, 11),
+(9, 'Pintura No Tóxica Fashionistas', 'Certificación química libre de plomo para los pigmentos del rostro.', 9, 7, 1),
+(10, 'No Sumergir Princesa LED', 'La falda contiene fibra óptica y cables; prohibido el contacto con agua.', 31, 9, 1),
+(11, 'Norma ASTM MadeToMove', 'Test de estrés mecánico superado en los 22 puntos de articulación.', 17, 14, 4),
+(12, 'No Planchar Traje Día de Muertos', 'El vestido textil sintético cuenta con bordados propensos a derretirse.', 14, 11, 1),
+(13, 'Lavar a Mano Abrigo Extra', 'Pelaje artificial delicado que pierde consistencia en lavadora automática.', 12, 10, 1),
+(14, 'Alerta Enredo Totally Hair', 'Cabello de 30cm; peligro de atasco en piezas móviles o ruedas de juego.', 3, 5, 1),
+(15, 'Norma +6 Ambulancia Clínica', 'Complejidad operativa alta por la cantidad de instrumental médico de PVC.', 40, 2, 1);
+
+--------------------------------------------------------------------------------------------------
+-- DISEÑO-AMBIENTE
+
+INSERT INTO DiseñoAmbiente (idDiseñoAmbiente, interactivo, Diseño_idDiseño, Ambiente_idAmbiente) VALUES
+(1, 'N', 2, 2),   -- Barbie Malibu (2) en Malibu Beach (2)
+(2, 'N', 55, 2),  -- Ken Surfista (55) en Malibu Beach (2)
+(3, 'Y', 6, 1),   -- Dreamhouse Playset (6) en Dreamhouse (1)
+(4, 'Y', 11, 4),  -- Camper Van (11) en Camper Van (4)
+(5, 'Y', 26, 5),  -- Dream Plane (26) en Dream Plane (5)
+(6, 'Y', 21, 6),  -- Veterinaria Selva (21) en Vet Clinic (6)
+(7, 'Y', 47, 7),  -- Cafetería (47) en Bakery Shop (7)
+(8, 'N', 16, 8),  -- Astronauta 1965 (16) en Space Station (8)
+(9, 'N', 57, 8),  -- Exploradora Marte (57) en Space Station (8)
+(10, 'Y', 10, 9), -- Color Reveal Sirena (10) en Mermaid Cove (9)
+(11, 'N', 48, 9), -- Ken Sireno (48) en Mermaid Cove (9)
+(12, 'Y', 31, 10),-- Princesa Dreamtopia (31) en Fairy Kingdom (10)
+(13, 'Y', 50, 11),-- Caballo Andador (50) en Equestrian Center (11)
+(14, 'N', 34, 13),-- Pop Star 1986 (34) en Concert Stage (13)
+(15, 'N', 12, 15);-- Barbie Extra (12) en Boutique (15)
+
+--------------------------------------------------------------------------------------------------
+-- DEPARTAMENTO
+
+INSERT INTO Departamento (idDepartamento, nombre, direccion) VALUES
+(1, 'Investigación y Desarrollo (I+D)', 'Torre Creativa, Piso 10'),
+(2, 'Escultura y Modelado 3D', 'Torre Creativa, Piso 9'),
+(3, 'Ingeniería de Materiales', 'Laboratorio Central, Ala Norte'),
+(4, 'Matricería y Moldes', 'Planta de Manufactura, Sector A'),
+(5, 'Inyección de Plásticos', 'Planta de Manufactura, Sector B'),
+(6, 'Ensamblaje y Articulación', 'Planta de Manufactura, Sector C'),
+(7, 'Enraizado y Estilismo de Cabello', 'Planta de Manufactura, Sector D'),
+(8, 'Pintura Facial y Acabados', 'Planta de Manufactura, Sector E'),
+(9, 'Confección Textil y Vestuario', 'Taller de Costura Principal'),
+(10, 'Control de Calidad (QA)', 'Laboratorio Central, Ala Sur'),
+(11, 'Empaquetado y Blíster', 'Centro de Distribución, Zona 1'),
+(12, 'Logística y Despachos B2B', 'Centro de Distribución, Zona 2'),
+(13, 'Marketing y Mercado B2C', 'Torre Corporativa, Piso 15'),
+(14, 'Gestión de Subastas y Coleccionistas', 'Torre Corporativa, Piso 16'),
+(15, 'Talento Humano y Nómina', 'Torre Corporativa, Piso 2');
+
+--------------------------------------------------------------------------------------------------
+-- PUESTO DE TRABAJO
+
+INSERT INTO PuestoTrabajo (id, nombre, descripcion) VALUES
+(1, 'Director de Diseño PLM', 'Lidera la conceptualización de nuevas líneas de Barbie.'),
+(2, 'Escultor Digital Senior', 'Crea modelos 3D y aprueba mallas para mecanizado.'),
+(3, 'Ingeniero Químico de Polímeros', 'Formula las mezclas de PVC, ABS y colorantes.'),
+(4, 'Técnico Tornero CNC', 'Fabrica los moldes de acero inoxidable para inyección.'),
+(5, 'Operador de Inyectora', 'Maneja la maquinaria pesada de inyección de plástico.'),
+(6, 'Técnico de Enraizado', 'Opera las máquinas de costura capilar en las cabezas.'),
+(7, 'Artista de Tampografía', 'Aplica la pintura de ojos, labios y cejas con precisión.'),
+(8, 'Ensamblador de Línea', 'Une torsos, extremidades y articulaciones de presión.'),
+(9, 'Costurera a Escala', 'Cose la indumentaria miniatura (1/6) de las muñecas.'),
+(10, 'Inspector de Estrés ASTM', 'Aplica pruebas de fuerza y toxicidad a los prototipos.'),
+(11, 'Empacador de Línea Final', 'Coloca el producto en su blíster e inserta manuales.'),
+(12, 'Coordinador de Flota Logística', 'Supervisa despachos a retailers (Target, Walmart).'),
+(13, 'Analista de Mercado Secundario', 'Fija precios base para el módulo de subastas BFC.'),
+(14, 'Especialista en Reclutamiento', 'Contrata personal de planta e ingenieros.'),
+(15, 'Analista de Sistemas (IT)', 'Mantiene activo el sistema Dream Legacy y la BD.');
+
+--------------------------------------------------------------------------------------------------
+-- PROFESION
+
+INSERT INTO Profesion (idProfesion, nombre, descripcion) VALUES
+(1, 'Diseñador Industrial', 'Especialista en ergonomía y diseño de productos de consumo.'),
+(2, 'Ingeniero Industrial', 'Experto en optimización de líneas de producción y tiempos.'),
+(3, 'Ingeniero de Materiales', 'Conocimientos avanzados en termoplásticos y resinas.'),
+(4, 'Artista Plástico / Escultor', 'Habilidad manual y digital para anatomía a escala.'),
+(5, 'Técnico Mecánico', 'Mantenimiento preventivo y correctivo de maquinaria pesada.'),
+(6, 'Técnico Superior en Logística', 'Manejo de inventarios, Kardex y rutas de distribución.'),
+(7, 'Diseñador de Modas', 'Creación de patrones y selección de textiles.'),
+(8, 'Ingeniero Químico', 'Formulación de pinturas no tóxicas y tintes capilares.'),
+(9, 'Licenciado en Mercadeo', 'Estrategias de penetración y comportamiento del consumidor.'),
+(10, 'Licenciado en Administración', 'Manejo de presupuestos operativos y costos de producción.'),
+(11, 'Psicólogo Industrial', 'Evaluación de clima laboral y pruebas psicotécnicas.'),
+(12, 'Médico Ocupacional', 'Salud en planta y prevención de riesgos laborales.'),
+(13, 'Ingeniero en Computación', 'Desarrollador Full Stack (Angular/C#) e infraestructura.'),
+(14, 'Abogado Corporativo', 'Gestión de patentes de moldes y derechos de autor.'),
+(15, 'Operario Integral Certificado', 'Personal capacitado en múltiples estaciones de ensamblaje.');
+
+--------------------------------------------------------------------------------------------------
+-- TURNO
+
+INSERT INTO Turno (idTurno, porcentajeRecargo, nombre) VALUES
+(1, 0, 'Diurno - Administrativo'), (2, 0, 'Diurno - Planta Línea 1'), (3, 0, 'Diurno - Planta Línea 2'),
+(4, 15, 'Mixto - Planta Línea 1'), (5, 15, 'Mixto - Planta Línea 2'), (6, 15, 'Mixto - Logística B2B'),
+(7, 30, 'Nocturno - Inyección Continua'), (8, 30, 'Nocturno - Mantenimiento'), (9, 30, 'Nocturno - Seguridad'),
+(10, 50, 'Fin de Semana - Sábado Mañana'), (11, 50, 'Fin de Semana - Sábado Tarde'), (12, 75, 'Fin de Semana - Domingo'),
+(13, 100, 'Feriado - Operación Mínima'), (14, 0, 'Rotativo A (I+D)'), (15, 0, 'Rotativo B (I+D)');
+
+--------------------------------------------------------------------------------------------------
+-- HORARIO
+
+INSERT INTO Horario (idHorario, dia, horaInicio, horaFin) VALUES
+(1, 'Lunes', '08:00:00', '17:00:00'), (2, 'Martes', '08:00:00', '17:00:00'), (3, 'Miércoles', '08:00:00', '17:00:00'),
+(4, 'Jueves', '08:00:00', '17:00:00'), (5, 'Viernes', '08:00:00', '17:00:00'), (6, 'Lunes', '14:00:00', '22:00:00'),
+(7, 'Martes', '14:00:00', '22:00:00'), (8, 'Miércoles', '14:00:00', '22:00:00'), (9, 'Jueves', '14:00:00', '22:00:00'),
+(10, 'Viernes', '14:00:00', '22:00:00'), (11, 'Lunes', '22:00:00', '06:00:00'), (12, 'Martes', '22:00:00', '06:00:00'),
+(13, 'Miércoles', '22:00:00', '06:00:00'), (14, 'Sábado', '08:00:00', '14:00:00'), (15, 'Domingo', '08:00:00', '14:00:00');
+
+--------------------------------------------------------------------------------------------------
+-- TURNO HORARIO
+
+INSERT INTO TurnoHorario (idTurnoHorario, Horario_idHorario, Turno_idTurno) VALUES
+(1, 1, 1), (2, 2, 1), (3, 3, 1), (4, 4, 1), (5, 5, 1), -- Diurno Admin (L-V)
+(6, 6, 4), (7, 7, 4), (8, 8, 4), (9, 9, 4), (10, 10, 4), -- Mixto Planta (L-V)
+(11, 11, 7), (12, 12, 7), (13, 13, 7), (14, 14, 10), (15, 15, 12); -- Nocturno y Fines de semana
+
+--------------------------------------------------------------------------------------------------
+-- FASE
+
+INSERT INTO Fase (idFase, nombreFase, descripcionFase, Diseño_idDiseño) VALUES
+(1, 'Conceptualización', 'Creación del moodboard y referencias históricas.', 1),
+(2, 'Esculpido Facial', 'Modelado en arcilla o 3D del molde del rostro.', 2),
+(3, 'Aprobación de Patrón', 'Selección de telas y colores corporativos.', 3),
+(4, 'Prototipo Resina', 'Impresión 3D inicial para validar articulaciones.', 4),
+(5, 'Mecanizado de Moldes', 'Corte CNC del acero para la inyectora.', 5),
+(6, 'Prueba de Inyección', 'Inyección del primer lote (First Shot) para ajuste.', 6),
+(7, 'Enraizado Piloto', 'Prueba de densidad capilar en la cabeza base.', 7),
+(8, 'Tampografía Facial', 'Ajuste de los tampones de silicona para los ojos.', 8),
+(9, 'Producción Masiva', 'Inicio de la cadena de inyección ininterrumpida.', 9),
+(10, 'Ensamblaje Mecánico', 'Unión a presión de extremidades y torsos.', 10),
+(11, 'Vestido y Peinado', 'Acabado manual de la muñeca en línea.', 11),
+(12, 'Control de Calidad Final', 'Inspección visual antes de sellar el blíster.', 12),
+(13, 'Empaquetado', 'Sellado térmico del juguete en caja de cartón/PET.', 13),
+(14, 'Paletización', 'Embalaje en cajas maestras para B2B.', 14),
+(15, 'Lanzamiento Comercial', 'Liberación del producto al mercado secundario.', 15);
+
+--------------------------------------------------------------------------------------------------
+-- PRUEBA
+
+INSERT INTO Prueba (idPrueba, nombrePrueba, descripcionPrueba, resultado, tipoPrueba, Diseño_idDiseño) VALUES
+(1, 'Tensión de Cuello (Norma ASTM)', 'Verifica que la cabeza no se desprenda con 10kg de fuerza.', 'Aprobado', 'Tecnica', 1),
+(2, 'Toxicidad de Pintura', 'Prueba química de plomo en labios y ojos.', 'Aprobado', 'Tecnica', 2),
+(3, 'Caída Libre (Drop Test)', 'Caída desde 1.5m para asegurar que el ABS no se astilla.', 'Reprobado', 'Tecnica', 3),
+(4, 'Combustión de Cabello', 'Prueba térmica sobre el Kanekalon.', 'Aprobado', 'Tecnica', 4),
+(5, 'Examen Visual de Operario', 'Prueba oftalmológica para pintores de tampografía.', 'Aprobado', 'Medica', 5),
+(6, 'Evaluación de Estrés Térmico', 'Comportamiento del plástico en contenedores a 50°C.', 'Aprobado', 'Tecnica', 6),
+(7, 'Prueba Psicométrica de Ensamblaje', 'Test de destreza y concentración bajo presión.', 'Aprobado', 'Psicologica', 7),
+(8, 'Audiometría Anual', 'Examen obligatorio para operadores de inyectoras.', 'Aprobado', 'Medica', 8),
+(9, 'Resistencia de Articulaciones', '10,000 ciclos de doblez en la línea Made to Move.', 'Aprobado', 'Tecnica', 17),
+(10, 'Prueba de Flotabilidad', 'Verificación de sellado en vehículos acuáticos.', 'Reprobado', 'Tecnica', 26),
+(11, 'Prueba de Liderazgo', 'Test para aspirantes a Gerentes de Línea.', 'Aprobado', 'Psicologica', 11),
+(12, 'Examen Toxicológico', 'Prueba antidoping obligatoria en Planta.', 'Aprobado', 'Medica', 12),
+(13, 'Lavado de Textiles', 'Ciclos de lavado para probar decoloración del vestido.', 'Aprobado', 'Tecnica', 13),
+(14, 'Manejo de Montacargas', 'Examen práctico de conducción en almacén.', 'Aprobado', 'Tecnica', 14),
+(15, 'Prueba de Funcionamiento LED', 'Verificación de circuitos en juguetes electrónicos.', 'Aprobado', 'Tecnica', 31);
+
+--------------------------------------------------------------------------------------------------
+-- CURRICULUM VITAE
+
+INSERT INTO CurriculumVitae (idCurriculumVitae, añoDeAsignacion, Profesion_idProfesion, Diseño_idDiseño) VALUES
+(1, 2020, 1, 1), (2, 2021, 2, 2), (3, 2022, 3, 3), (4, 2019, 4, 4), (5, 2023, 5, 5),
+(6, 2018, 6, 6), (7, 2024, 7, 7), (8, 2020, 8, 8), (9, 2021, 9, 9), (10, 2022, 10, 10),
+(11, 2017, 11, 11), (12, 2023, 12, 12), (13, 2024, 13, 13), (14, 2019, 14, 14), (15, 2020, 15, 15);
+
+--------------------------------------------------------------------------------------------------
+-- TURNO EMPLEADO
+
+INSERT INTO TurnoEmpleado (idTurnoEmpleado, fecha, feriado, Empleado_idEmpleado, Turno_idTurno) VALUES
+(1, '2023-10-02', 'N', 1, 1), (2, '2023-10-03', 'N', 2, 2), (3, '2023-10-04', 'N', 3, 3),
+(4, '2023-10-05', 'N', 4, 4), (5, '2023-10-06', 'N', 5, 5), (6, '2023-10-09', 'N', 6, 6),
+(7, '2023-10-10', 'N', 7, 7), (8, '2023-10-11', 'N', 8, 8), (9, '2023-10-12', 'N', 9, 9),
+(10, '2023-10-14', 'Y', 10, 10), (11, '2023-10-15', 'Y', 11, 11), (12, '2023-10-21', 'Y', 12, 12),
+(13, '2023-10-22', 'Y', 13, 13), (14, '2023-10-23', 'N', 14, 14), (15, '2023-10-24', 'N', 15, 15);
+
+--------------------------------------------------------------------------------------------------
+-- ASISTENCIA
+
+INSERT INTO Asistencia (idAsistencia, fecha, horaEntrada, horaSalida, Empleado_idEmpleado) VALUES
+(1, '2023-10-02', '08:00:00', '17:05:00', 1), (2, '2023-10-03', '07:55:00', '17:00:00', 2),
+(3, '2023-10-04', '08:10:00', '17:15:00', 3), (4, '2023-10-05', '13:50:00', '22:00:00', 4),
+(5, '2023-10-06', '14:00:00', '22:10:00', 5), (6, '2023-10-09', '14:05:00', '22:00:00', 6),
+(7, '2023-10-10', '21:55:00', '06:00:00', 7), (8, '2023-10-11', '22:00:00', '06:05:00', 8),
+(9, '2023-10-12', '22:00:00', '06:00:00', 9), (10, '2023-10-14', '08:00:00', '14:00:00', 10),
+(11, '2023-10-15', '08:00:00', '14:00:00', 11), (12, '2023-10-21', '08:00:00', '14:00:00', 12),
+(13, '2023-10-22', '08:00:00', '12:00:00', 13), (14, '2023-10-23', '08:00:00', '17:00:00', 14),
+(15, '2023-10-24', '08:00:00', '17:00:00', 15);
+
+--------------------------------------------------------------------------------------------------
+-- FASE EMPLEADO
+
+INSERT INTO FaseEmpleado (idFaseEmpleado, fechaInicio, fechaFin, Empleado_idEmpleado, Fase_idFase) VALUES
+(1, '2023-01-10', '2023-02-15', 1, 1), (2, '2023-02-16', '2023-04-20', 2, 2),
+(3, '2023-04-21', '2023-05-10', 3, 3), (4, '2023-05-11', '2023-06-30', 4, 4),
+(5, '2023-07-01', '2023-08-15', 5, 5), (6, '2023-08-16', '2023-09-01', 6, 6),
+(7, '2023-09-02', '2023-09-15', 7, 7), (8, '2023-09-16', '2023-10-05', 8, 8),
+(9, '2023-10-06', NULL, 9, 9), (10, '2023-10-10', NULL, 10, 10),
+(11, '2023-10-15', NULL, 11, 11), (12, '2023-10-20', NULL, 12, 12),
+(13, '2023-10-25', NULL, 13, 13), (14, '2023-11-01', NULL, 14, 14),
+(15, '2023-11-05', NULL, 15, 15);
+
+--------------------------------------------------------------------------------------------------
+-- PRUEBA EMPLEADO
+
+INSERT INTO PruebaEmpleado (idPruebaEmpleado, fechaInicio, fechaFin, Prueba_idPrueba, Empleado_idEmpleado) VALUES
+(1, '2023-03-01', '2023-03-02', 5, 1), (2, '2023-03-15', '2023-03-16', 8, 2),
+(3, '2023-04-05', '2023-04-06', 12, 3), (4, '2023-05-20', '2023-05-21', 11, 4),
+(5, '2023-06-10', '2023-06-11', 7, 5), (6, '2023-07-12', '2023-07-13', 5, 6),
+(7, '2023-08-05', '2023-08-06', 8, 7), (8, '2023-09-01', '2023-09-02', 12, 8),
+(9, '2023-09-20', '2023-09-21', 11, 9), (10, '2023-10-01', '2023-10-02', 7, 10),
+(11, '2023-10-10', '2023-10-11', 5, 11), (12, '2023-10-18', '2023-10-19', 8, 12),
+(13, '2023-11-02', '2023-11-03', 12, 13), (14, '2023-11-15', '2023-11-16', 11, 14),
+(15, '2023-11-20', '2023-11-21', 7, 15);

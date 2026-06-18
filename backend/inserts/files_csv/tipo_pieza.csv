@@ -1,0 +1,16 @@
+idTipoPieza,nombre
+1,Cabeza
+2,Torso Superior
+3,Torso Inferior
+4,Brazo Izquierdo
+5,Brazo Derecho
+6,Pierna Izquierda
+7,Pierna Derecha
+8,Articulación Hombro
+9,Articulación Rodilla
+10,Cabello
+11,Ojos (Insert)
+12,Mano Izquierda
+13,Mano Derecha
+14,Pie Izquierdo
+15,Pie Derecho
