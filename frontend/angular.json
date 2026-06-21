@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "d6e89fa2-1fb5-49bf-963f-0506dcb896f2"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -16,6 +17,14 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+          "styles": [
+            "node_modules/datatables.net-dt/css/dataTables.dataTables.min.css",
+            "src/styles.css"
+          ],
+          "scripts": [
+            "node_modules/jquery/dist/jquery.min.js",
+            "node_modules/datatables.net/js/dataTables.js"
+          ],
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -23,9 +32,6 @@
                 "glob": "**/*",
                 "input": "public"
               }
-            ],
-            "styles": [
-              "src/styles.css"
             ]
           },
           "configurations": {
