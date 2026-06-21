@@ -356,12 +356,12 @@ CREATE TABLE HistoricoEmpleado (
 
 CREATE TABLE HistoricoEstado (
     idHistoricoEstado         NUMERIC  NOT NULL,
-    fechaHora                 DATE  NOT NULL,
-    OrdenCompra_idOrdenCompra NUMERIC  NOT NULL,
+    fechaHora                 TIMESTAMP  NOT NULL,
+    OrdenCompra_idOrdenCompra NUMERIC,          -- Permite NULL (CHECK exige que una de las dos sea NULL)
     EstadoOrden_idEstadoOrden NUMERIC  NOT NULL,
-    Compra_idCompra           NUMERIC  NOT NULL,
+    Compra_idCompra           NUMERIC,          -- Permite NULL (CHECK exige que una de las dos sea NULL)
 
-    CONSTRAINT arc_historico_estado_01 CHECK ( (  (OrdenCompra_idOrdenCompra IS NOT NULL) AND (Compra_idCompra IS NULL) ) OR (  (Compra_idCompra IS NOT NULL) AND (OrdenCompra_idOrdenCompra IS NULL) ) ),
+    CONSTRAINT arc_historico_estado_01 CHECK ( ( (OrdenCompra_idOrdenCompra IS NOT NULL) AND (Compra_idCompra IS NULL) ) OR ( (Compra_idCompra IS NOT NULL) AND (OrdenCompra_idOrdenCompra IS NULL) ) ),
     CONSTRAINT pk_historico_estado_01 PRIMARY KEY (idHistoricoEstado, EstadoOrden_idEstadoOrden)
 );
 
@@ -973,8 +973,17 @@ CREATE TABLE ValoracionMercado (
     CONSTRAINT pk_valoracion_mercado_01 PRIMARY KEY (idValoracionMercado)
 );
 
+CREATE TABLE Caja (
+    idCaja    NUMERIC  NOT NULL,
+    nombre    VARCHAR(150)  NOT NULL,
+    capacidad NUMERIC  NOT NULL,
+
+    CONSTRAINT pk_caja_01 PRIMARY KEY (idCaja)
+);
+
 /* CREATE DE LAS SECUENCIAS */
 
+CREATE SEQUENCE Caja_SEQ START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE Ambiente_SEQ START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE AsignacionMeta_SEQ START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE Asistencia_SEQ START WITH 1 INCREMENT BY 1;

@@ -95,33 +95,6 @@ DROP SEQUENCE TurnoHorario_SEQ;
 DROP SEQUENCE UnidadProducida_SEQ;
 DROP SEQUENCE Usuario_SEQ;
 DROP SEQUENCE ValoracionMercado_SEQ;
-
-DROP SEQUENCE IF EXISTS
-    Ambiente_SEQ, AsignacionMeta_SEQ, Asistencia_SEQ, AutorDiseño_SEQ,
-    BackOrder_SEQ, ChequeCorporativo_SEQ, ClasificacionExclusividad_SEQ,
-    ClasificacionHistorica_SEQ, ClienteJuridico_SEQ, ClienteNatural_SEQ,
-    Color_SEQ, ComisionVenta_SEQ, Compra_SEQ, CompraDescuento_SEQ,
-    Conciliacion_SEQ, CondicionFisica_SEQ, Courier_SEQ, CriptoActivo_SEQ,
-    CurriculumVitae_SEQ, Departamento_SEQ, Descuento_SEQ, DespachoNatural_SEQ,
-    DetalleCompraJuridico_SEQ, DetalleCompraNatural_SEQ, DevolucionJuridica_SEQ,
-    DevolucionNatural_SEQ, Diseño_SEQ, DiseñoAmbiente_SEQ, Efectivo_SEQ,
-    Empleado_SEQ, EstadoOrden_SEQ, Estatus_SEQ, Fase_SEQ, FaseEmpleado_SEQ,
-    HistoricoEmpleado_SEQ, HistoricoEstado_SEQ, HistoricoEstatus_SEQ, Horario_SEQ,
-    InsumoProduccion_SEQ, ListaPrecioMayorista_SEQ, LoteMateriaPrima_SEQ,
-    LoteProduccion_SEQ, Lugar_SEQ, ManifiestoCarga_SEQ, Material_SEQ,
-    MaterialDiseño_SEQ, Membresia_SEQ, MetaMensual_SEQ, MoldeRostro_SEQ,
-    MonitorActividadSopechosa_SEQ, ObjetivoGlobal_SEQ, ObjetivoGlobalProducto_SEQ,
-    OrdenCompra_SEQ, OrdenCompraDescuento_SEQ, OrdenVenta_SEQ, Pack_SEQ,
-    PagoJuridico_SEQ, PagoNatural_SEQ, PayPal_SEQ, Permiso_SEQ, Pieza_SEQ,
-    PiezaProducto_SEQ, Producto_SEQ, Profesion_SEQ, Prueba_SEQ, PruebaEmpleado_SEQ,
-    PuestoTrabajo_SEQ, Puja_SEQ, Regalia_SEQ, Restriccion_SEQ, RestriccionDiseño_SEQ,
-    Rol_SEQ, RolPermiso_SEQ, Sancion_SEQ, StockClienteNatural_SEQ, Subasta_SEQ,
-    SubEnsamblaje_SEQ, Swift_SEQ, TarjetaCredito_SEQ, TarjetaDebito_SEQ, Telefono_SEQ,
-    TipoCuerpo_SEQ, TipoDiseño_SEQ, TipoPieza_SEQ, TipoRelacion_SEQ,
-    TipoUbicacionStock_SEQ, TonoPiel_SEQ, Transporte_SEQ, Turno_SEQ,
-    TurnoEmpleado_SEQ, TurnoHorario_SEQ, UnidadProducida_SEQ, Usuario_SEQ,
-    ValoracionMercado_SEQ CASCADE;
-
 /* BORRAR TABLAS */
 
 DROP TABLE Ambiente CASCADE;
@@ -220,4 +193,4 @@ DROP TABLE Usuario CASCADE;
 DROP TABLE ValoracionMercado CASCADE;
 
 /* BORRAR LA BASE DE DATOS */
- --DROP DATABASE mattelucab;--
+-- DROP DATABASE IF EXISTS mattelucab;
