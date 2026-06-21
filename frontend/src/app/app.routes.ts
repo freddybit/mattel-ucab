@@ -13,27 +13,34 @@ import { Paso1 } from './pasos-producto/paso1/paso1';
 import { Paso2 } from './pasos-producto/paso2/paso2';
 import { Paso3 } from './pasos-producto/paso3/paso3';
 import { Paso4 } from './pasos-producto/paso4/paso4';
+import { RegistroClienteNatural } from './registro-cliente-natural/registro-cliente-natural';
+import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
   { path: '', component: LandingPage, pathMatch: 'full' },
   { path: 'login', component: LoginPage },
+  { path: 'registro-cliente', component: RegistroClienteNatural },
   {
     path: '',
     component: AppLayout,
+    canActivate: [AuthGuard],
     children: [
       { path: 'dashboard', component: Dashboard },
-      { path: 'ingenieria', component: Ingenieria },
+      { path: 'ingenieria', component: Ingenieria, canActivate: [RoleGuard], data: { permissions: ['CONSULTAR'] } },
       {
         path: 'trazabilidad',
         component: Trazabilidad,
+        canActivate: [RoleGuard],
+        data: { permissions: ['CONSULTAR'] },
         children: [
           { path: '', redirectTo: 'motor', pathMatch: 'full' },
           { path: 'motor', component: MotorTrazabilidad },
           { path: 'reportes', component: ReportesOficiales },
         ],
       },
-      { path: 'personal', component: Personal },
-      { path: 'seguridad', component: Seguridad },
+      { path: 'personal', component: Personal, canActivate: [RoleGuard], data: { permissions: ['CONSULTAR'] } },
+      { path: 'seguridad', component: Seguridad, canActivate: [RoleGuard], data: { permissions: ['CONSULTAR'] } },
       { path: 'paso1', component: Paso1 },
       { path: 'paso2', component: Paso2 },
       { path: 'paso3', component: Paso3 },

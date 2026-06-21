@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { UserService } from '../../services/user.service';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 export type SidebarItem =
   | 'dashboard'
@@ -10,6 +10,15 @@ export type SidebarItem =
   | 'seguridad'
   | 'almacen'
   | 'finanzas';
+
+interface NavEntry {
+  key: SidebarItem;
+  label: string;
+  icon: string;
+  route: string;
+  roles: number[];
+  enabled: boolean;
+}
 
 @Component({
   selector: 'app-sidebar',
@@ -21,9 +30,31 @@ export class AppSidebar {
   @Input() activeItem: SidebarItem = 'dashboard';
 
   userName: string;
+  userRole: string;
 
-  constructor(private userService: UserService) {
-    this.userName = this.userService.getUser().name;
+  navItems: NavEntry[] = [
+    { key: 'dashboard', label: 'Dashboard', icon: 'grid_view', route: '/dashboard', roles: [], enabled: true },
+    { key: 'ingenieria', label: 'Ingeniería', icon: 'settings_input_component', route: '/ingenieria', roles: [1, 2, 11, 12], enabled: true },
+    { key: 'trazabilidad', label: 'Trazabilidad', icon: 'history', route: '/trazabilidad', roles: [1, 2, 3, 4, 5, 6, 11, 12, 13], enabled: true },
+    { key: 'personal', label: 'Personal', icon: 'badge', route: '/personal', roles: [1, 9, 11], enabled: true },
+    { key: 'seguridad', label: 'Seguridad', icon: 'security', route: '/seguridad', roles: [1, 11], enabled: true },
+    { key: 'almacen', label: 'Almacén', icon: 'inventory_2', route: '#', roles: [1, 6, 11], enabled: true },
+    { key: 'finanzas', label: 'Finanzas B2B', icon: 'account_balance_wallet', route: '#', roles: [1, 7, 10, 11], enabled: true },
+  ];
+
+  constructor(private auth: AuthService, private router: Router) {
+    const user = this.auth.getCurrentUser();
+    this.userName = user?.username ?? 'Invitado';
+    this.userRole = user?.roleName ?? '';
+
+    const roleId = user?.roleId;
+    if (roleId) {
+      this.navItems.forEach(item => {
+        if (item.roles.length > 0 && !item.roles.includes(roleId)) {
+          item.enabled = false;
+        }
+      });
+    }
   }
 
   isActive(item: SidebarItem): boolean {
@@ -31,10 +62,20 @@ export class AppSidebar {
   }
 
   linkClass(item: SidebarItem): string {
-    const base =
-      'nav-item-base flex items-center gap-4 px-8 py-4 transition-all duration-200 group';
-    return this.isActive(item)
-      ? `${base} nav-active text-white`
-      : `${base} text-slate-400 hover:text-white`;
+    const base = 'nav-item-base flex items-center gap-4 px-8 py-4 transition-all duration-200 group';
+    if (this.isActive(item)) return `${base} nav-active text-white`;
+    const entry = this.navItems.find(n => n.key === item);
+    if (entry && !entry.enabled) return `${base} text-slate-600 cursor-not-allowed`;
+    return `${base} text-slate-400 hover:text-white`;
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/login']);
+  }
+
+  isEnabled(item: SidebarItem): boolean {
+    const entry = this.navItems.find(n => n.key === item);
+    return entry?.enabled ?? true;
   }
 }

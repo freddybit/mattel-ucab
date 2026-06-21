@@ -1,0 +1,85 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #0b1326;
+  padding: 2rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+.page {
+  width: 100%;
+  max-width: 896px;
+}
+
+.glass-panel {
+  background-color: #0F172A;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+.modal-content::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+
+.input-field {
+  background-color: #1E293B;
+  border: 1px solid #334155;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.input-field:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  outline: none;
+}
+
+.input-label {
+  color: #94A3B8;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #E0218A;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+  transform: scale(1.02);
+  filter: brightness(1.1);
+  box-shadow: 0 0 20px rgba(224, 33, 138, 0.4);
+}
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-primary:disabled {
+  opacity: 0.85;
+  cursor: wait;
+}

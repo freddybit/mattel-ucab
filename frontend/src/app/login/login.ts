@@ -1,31 +1,54 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   passwordVisible = false;
   loading = false;
+  errorMsg = '';
+  successMsg = '';
+  email = '';
+  password = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private auth: AuthService, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    if (this.route.snapshot.queryParamMap.get('registrado') === 'true') {
+      this.successMsg = 'Registro exitoso. Ahora puedes iniciar sesión.';
+    }
+  }
 
   togglePassword() {
     this.passwordVisible = !this.passwordVisible;
   }
 
-  login(event: Event) {
+  async login(event: Event) {
     event.preventDefault();
     if (this.loading) return;
 
+    if (!this.email || !this.password) {
+      this.errorMsg = 'Completa todos los campos para iniciar sesión.';
+      return;
+    }
+
     this.loading = true;
-    setTimeout(() => {
-      this.loading = false;
+    this.errorMsg = '';
+
+    const result = await this.auth.login(this.email, this.password);
+    this.loading = false;
+
+    if (result.success) {
       this.router.navigate(['/dashboard']);
-    }, 1500);
+    } else {
+      this.errorMsg = result.error ?? 'Error al iniciar sesión.';
+    }
   }
 }

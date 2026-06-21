@@ -1,20 +1,27 @@
 import { Injectable } from '@angular/core';
-
-export interface UserInfo {
-  name: string;
-  email: string;
-  role: string;
-}
+import { AuthService, AuthUser } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private user: UserInfo = {
-    name: 'Andrea Rivas',
-    email: 'andrea.rivas@mattelucab.com',
-    role: 'Administrator',
-  };
+  constructor(private auth: AuthService) {}
 
-  getUser(): UserInfo {
-    return this.user;
+  getUser(): { name: string; email: string; role: string } {
+    const u = this.auth.getCurrentUser();
+    if (u) {
+      return { name: u.username, email: u.email, role: u.roleName };
+    }
+    return { name: 'Invitado', email: '', role: '' };
+  }
+
+  hasPermission(perm: string): boolean {
+    return this.auth.hasPermission(perm);
+  }
+
+  hasAnyPermission(perms: string[]): boolean {
+    return this.auth.hasAnyPermission(perms);
+  }
+
+  isLoggedIn(): boolean {
+    return this.auth.isAuthenticated();
   }
 }
