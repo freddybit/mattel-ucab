@@ -1232,3 +1232,94 @@
         RETURN json_build_object('success', false, 'mensaje', 'Error en BD: ' || SQLERRM);
     END;
     $$ LANGUAGE plpgsql;
+
+    /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+    -- PARTE DEL DASHBOARD Y MONITOR DE SEGURIDAD EN EL FRONTEND
+
+-- 1. Actualización del Monitor de Seguridad (Nombres Reales)
+CREATE OR REPLACE FUNCTION obtener_alertas_seguridad()
+RETURNS TABLE (
+    id_alerta NUMERIC,
+    id_usuario VARCHAR,
+    accion_detectada VARCHAR,
+    nivel_riesgo VARCHAR,
+    tiempo_respuesta VARCHAR
+) LANGUAGE plpgsql SECURITY DEFINER AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        m.idMonitorActividadSopechosa,
+        -- Prioriza el nombre de usuario web, si no existe, concatena el nombre real del cliente
+        COALESCE(u.nombreUsuario, c.pNombre || ' ' || c.pApellido)::VARCHAR AS id_usuario,
+        'Patrón de Acaparamiento'::VARCHAR AS accion_detectada,
+        'Crítico'::VARCHAR AS nivel_riesgo,
+        '< 1s'::VARCHAR AS tiempo_respuesta
+    FROM MonitorActividadSopechosa m
+    JOIN ClienteNatural c ON m.ClienteNatural_idClienteNatural = c.idClienteNatural
+    LEFT JOIN Usuario u ON u.ClienteNatural_idClienteNatural = c.idClienteNatural
+    ORDER BY m.fechaHora DESC;
+END;
+$$;
+
+-- 2. Nuevo RPC para Moldes de Rostro Rentables
+CREATE PROCEDURE obtener_moldes_rentables()
+RETURNS TABLE (
+    nombre_molde VARCHAR,
+    porcentaje_rentabilidad NUMERIC
+) LANGUAGE plpgsql SECURITY DEFINER AS $$
+BEGIN
+    RETURN QUERY
+    -- Lógica base: Contamos cuántos diseños usan el molde y simulamos su % de impacto actual.
+    -- (Ver nota al final sobre la fórmula financiera exacta).
+    SELECT 
+        mr.nombre::VARCHAR AS nombre_molde,
+        -- Cálculo simulado basado en el conteo de diseños activos asociados a ese molde.
+        -- En un entorno real puro, esto cruzaría con Compra/OrdenCompra para evaluar ganancia neta.
+        ROUND((COUNT(d.idDiseño) * 100.0) / (SELECT GREATEST(COUNT(*), 1) FROM Diseño))::NUMERIC AS porcentaje_rentabilidad
+    FROM MoldeRostro mr
+    JOIN Diseño d ON d.MoldeRostro_idMoldeRostro = mr.idMoldeRostro
+    GROUP BY mr.idMoldeRostro, mr.nombre
+    ORDER BY porcentaje_rentabilidad DESC
+    LIMIT 4;
+END;
+$$;
+
+CREATE PROCEDURE obtener_distribucion_tipos_cuerpo()
+RETURNS TABLE (
+    nombre_tipo VARCHAR,
+    porcentaje NUMERIC,
+    color_hex VARCHAR
+) LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE
+    v_total_productos NUMERIC;
+BEGIN
+    -- Obtenemos el total de productos en catálogo para calcular la cuota del 100%
+    SELECT GREATEST(COUNT(*), 1) INTO v_total_productos FROM Producto;
+
+    RETURN QUERY
+    SELECT 
+        tc.nombre::VARCHAR AS nombre_tipo,
+        -- Calculamos la distribución en base a los Productos creados
+        ROUND((COUNT(p.idProducto) * 100.0) / v_total_productos)::NUMERIC AS porcentaje,
+        -- Asignamos los colores institucionales
+        CASE 
+            WHEN tc.nombre ILIKE '%Curvy%' THEN '#8B1D54'::VARCHAR
+            WHEN tc.nombre ILIKE '%Original%' THEN '#E0218A'::VARCHAR
+            WHEN tc.nombre ILIKE '%Tall%' THEN '#94a3b8'::VARCHAR
+            WHEN tc.nombre ILIKE '%Petite%' THEN '#cbd5e1'::VARCHAR
+            ELSE '#f1f5f9'::VARCHAR
+        END AS color_hex
+    FROM TipoCuerpo tc
+    -- Camino relacional estricto hacia el Producto
+    JOIN RestriccionDiseño rd ON tc.idTipoCuerpo = rd.TipoCuerpo_idTipoCuerpo
+    JOIN Diseño d ON rd.Diseño_idDiseño = d.idDiseño
+    JOIN Producto p ON d.idDiseño = p.Diseño_idDiseño
+    GROUP BY tc.idTipoCuerpo, tc.nombre
+    ORDER BY porcentaje DESC;
+END;
+$$;
+
+/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* MODULO DE TRAZABILIDAD */
