@@ -1,4 +1,9 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DataTablesModule } from 'angular-datatables';
+import { FormsModule } from '@angular/forms';
+import { SupabaseService } from '../services/supabase.service';
+import { Subject } from 'rxjs';
 
 export interface Role {
   id: number;
@@ -8,147 +13,177 @@ export interface Role {
   permsCount: number;
 }
 
-export interface ModulePerms {
-  crear: boolean;
-  editar: boolean;
-  eliminar: boolean;
-  exportar: boolean;
-}
-
-export interface SecurityModule {
-  id: string;
-  label: string;
-  icon: string;
-  description: string;
-  perms: ModulePerms;
-}
-
 @Component({
   selector: 'app-seguridad',
   standalone: true,
+  imports: [CommonModule, DataTablesModule, FormsModule],
   templateUrl: './seguridad.html',
   styleUrls: ['./seguridad.css'],
 })
-export class Seguridad {
-  roles: Role[] = [
-    { id: 1, name: 'Administrador', description: 'Acceso total a todas las funciones del sistema Dream Legacy.', icon: 'admin_panel_settings', permsCount: 4 },
-    { id: 2, name: 'Ingeniero I+D', description: 'Gestión técnica de prototipos y especificaciones de producto.', icon: 'engineering', permsCount: 3 },
-  ];
+export class Seguridad implements OnInit, OnDestroy {
+deleteRole(arg0: number,arg1: string) {
+throw new Error('Method not implemented.');
+}
+applyTemplate(arg0: any) {
+throw new Error('Method not implemented.');
+}
+  public roles: Role[] = [];
 
-  modalOpen = false;
-  selectedTemplate = 'admin';
+  // --- VARIABLES DE MODALES ---
+  public modalOpen = false;
+  public transferModalOpen = false;
 
-  modules: SecurityModule[] = [
-    {
-      id: 'productos', label: 'Gestión de Productos', icon: 'inventory_2',
-      description: 'Configuración de acceso para el módulo de gestión de productos',
-      perms: { crear: true, editar: true, eliminar: true, exportar: true },
-    },
-    {
-      id: 'trazabilidad', label: 'Trazabilidad', icon: 'account_tree',
-      description: 'Configuración de acceso para el módulo de trazabilidad',
-      perms: { crear: true, editar: true, eliminar: true, exportar: true },
-    },
-    {
-      id: 'inventario', label: 'Inventario Global', icon: 'language',
-      description: 'Configuración de acceso para el módulo de inventario global',
-      perms: { crear: true, editar: true, eliminar: true, exportar: true },
-    },
-    {
-      id: 'reportes', label: 'Reportes', icon: 'analytics',
-      description: 'Configuración de acceso para el módulo de reportes',
-      perms: { crear: true, editar: true, eliminar: true, exportar: true },
-    },
-    {
-      id: 'seguridad', label: 'Seguridad', icon: 'security',
-      description: 'Configuración de acceso para el módulo de seguridad',
-      perms: { crear: true, editar: true, eliminar: true, exportar: true },
-    },
-  ];
+  // --- VARIABLES DE BORRADO (TRANSFERENCIA) ---
+  public roleToDelete: Role | null = null;
+  public lifeguardRoleId: number | null = null;
 
-  private allOff: ModulePerms = { crear: false, editar: false, eliminar: false, exportar: false };
-  private allOn: ModulePerms = { crear: true, editar: true, eliminar: true, exportar: true };
+  // --- VARIABLES DE DATATABLES ---
+  public dtOptions: any = {};
+  public dtTrigger: Subject<any> = new Subject<any>();
+  public cargando = true;
 
-  private templates: Record<string, Record<string, ModulePerms>> = {
-    admin: {
-      productos: this.allOn,
-      trazabilidad: this.allOn,
-      inventario: this.allOn,
-      reportes: this.allOn,
-      seguridad: this.allOn,
-    },
-    editor: {
-      productos: { crear: true, editar: true, eliminar: false, exportar: true },
-      trazabilidad: { crear: true, editar: false, eliminar: false, exportar: true },
-      inventario: { crear: true, editar: true, eliminar: true, exportar: false },
-      reportes: { crear: false, editar: true, eliminar: false, exportar: true },
-      seguridad: { crear: true, editar: true, eliminar: false, exportar: true },
-    },
-    viewer: {
-      productos: this.allOff,
-      trazabilidad: this.allOff,
-      inventario: this.allOff,
-      reportes: this.allOff,
-      seguridad: this.allOff,
-    },
+  // --- LOS 4 PERMISOS GLOBALES SIMPLIFICADOS ---
+  public globalPerms = {
+    consultar: false,
+    crear: false,
+    modificar: false,
+    borrar: false,
   };
+selectedTemplate: any;
+modules: any;
 
+  constructor(
+    private supabaseService: SupabaseService,
+    private cdr: ChangeDetectorRef,
+  ) {}
+
+  // --- CICLO DE VIDA ---
+  async ngOnInit() {
+    this.dtOptions = {
+      destroy: true, // REINICIALIZACIÓN SEGURA
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      processing: true,
+      language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+      },
+    };
+    await this.cargarRoles();
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
+  // --- LECTURA A LA BASE DE DATOS ---
+  async cargarRoles() {
+    this.cargando = true;
+
+    const { data, error } = await this.supabaseService.client.from('rol').select(`
+            idrol,
+            nombre,
+            descripcion,
+            rolpermiso ( permisos_idpermiso )
+        `);
+
+    if (data) {
+      this.roles = data.map((r: any) => ({
+        id: r.idrol,
+        name: r.nombre,
+        description: r.descripcion || 'Sin descripción',
+        icon: r.nombre.toLowerCase().includes('admin') ? 'admin_panel_settings' : 'shield',
+        permsCount: r.rolpermiso ? r.rolpermiso.length : 0,
+      }));
+
+      // Obliga a Angular a pintar los <tr>
+      this.cdr.detectChanges();
+      // DataTables toma el control
+      setTimeout(() => this.dtTrigger.next(null), 0);
+    }
+
+    this.cargando = false;
+  }
+
+  // --- LÓGICA DEL MODAL DE CREAR ROL ---
   toggleModal(show: boolean) {
     this.modalOpen = show;
-    if (!show) this.resetForm();
-  }
-
-  applyTemplate(templateId: string) {
-    this.selectedTemplate = templateId;
-    const perms = this.templates[templateId];
-    if (perms) {
-      this.modules.forEach(m => {
-        const p = perms[m.id];
-        if (p) m.perms = { ...p };
-      });
+    if (!show) {
+      this.globalPerms = { consultar: false, crear: false, modificar: false, borrar: false };
     }
   }
 
-  togglePerm(moduleId: string, permKey: keyof ModulePerms) {
-    const mod = this.modules.find(m => m.id === moduleId);
-    if (mod) {
-      mod.perms[permKey] = !mod.perms[permKey];
-      this.selectedTemplate = 'custom';
-    }
+  private generarArrayPermisos(): string[] {
+    const lista: string[] = [];
+    if (this.globalPerms.consultar) lista.push('CONSULTAR');
+    if (this.globalPerms.modificar) lista.push('MODIFICAR');
+    if (this.globalPerms.crear) lista.push('CREAR');
+    if (this.globalPerms.borrar) lista.push('BORRAR');
+    return lista;
   }
 
-  resetForm() {
-    this.applyTemplate('admin');
-  }
-
-  get totalActivePerms(): number {
-    return this.modules.reduce((sum, m) => {
-      return sum + (m.perms.crear ? 1 : 0) + (m.perms.editar ? 1 : 0)
-           + (m.perms.eliminar ? 1 : 0) + (m.perms.exportar ? 1 : 0);
-    }, 0);
-  }
-
-  saveRole(event: Event) {
+  async saveRole(event: Event) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const nameInput = form.querySelector('#role-name') as HTMLInputElement;
     const descInput = form.querySelector('#role-desc') as HTMLTextAreaElement;
+
     const name = nameInput?.value.trim();
     const desc = descInput?.value.trim();
+
     if (!name || !desc) return;
 
-    this.roles.push({
-      id: this.roles.length + 1,
-      name,
-      description: desc,
-      icon: 'shield',
-      permsCount: this.totalActivePerms,
+    const p_permisos = this.generarArrayPermisos();
+
+    const { data, error } = await this.supabaseService.client.rpc('registrar_rol_seguridad', {
+      p_nombre: name,
+      p_descripcion: desc,
+      p_permisos: p_permisos,
     });
-    this.toggleModal(false);
+
+    if (error) {
+      alert('Error crítico de red: ' + error.message);
+    } else if (data && !data.success) {
+      alert('Error en BD: ' + data.mensaje);
+    } else {
+      this.toggleModal(false);
+      location.reload();
+    }
+  }
+
+  // --- LÓGICA DE TRANSFERENCIA Y BORRADO ---
+  openTransferModal(role: Role) {
+    this.roleToDelete = role;
+    this.lifeguardRoleId = null;
+    this.transferModalOpen = true;
+  }
+
+  closeTransferModal() {
+    this.transferModalOpen = false;
+    this.roleToDelete = null;
+    this.lifeguardRoleId = null;
+  }
+
+  async confirmDeleteAndTransfer() {
+    if (!this.roleToDelete || !this.lifeguardRoleId) return;
+
+    const { data, error } = await this.supabaseService.client.rpc('eliminar_rol_seguridad', {
+      p_idrol_a_borrar: this.roleToDelete.id,
+      p_idrol_destino: Number(this.lifeguardRoleId),
+    });
+
+    if (error) {
+      alert('Error crítico de red: ' + error.message);
+    } else if (data && !data.success) {
+      alert('Error en BD: ' + data.mensaje);
+    } else {
+      this.closeTransferModal();
+      location.reload();
+    }
   }
 
   @HostListener('document:keydown.escape')
   onEscape() {
     if (this.modalOpen) this.toggleModal(false);
+    if (this.transferModalOpen) this.closeTransferModal();
   }
 }

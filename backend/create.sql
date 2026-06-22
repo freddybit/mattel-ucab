@@ -1079,45 +1079,156 @@
     CREATE SEQUENCE Usuario_SEQ START WITH 1 INCREMENT BY 1;
     CREATE SEQUENCE ValoracionMercado_SEQ START WITH 1 INCREMENT BY 1;
 
-    -- Oracle SQL Developer Data Modeler Summary Report:
-    --
-    -- CREATE TABLE                            95
-    -- CREATE INDEX                             5
-    -- ALTER TABLE                            226
-    -- CREATE VIEW                              0
-    -- ALTER VIEW                               0
-    -- CREATE PACKAGE                           0
-    -- CREATE PACKAGE BODY                      0
-    -- CREATE PROCEDURE                         0
-    -- CREATE FUNCTION                          0
-    -- CREATE TRIGGER                           0
-    -- ALTER TRIGGER                            0
-    -- CREATE COLLECTION TYPE                   0
-    -- CREATE STRUCTURED TYPE                   0
-    -- CREATE STRUCTURED TYPE BODY              0
-    -- CREATE CLUSTER                           0
-    -- CREATE CONTEXT                           0
-    -- CREATE DATABASE                          0
-    -- CREATE DIMENSION                         0
-    -- CREATE DIRECTORY                         0
-    -- CREATE DISK GROUP                        0
-    -- CREATE ROLE                              0
-    -- CREATE ROLLBACK SEGMENT                  0
-    -- CREATE SEQUENCE                          0
-    -- CREATE MATERIALIZED VIEW                 0
-    -- CREATE MATERIALIZED VIEW LOG             0
-    -- CREATE SYNONYM                           0
-    -- CREATE TABLESPACE                        0
-    -- CREATE USER                              0
-    --
-    -- DROP TABLESPACE                          0
-    -- DROP DATABASE                            0
-    --
-    -- REDACTION POLICY                         0
-    --
-    -- ORDS DROP SCHEMA                         0
-    -- ORDS ENABLE SCHEMA                       0
-    -- ORDS ENABLE OBJECT                       0
-    --
-    -- ERRORS                                  83
-    -- WARNINGS                                 0
+    /* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+    /* GESTION DE USUARIOS */
+
+    CREATE FUNCTION registrar_onboarding_completo(
+        p_cedula NUMERIC,
+        p_pnombre VARCHAR,
+        p_snombre VARCHAR,
+        p_papellido VARCHAR,
+        p_sapellido VARCHAR,
+        p_fechanacimiento DATE,
+        p_direccion VARCHAR,
+        p_id_lugar_empleado NUMERIC,
+        
+        p_username VARCHAR,
+        p_correo VARCHAR,
+        p_password VARCHAR,
+        p_id_rol NUMERIC,
+        
+        p_id_departamento NUMERIC,
+        p_id_puesto NUMERIC,
+        p_salario NUMERIC,
+        
+        p_id_turno NUMERIC,
+        p_id_tipo_ubicacion NUMERIC -- Requerido por HistoricoEmpleado
+    ) RETURNS json AS $$
+    DECLARE
+        v_id_empleado NUMERIC;
+        v_id_usuario NUMERIC;
+        v_id_historico NUMERIC;
+        v_id_turno_emp NUMERIC;
+    BEGIN
+        -- 1. Generación manual de IDs (Se recomienda usar secuencias como Empleado_SEQ.nextval)
+        SELECT COALESCE(MAX(idEmpleado), 0) + 1 INTO v_id_empleado FROM Empleado;
+        SELECT COALESCE(MAX(idUsuario), 0) + 1 INTO v_id_usuario FROM Usuario;
+        SELECT COALESCE(MAX(idHistoricoEmpleado), 0) + 1 INTO v_id_historico FROM HistoricoEmpleado;
+        SELECT COALESCE(MAX(idTurnoEmpleado), 0) + 1 INTO v_id_turno_emp FROM TurnoEmpleado;
+
+        -- 2. Insertar Empleado Físico
+        INSERT INTO Empleado (idEmpleado, cedula, pNombre, sNombre, pApellido, sApellido, fechaNacimiento, direccion, Lugar_idLugar)
+        VALUES (v_id_empleado, p_cedula, p_pnombre, p_snombre, p_papellido, p_sapellido, p_fechanacimiento, p_direccion, p_id_lugar_empleado);
+
+        -- 3. Insertar Histórico Laboral Inicial
+        INSERT INTO HistoricoEmpleado (idHistoricoEmpleado, fechaInicio, salarioBase, Empleado_idEmpleado, Departamento_idDepartamento, PuestoTrabajo_id, TipoUbicacionStock_idTipoUbicacionStock)
+        VALUES (v_id_historico, CURRENT_DATE, p_salario, v_id_empleado, p_id_departamento, p_id_puesto, p_id_tipo_ubicacion);
+
+        -- 4. Asignar Turno
+        INSERT INTO TurnoEmpleado (idTurnoEmpleado, fecha, feriado, Empleado_idEmpleado, Turno_idTurno)
+        VALUES (v_id_turno_emp, CURRENT_DATE, 'N', v_id_empleado, p_id_turno);
+
+        -- 5. Crear Credenciales (Usuario) con PGCrypto
+        INSERT INTO Usuario (idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro, Empleado_idEmpleado, Rol_idRol)
+        VALUES (v_id_usuario, p_username, p_correo, crypt(p_password, gen_salt('bf')), 'Activo', CURRENT_DATE, v_id_empleado, p_id_rol);
+
+        -- 6. Retorno de éxito
+        RETURN json_build_object('success', true, 'mensaje', 'Onboarding completado exitosamente.');
+
+    EXCEPTION WHEN OTHERS THEN
+        -- Ante cualquier error de FK, Check o nulos, se activa el ROLLBACK automático de PostgreSQL
+        RETURN json_build_object('success', false, 'mensaje', SQLERRM);
+    END;
+    $$ LANGUAGE plpgsql;
+
+    /* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+    /* GESTION DE ROLES */
+
+    CREATE FUNCTION actualizar_permisos_rol(
+    p_idrol NUMERIC,     
+    p_permisos JSON      
+    ) RETURNS json AS $$
+    DECLARE
+        v_permiso_name VARCHAR;
+        v_id_permiso NUMERIC;
+        v_id_rolpermiso NUMERIC;
+    BEGIN
+        -- 1. Limpieza absoluta de la matriz vieja
+        DELETE FROM RolPermiso WHERE Rol_idRol = p_idrol;
+
+        -- 2. Inserción de la nueva matriz
+        FOR v_permiso_name IN SELECT json_array_elements_text(p_permisos)
+        LOOP
+            SELECT idPermiso INTO v_id_permiso FROM Permiso WHERE nombre = v_permiso_name LIMIT 1;
+
+            IF v_id_permiso IS NOT NULL THEN
+                SELECT COALESCE(MAX(idRolPermiso), 0) + 1 INTO v_id_rolpermiso FROM RolPermiso;
+                INSERT INTO RolPermiso (idRolPermiso, Rol_idRol, Permisos_idPermiso)
+                VALUES (v_id_rolpermiso, p_idrol, v_id_permiso);
+            END IF;
+        END LOOP;
+
+        RETURN json_build_object('success', true, 'mensaje', 'Matriz actualizada correctamente.');
+
+    EXCEPTION WHEN OTHERS THEN
+        RETURN json_build_object('success', false, 'mensaje', 'Fallo de integridad: ' || SQLERRM);
+    END;
+    $$ LANGUAGE plpgsql;
+
+    CREATE OR REPLACE FUNCTION eliminar_rol_seguridad(
+        p_idrol_a_borrar NUMERIC,
+        p_idrol_destino NUMERIC -- El rol de salvavidas al que moveremos los usuarios
+    ) RETURNS json AS $$
+    BEGIN
+        -- 1. Mudamos a todos los usuarios afectados al rol de destino
+        UPDATE Usuario 
+        SET Rol_idRol = p_idrol_destino 
+        WHERE Rol_idRol = p_idrol_a_borrar;
+
+        -- 2. Borramos las asociaciones de la matriz de permisos
+        DELETE FROM RolPermiso WHERE Rol_idRol = p_idrol_a_borrar;
+
+        -- 3. Ahora que el rol está huérfano de relaciones, lo eliminamos físicamente
+        DELETE FROM Rol WHERE idRol = p_idrol_a_borrar;
+
+        RETURN json_build_object('success', true, 'mensaje', 'Usuarios reasignados y rol eliminado con éxito.');
+    END;
+    $$ LANGUAGE plpgsql;
+
+    CREATE OR REPLACE FUNCTION registrar_rol_seguridad(
+        p_nombre TEXT,
+        p_descripcion TEXT,
+        p_permisos JSONB
+    ) RETURNS json AS $$
+    DECLARE
+    v_id_rol NUMERIC;
+    v_permiso_name TEXT;
+        v_id_permiso NUMERIC;
+        v_id_rolpermiso NUMERIC;
+    BEGIN
+        SELECT COALESCE(MAX(idRol), 0) + 1 INTO v_id_rol FROM Rol;
+
+        INSERT INTO Rol (idRol, nombre, descripcion)
+        VALUES (v_id_rol, p_nombre, p_descripcion);
+
+        FOR v_permiso_name IN SELECT jsonb_array_elements_text(p_permisos)
+        LOOP
+            SELECT idPermiso INTO v_id_permiso 
+            FROM Permiso 
+            WHERE nombre = UPPER(v_permiso_name) 
+            LIMIT 1;
+
+            IF v_id_permiso IS NOT NULL THEN
+                SELECT COALESCE(MAX(idRolPermiso), 0) + 1 INTO v_id_rolpermiso FROM RolPermiso;
+                INSERT INTO RolPermiso (idRolPermiso, Rol_idRol, Permisos_idPermiso)
+                VALUES (v_id_rolpermiso, v_id_rol, v_id_permiso);
+            END IF;
+        END LOOP;
+
+        RETURN json_build_object('success', true, 'mensaje', 'Rol maestro creado exitosamente.');
+    EXCEPTION WHEN OTHERS THEN
+        RETURN json_build_object('success', false, 'mensaje', 'Error en BD: ' || SQLERRM);
+    END;
+    $$ LANGUAGE plpgsql;
