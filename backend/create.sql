@@ -1322,4 +1322,232 @@ $$;
 
 /* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
-/* MODULO DE TRAZABILIDAD */
+/* MODULO DE CREAR DISEÑO */
+
+-- PASO 1: Obtener catálogos de Tipos, Clasificaciones Históricas y Clasificaciones de Exclusividad
+
+CREATE OR REPLACE FUNCTION obtener_catalogos_diseno_paso1()
+RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE
+    v_tipos json;
+    v_historicas json;
+    v_exclusividad json;
+BEGIN
+    -- Extraemos los Tipos de Diseño (Ej: Muñeca, Accesorio)
+    SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json) INTO v_tipos 
+    FROM TipoDiseño t;
+    
+    -- Extraemos las Clasificaciones Históricas (Ej: Mod Era, Vintage Era)
+    SELECT COALESCE(json_agg(row_to_json(ch)), '[]'::json) INTO v_historicas 
+    FROM ClasificacionHistorica ch;
+    
+    -- Extraemos las Clasificaciones de Exclusividad (Ej: Pink Label, Gold Label)
+    SELECT COALESCE(json_agg(row_to_json(ce)), '[]'::json) INTO v_exclusividad 
+    FROM ClasificacionExclusividad ce;
+
+    -- Devolvemos un payload unificado
+    RETURN json_build_object(
+        'tipos', v_tipos,
+        'historicas', v_historicas,
+        'exclusividad', v_exclusividad
+    );
+END;
+$$;
+
+-- PASO 2: Obtener catálogos de Tonos de Piel, Moldes de Rostro y Diseños Base
+
+CREATE OR REPLACE FUNCTION obtener_catalogos_diseno_paso2()
+RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE
+    v_tonos json;
+    v_moldes json;
+    v_disenos_base json;
+BEGIN
+    -- Catálogo de Tonos de Piel
+    SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json) INTO v_tonos 
+    FROM TonoPiel t;
+    
+    -- Catálogo de Moldes de Rostro
+    SELECT COALESCE(json_agg(row_to_json(m)), '[]'::json) INTO v_moldes 
+    FROM MoldeRostro m;
+
+    -- Catálogo de Diseños (Para usar como Diseño Padre / Base)
+    SELECT COALESCE(json_agg(row_to_json(d)), '[]'::json) INTO v_disenos_base 
+    FROM Diseño d;
+
+    -- Retornamos el payload consolidado
+    RETURN json_build_object(
+        'tonos', v_tonos,
+        'moldes', v_moldes,
+        'disenos_base', v_disenos_base
+    );
+END;
+$$;
+
+-- PASO 3: Obtener catálogos de Tipos de Cuerpo, Profesiones, Restricciones, Piezas y Materiales
+
+CREATE OR REPLACE FUNCTION obtener_catalogos_diseno_paso3()
+RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE
+    v_cuerpos json;
+    v_profesiones json;
+    v_restricciones json;
+    v_piezas json;
+    v_materiales json;
+    v_empleados json;
+BEGIN
+    SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json) INTO v_cuerpos FROM TipoCuerpo t;
+    SELECT COALESCE(json_agg(row_to_json(p)), '[]'::json) INTO v_profesiones FROM Profesion p;
+    SELECT COALESCE(json_agg(row_to_json(r)), '[]'::json) INTO v_restricciones FROM Restriccion r;
+    SELECT COALESCE(json_agg(row_to_json(pz)), '[]'::json) INTO v_piezas FROM Pieza pz;
+    SELECT COALESCE(json_agg(row_to_json(m)), '[]'::json) INTO v_materiales FROM Material m;
+    
+    -- Extraemos empleados con su nombre concatenado
+    SELECT COALESCE(json_agg(row_to_json(e)), '[]'::json) INTO v_empleados 
+    FROM (
+        SELECT idEmpleado, pNombre || ' ' || pApellido AS nombre_completo 
+        FROM Empleado
+    ) e;
+
+    RETURN json_build_object(
+        'cuerpos', v_cuerpos,
+        'profesiones', v_profesiones,
+        'restricciones', v_restricciones,
+        'piezas', v_piezas,
+        'materiales', v_materiales,
+        'empleados', v_empleados
+    );
+END;
+$$;
+
+-- PASO 4: Registrar el Diseño con todos sus componentes (Diseño, Profesiones, Restricciones, BOM, Fases y Pruebas)
+
+CREATE OR REPLACE FUNCTION registrar_genoma_barbie_maestro(p_payload JSON)
+RETURNS JSON LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE
+    v_id_diseno NUMERIC;
+    v_id_fase NUMERIC;
+    v_id_prueba NUMERIC;
+    v_profesion NUMERIC;
+    v_restriccion NUMERIC;
+    v_bom JSON;
+    v_fase JSON;
+    v_prueba JSON;
+BEGIN
+    SELECT COALESCE(MAX(idDiseño), 0) + 1 INTO v_id_diseno FROM Diseño;
+
+    INSERT INTO Diseño (
+        idDiseño, nombre, descripcion, TipoDiseño_idTipoDiseño, ClasificacionHistorica_idClasificacionHistorica,
+        ClasificacionExclusividad_idClasificacionExclusividad, TonoPiel_idTonoPiel, MoldeRostro_idMoldeRostro, Diseño_idDiseño
+    ) VALUES (
+        v_id_diseno, p_payload->>'nombre', p_payload->>'descripcion',
+        (p_payload->>'idTipoDiseno')::NUMERIC, (p_payload->>'idClasificacionHistorica')::NUMERIC,
+        (p_payload->>'idClasificacionExclusividad')::NUMERIC, (p_payload->>'idTonoPiel')::NUMERIC,
+        (p_payload->>'idMoldeRostro')::NUMERIC, NULLIF(p_payload->>'idDisenoBase', '')::NUMERIC
+    );
+
+    IF p_payload->'profesiones' IS NOT NULL THEN
+        FOR v_profesion IN SELECT value::NUMERIC FROM json_array_elements_text(p_payload->'profesiones') LOOP
+            INSERT INTO CurriculumVitae (idCurriculumVitae, añoDeAsignacion, Profesion_idProfesion, Diseño_idDiseño)
+            VALUES (COALESCE((SELECT MAX(idCurriculumVitae) FROM CurriculumVitae), 0) + 1, EXTRACT(YEAR FROM CURRENT_DATE), v_profesion, v_id_diseno);
+        END LOOP;
+    END IF;
+
+    IF p_payload->'restricciones' IS NOT NULL THEN
+        FOR v_restriccion IN SELECT value::NUMERIC FROM json_array_elements_text(p_payload->'restricciones') LOOP
+            INSERT INTO RestriccionDiseño (idRestriccionDiseño, nombre, descripcion, Diseño_idDiseño, Restriccion_idRestriccion, TipoCuerpo_idTipoCuerpo)
+            VALUES (COALESCE((SELECT MAX(idRestriccionDiseño) FROM RestriccionDiseño), 0) + 1, 'Restricción de Fit', 'Automática', v_id_diseno, v_restriccion, (p_payload->>'idTipoCuerpo')::NUMERIC);
+        END LOOP;
+    END IF;
+
+    IF p_payload->'bom' IS NOT NULL THEN
+        FOR v_bom IN SELECT * FROM json_array_elements(p_payload->'bom') LOOP
+            INSERT INTO MaterialDiseño (idMaterialDiseño, cantidad, Diseño_idDiseño, Pieza_idPieza, Material_idMaterial)
+            VALUES (COALESCE((SELECT MAX(idMaterialDiseño) FROM MaterialDiseño), 0) + 1, (v_bom->>'cantidad')::NUMERIC, v_id_diseno, (v_bom->>'idPieza')::NUMERIC, (v_bom->>'idMaterial')::NUMERIC);
+        END LOOP;
+    END IF;
+
+    IF p_payload->'fases' IS NOT NULL THEN
+        FOR v_fase IN SELECT * FROM json_array_elements(p_payload->'fases') LOOP
+            SELECT COALESCE(MAX(idFase), 0) + 1 INTO v_id_fase FROM Fase;
+            INSERT INTO Fase (idFase, nombreFase, descripcionFase, Diseño_idDiseño)
+            VALUES (v_id_fase, v_fase->>'nombre', v_fase->>'descripcion', v_id_diseno);
+
+            INSERT INTO FaseEmpleado (idFaseEmpleado, fechaInicio, fechaFin, Empleado_idEmpleado, Fase_idFase)
+            VALUES (COALESCE((SELECT MAX(idFaseEmpleado) FROM FaseEmpleado), 0) + 1, CURRENT_DATE, NULL, (v_fase->>'idEmpleado')::NUMERIC, v_id_fase);
+        END LOOP;
+    END IF;
+
+    IF p_payload->'pruebas' IS NOT NULL THEN
+        FOR v_prueba IN SELECT * FROM json_array_elements(p_payload->'pruebas') LOOP
+            SELECT COALESCE(MAX(idPrueba), 0) + 1 INTO v_id_prueba FROM Prueba;
+            INSERT INTO Prueba (idPrueba, nombrePrueba, descripcionPrueba, resultado, tipoPrueba, Diseño_idDiseño)
+            VALUES (v_id_prueba, v_prueba->>'nombre', v_prueba->>'descripcion', v_prueba->>'resultado', v_prueba->>'tipo', v_id_diseno);
+
+            INSERT INTO PruebaEmpleado (idPruebaEmpleado, fechaInicio, fechaFin, Prueba_idPrueba, Empleado_idEmpleado)
+            VALUES (COALESCE((SELECT MAX(idPruebaEmpleado) FROM PruebaEmpleado), 0) + 1, CURRENT_DATE, NULL, v_id_prueba, (v_prueba->>'idEmpleado')::NUMERIC);
+        END LOOP;
+    END IF;
+
+    RETURN json_build_object('success', true, 'idGenerado', v_id_diseno);
+EXCEPTION WHEN OTHERS THEN
+    RETURN json_build_object('success', false, 'mensaje', SQLERRM);
+END;
+$$;
+
+-- 2. OTORGAR PERMISOS EXPLÍCITOS A LOS ROLES DE LA API
+GRANT EXECUTE ON FUNCTION registrar_genoma_barbie_maestro(JSON) TO anon, authenticated, service_role;
+
+-- 3. JUGADA MAESTRA: NOTIFICAR A POSTGREST QUE DEBE RECARGAR EL CACHÉ
+NOTIFY pgrst, 'reload schema';
+
+-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+-- NUEVO RPC PARA OBTENER EL CATÁLOGO DE DISEÑOS CON ESTADÍSTICAS REALES
+
+CREATE OR REPLACE FUNCTION obtener_catalogo_disenos()
+RETURNS TABLE (
+    sku VARCHAR,
+    nombre VARCHAR,
+    categoria VARCHAR,
+    label_exclusividad VARCHAR,
+    molde_rostro VARCHAR,
+    stats_totales JSON
+) LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE
+    v_total_disenos INT;
+    v_eras_unicas INT;
+    v_moldes_unicos INT;
+    v_total_restricciones INT;
+    v_stats_json JSON;
+BEGIN
+    -- 1. Calculamos las métricas reales UNA sola vez (Optimización de rendimiento)
+    SELECT COUNT(*)::INT INTO v_total_disenos FROM Diseño;
+    SELECT COUNT(DISTINCT ClasificacionHistorica_idClasificacionHistorica)::INT INTO v_eras_unicas FROM Diseño;
+    SELECT COUNT(DISTINCT MoldeRostro_idMoldeRostro)::INT INTO v_moldes_unicos FROM Diseño;
+    SELECT COUNT(*)::INT INTO v_total_restricciones FROM RestriccionDiseño;
+
+    -- 2. Construimos el payload JSON con las variables correctas
+    v_stats_json := json_build_object(
+        'total_disenos', v_total_disenos,
+        'eras_activas', v_eras_unicas,
+        'moldes_uso', v_moldes_unicos,
+        'restricciones', v_total_restricciones
+    );
+
+    -- 3. Retornamos la tabla plana inyectando la variable JSON ya calculada
+    RETURN QUERY
+    SELECT 
+        ('PRD-' || d.idDiseño)::VARCHAR AS sku,
+        d.nombre::VARCHAR AS nombre,
+        td.nombre::VARCHAR AS categoria,
+        ce.nombre::VARCHAR AS label_exclusividad,
+        mr.nombre::VARCHAR AS molde_rostro,
+        v_stats_json AS stats_totales
+    FROM Diseño d
+    JOIN TipoDiseño td ON d.TipoDiseño_idTipoDiseño = td.idTipoDiseño
+    JOIN ClasificacionExclusividad ce ON d.ClasificacionExclusividad_idClasificacionExclusividad = ce.idClasificacionExclusividad
+    JOIN MoldeRostro mr ON d.MoldeRostro_idMoldeRostro = mr.idMoldeRostro
+    ORDER BY d.idDiseño DESC;
+END;
+$$;

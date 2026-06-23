@@ -1,112 +1,100 @@
 <div class="p-12 bg-white">
-  <div class="max-w-6xl mx-auto">
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-      <div>
-        <h1 class="text-5xl font-bold font-headline text-ebony tracking-tight mb-4 uppercase">Nuevo Producto: Taxonomía y Genoma</h1>
-        <div class="w-32 h-1 bg-primary mb-4"></div>
-        <p class="text-neutral-gray font-medium flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-vibrant animate-pulse"></span>
-          Configuración de atributos físicos y genoma del producto (Categoría: Muñeca)
-        </p>
-      </div>
-      <div class="flex flex-col items-end gap-2">
-        <span class="text-xs font-black text-vibrant font-headline uppercase tracking-widest">PASO 2 DE 4</span>
-        <div class="w-48 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-          <div class="w-1/2 h-full bg-vibrant"></div>
+    <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div>
+                <h1 class="text-5xl font-bold font-headline text-ebony tracking-tight mb-4 uppercase">Nuevo Diseño: Taxonomía y Genoma</h1>
+                <div class="w-32 h-1 bg-primary mb-4"></div>
+                <p class="text-neutral-gray font-medium flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-vibrant animate-pulse"></span>
+                    Configuración de atributos físicos y genoma base
+                </p>
+            </div>
+            <div class="flex flex-col items-end gap-2">
+                <span class="text-xs font-black text-vibrant font-headline uppercase tracking-widest">PASO 2 DE 4</span>
+                <div class="w-48 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="w-2/4 h-full bg-vibrant"></div>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="space-y-10" *ngIf="!cargando">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+                <div class="form-field flex flex-col gap-3">
+                    <label class="text-[11px] font-black text-neutral-gray uppercase tracking-widest">Molde de Rostro (Genoma Base)</label>
+                    <div class="relative">
+                        <select [(ngModel)]="wizardService.borrador.idMoldeRostro"
+                            class="w-full appearance-none bg-surface/30 border border-gray-200 rounded-none p-4 pr-12 focus:ring-1 focus:ring-vibrant focus:border-vibrant text-ebony font-medium">
+                            <option [ngValue]="null" disabled>Seleccione un molde de rostro...</option>
+                            @for (molde of catalogos.moldes; track $index) {
+                                <option [ngValue]="molde.id">{{ molde.nombre }}</option>
+                            }
+                        </select>
+                        <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">face</span>
+                    </div>
+                    @for (molde of catalogos.moldes; track $index) {
+                        @if (wizardService.borrador.idMoldeRostro === molde.id) {
+                            <p class="text-[10px] text-vibrant italic mt-1">{{ molde.detalle }}</p>
+                        }
+                    }
+                </div>
+
+                <div class="form-field flex flex-col gap-3">
+                    <label class="text-[11px] font-black text-neutral-gray uppercase tracking-widest">Tono de Piel (Pigmentación)</label>
+                    <div class="relative">
+                        <select [(ngModel)]="wizardService.borrador.idTonoPiel"
+                            class="w-full appearance-none bg-surface/30 border border-gray-200 rounded-none p-4 pr-12 focus:ring-1 focus:ring-vibrant focus:border-vibrant text-ebony font-medium">
+                            <option [ngValue]="null" disabled>Seleccione el nivel de pigmentación...</option>
+                            @for (tono of catalogos.tonos; track $index) {
+                                <option [ngValue]="tono.id">{{ tono.nombre }} - {{ tono.detalle }}</option>
+                            }
+                        </select>
+                        <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">palette</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="form-field flex flex-col gap-3">
+                    <label class="text-[11px] font-black text-neutral-gray uppercase tracking-widest">Diseño Padre / Variante Base (Opcional)</label>
+                    <div class="relative">
+                        <select [(ngModel)]="wizardService.borrador.idDisenoBase"
+                            class="w-full appearance-none bg-surface/30 border border-gray-200 rounded-none p-4 pr-12 focus:ring-1 focus:ring-vibrant focus:border-vibrant text-ebony font-medium">
+                            <option [ngValue]="null">Ninguno (Diseño Original)</option>
+                            @for (diseno of catalogos.disenosBase; track $index) {
+                                <option [ngValue]="diseno.id">{{ diseno.nombre }}</option>
+                            }
+                        </select>
+                        <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">account_tree</span>
+                    </div>
+                    <p class="text-[10px] text-neutral-gray mt-1">Seleccione si este SKU hereda el árbol logístico de una edición anterior.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
+                <div class="border border-gray-200 p-8 flex flex-col gap-4 group hover:border-vibrant transition-all duration-300">
+                    <span class="material-symbols-outlined text-vibrant text-3xl">brush</span>
+                    <h4 class="font-bold text-ebony uppercase text-xs tracking-widest">Impacto en Pigmento</h4>
+                    <p class="text-xs text-neutral-gray leading-relaxed">Recálculo de costos BOM según tono de piel.</p>
+                </div>
+                <div class="border border-dashed border-gray-300 p-8 flex flex-col gap-4 group hover:border-vibrant transition-all duration-300 bg-white">
+                    <span class="material-symbols-outlined text-gray-400 group-hover:text-vibrant text-3xl transition-colors">description</span>
+                    <h4 class="font-bold text-ebony uppercase text-xs tracking-widest">Validación de Patente</h4>
+                    <p class="text-xs text-neutral-gray leading-relaxed">El sistema validará los derechos del Molde seleccionado.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-20 flex justify-between items-center gap-6 pb-20">
+            <button type="button" routerLink="/paso1" class="px-8 py-4 font-bold text-xs uppercase tracking-widest text-neutral-gray hover:text-ebony transition-all flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">arrow_back</span>
+                Atrás
+            </button>
+            <button type="button" (click)="avanzarPaso3()" class="bg-vibrant text-white px-10 py-4 font-bold text-xs uppercase tracking-widest hover:bg-primary transition-all flex items-center gap-4 group">
+                Siguiente: Ajuste Físico
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </button>
+        </div>
     </div>
-
-    <div class="space-y-10">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div class="form-field flex flex-col gap-3">
-          <label class="text-[11px] font-black text-neutral-gray uppercase tracking-widest">Face Sculpt (Molde de Rostro)</label>
-          <div class="relative">
-            <select class="w-full appearance-none bg-surface/30 border border-gray-200 rounded-none p-4 pr-12 focus:ring-1 focus:ring-vibrant focus:border-vibrant text-ebony font-medium transition-all">
-              <option>Mackie 1991</option>
-              <option>Superstar 1976</option>
-              <option>Millie 2015</option>
-            </select>
-            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">expand_more</span>
-          </div>
-        </div>
-        <div class="form-field flex flex-col gap-3">
-          <label class="text-[11px] font-black text-neutral-gray uppercase tracking-widest">Tono de Piel</label>
-          <div class="relative">
-            <select class="w-full appearance-none bg-surface/30 border border-gray-200 rounded-none p-4 pr-12 focus:ring-1 focus:ring-vibrant focus:border-vibrant text-ebony font-medium transition-all">
-              <option>Claro</option>
-              <option>Medio</option>
-              <option>Bronceado</option>
-              <option>Oscuro</option>
-              <option>Fantasía</option>
-            </select>
-            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">expand_more</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div class="form-field flex flex-col gap-3">
-          <label class="text-[11px] font-black text-neutral-gray uppercase tracking-widest">Tipo de Cuerpo</label>
-          <div class="relative">
-            <select class="w-full appearance-none bg-surface/30 border border-gray-200 rounded-none p-4 pr-12 focus:ring-1 focus:ring-vibrant focus:border-vibrant text-ebony font-medium transition-all">
-              <option>Original</option>
-              <option>Curvy</option>
-              <option>Petite</option>
-              <option>Tall</option>
-              <option>Made-to-Move</option>
-            </select>
-            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">expand_more</span>
-          </div>
-        </div>
-        <div class="form-field flex flex-col gap-3">
-          <label class="text-[11px] font-black text-neutral-gray uppercase tracking-widest">Color de Ojos</label>
-          <div class="relative">
-            <select class="w-full appearance-none bg-surface/30 border border-gray-200 rounded-none p-4 pr-12 focus:ring-1 focus:ring-vibrant focus:border-vibrant text-ebony font-medium transition-all">
-              <option>Azul</option>
-              <option>Verde</option>
-              <option>Marrón</option>
-              <option>Avellana</option>
-              <option>Fantasía</option>
-            </select>
-            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">expand_more</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-field flex flex-col gap-3">
-        <label class="text-[11px] font-black text-neutral-gray uppercase tracking-widest">Metadata Técnica del Genoma</label>
-        <textarea class="w-full bg-surface/30 border border-gray-200 rounded-none p-4 focus:ring-1 focus:ring-vibrant focus:border-vibrant text-ebony placeholder:text-gray-400 transition-all resize-none" placeholder="Ingrese metadatos de ingeniería para consistencia de producción..." rows="5"></textarea>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8">
-        <div class="border border-gray-200 p-8 flex flex-col gap-4 group hover:border-vibrant transition-all duration-300 bg-white shadow-sm">
-          <span class="material-symbols-outlined text-vibrant text-3xl">biotech</span>
-          <h4 class="font-bold text-ebony uppercase text-xs tracking-widest">Sincronización de Moldes</h4>
-          <p class="text-xs text-neutral-gray leading-relaxed">Taxonomía vinculada con sistemas de inyección.</p>
-        </div>
-        <div class="border border-gray-200 p-8 flex flex-col gap-4 group hover:border-vibrant transition-all duration-300 bg-white shadow-sm">
-          <span class="material-symbols-outlined text-vibrant text-3xl">palette</span>
-          <h4 class="font-bold text-ebony uppercase text-xs tracking-widest">Impacto en Pigmento</h4>
-          <p class="text-xs text-neutral-gray leading-relaxed">Recálculo de costos BOM según tono de piel.</p>
-        </div>
-        <div class="border border-dashed border-gray-300 p-8 flex flex-col gap-4 group hover:border-vibrant transition-all duration-300 bg-white">
-          <span class="material-symbols-outlined text-gray-400 group-hover:text-vibrant text-3xl transition-colors">description</span>
-          <h4 class="font-bold text-ebony uppercase text-xs tracking-widest">Blueprint 3D</h4>
-          <p class="text-xs text-neutral-gray leading-relaxed">Metadata para validar modelos industriales.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-20 flex justify-between items-center gap-6 pb-20">
-      <button type="button" routerLink="/paso1" class="px-8 py-4 font-bold text-xs uppercase tracking-widest text-neutral-gray hover:text-ebony transition-all flex items-center gap-2">
-        <span class="material-symbols-outlined text-sm">arrow_back</span>
-        Atrás
-      </button>
-      <button type="button" routerLink="/paso3" class="bg-vibrant text-white px-10 py-4 font-bold text-xs uppercase tracking-widest hover:bg-primary transition-all flex items-center gap-4 group">
-        Siguiente: Receta BOM (Lista de Materiales)
-        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-      </button>
-    </div>
-  </div>
 </div>

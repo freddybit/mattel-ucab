@@ -1,139 +1,105 @@
-<div class="bg-white">
-  <!-- Header -->
-  <div class="px-12 py-8 border-b border-gray-100 shadow-sm">
-    <div class="max-w-4xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
-      <div>
-        <div class="flex items-center gap-3 mb-4">
-          <span class="text-[10px] font-black bg-ebony text-white px-2 py-0.5 uppercase tracking-widest">PASO 4 DE 4</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
-          <span class="text-[10px] font-black text-neutral-gray uppercase tracking-widest">WIZARD DE CREACIÓN</span>
+<div class="bg-white min-h-screen">
+    <div class="px-12 py-8 border-b border-gray-100 shadow-sm">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-[10px] font-black bg-ebony text-white px-2 py-0.5 uppercase tracking-widest">PASO 4 DE 4</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+                    <span class="text-[10px] font-black text-neutral-gray uppercase tracking-widest">WIZARD DE CREACIÓN</span>
+                </div>
+                <h1 class="text-5xl font-bold font-headline text-ebony tracking-tight uppercase">RESUMEN FINAL</h1>
+                <p class="text-neutral-gray font-medium mt-4 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-vibrant animate-pulse"></span>
+                    Revisión final de especificaciones antes del registro PLM
+                </p>
+            </div>
+            <div class="w-full md:w-64 space-y-2">
+                <div class="flex justify-between text-[10px] font-black text-ebony uppercase tracking-widest">
+                    <span>PROGRESO</span>
+                    <span>100%</span>
+                </div>
+                <div class="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="w-full h-full bg-vibrant"></div>
+                </div>
+            </div>
         </div>
-        <h1 class="text-5xl font-bold font-headline text-ebony tracking-tight uppercase">RESUMEN FINAL</h1>
-        <p class="text-neutral-gray font-medium mt-4 flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-vibrant animate-pulse"></span>
-          Revisión final de especificaciones antes del registro PLM
-        </p>
-      </div>
-      <div class="w-full md:w-64 space-y-2">
-        <div class="flex justify-between text-[10px] font-black text-ebony uppercase tracking-widest">
-          <span>PROGRESO</span>
-          <span>100%</span>
-        </div>
-        <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-          <div class="h-full bg-vibrant w-full"></div>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- Content -->
-  <div class="p-12 blueprint-grid">
-    <div class="max-w-4xl mx-auto">
-      <div class="bg-white border border-gray-200 shadow-sm overflow-hidden">
-        <div class="h-32 bg-gradient-to-r from-industrial-maroon to-vibrant-pink relative flex items-end p-8">
-          <h2 class="text-4xl font-bold font-headline text-white leading-none">Resumen Final</h2>
-          <div class="absolute top-4 right-8 opacity-10">
-            <span class="material-symbols-outlined text-8xl text-white">verified</span>
-          </div>
+    <div class="p-12">
+        <div class="max-w-4xl mx-auto">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="border border-gray-200 p-8 bg-surface-muted/30">
+                    <h3 class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-6 border-b border-gray-200 pb-2">Información General (Paso 1)</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <span class="block text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">Nombre del Diseño</span>
+                            <span class="text-sm font-bold text-ebony">{{ wizardService.borrador.nombre }}</span>
+                        </div>
+                        <div>
+                            <span class="block text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">Descripción Conceptual</span>
+                            <span class="text-xs text-neutral-gray leading-relaxed">{{ wizardService.borrador.descripcion || 'Sin descripción' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 p-8 bg-surface-muted/30">
+                    <h3 class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-6 border-b border-gray-200 pb-2">Métricas de Ingeniería (Pasos 2 y 3)</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white p-4 border border-gray-100 text-center">
+                            <span class="block text-2xl font-black text-industrial-maroon mb-1">{{ wizardService.borrador.bom.length }}</span>
+                            <span class="block text-[9px] font-bold text-neutral-gray uppercase tracking-widest">Items BOM</span>
+                        </div>
+                        <div class="bg-white p-4 border border-gray-100 text-center">
+                            <span class="block text-2xl font-black text-vibrant mb-1">{{ wizardService.borrador.restricciones.length }}</span>
+                            <span class="block text-[9px] font-bold text-neutral-gray uppercase tracking-widest">Fits/Restric.</span>
+                        </div>
+                        <div class="bg-white p-4 border border-gray-100 text-center">
+                            <span class="block text-2xl font-black text-ebony mb-1">{{ wizardService.borrador.fases.length }}</span>
+                            <span class="block text-[9px] font-bold text-neutral-gray uppercase tracking-widest">Fases Logísticas</span>
+                        </div>
+                        <div class="bg-white p-4 border border-gray-100 text-center">
+                            <span class="block text-2xl font-black text-ebony mb-1">{{ wizardService.borrador.pruebas.length }}</span>
+                            <span class="block text-[9px] font-bold text-neutral-gray uppercase tracking-widest">Pruebas QA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 p-6 bg-amber-50 border border-amber-200 flex gap-4">
+                <span class="material-symbols-outlined text-amber-500">info</span>
+                <p class="text-xs text-amber-800 leading-relaxed font-medium">
+                    Al confirmar, el Diseño será registrado en el Genoma global de la corporación. Se ejecutarán múltiples transacciones en PostgreSQL. Asegúrese de que los datos sean correctos.
+                </p>
+            </div>
+
+            <div class="mt-12 flex justify-between items-center border-t border-gray-200 pt-8">
+                <button type="button" routerLink="/paso3" [disabled]="procesandoGuardado" class="px-8 py-4 font-bold text-xs uppercase tracking-widest text-neutral-gray hover:text-ebony transition-all flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span> Retornar a Edición
+                </button>
+                <button type="button" (click)="confirmarProducto()" [disabled]="procesandoGuardado" class="bg-green-600 text-white px-10 py-4 font-black text-xs uppercase tracking-widest hover:bg-green-700 transition-all flex items-center gap-4 shadow-lg disabled:opacity-50">
+                    {{ procesandoGuardado ? 'EJECUTANDO TRANSACCIÓN...' : 'CONFIRMAR Y GUARDAR EN PLM' }}
+                    <span class="material-symbols-outlined text-sm">{{ procesandoGuardado ? 'hourglass_empty' : 'save' }}</span>
+                </button>
+            </div>
         </div>
-        <div class="p-10 space-y-12">
-          <section>
-            <div class="flex items-center gap-3 mb-6">
-              <span class="material-symbols-outlined text-industrial-maroon">fingerprint</span>
-              <h3 class="text-xs font-black text-ebony uppercase tracking-widest">Identificación del Producto</h3>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-surface/50 p-6">
-              <div>
-                <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">Nombre del Producto</p>
-                <p class="text-lg font-bold text-ebony">Barbie Edición Especial 2026</p>
-              </div>
-              <div>
-                <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">SKU Base</p>
-                <p class="text-lg font-bold text-ebony">MTL-BAR-9999</p>
-              </div>
-              <div>
-                <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">Categoría</p>
-                <p class="text-lg font-bold text-ebony">Muñeca</p>
-              </div>
-              <div>
-                <p class="text-[10px] font-black text-neutral-gray uppercase tracking-widest mb-1">Línea de Rareza</p>
-                <span class="inline-block mt-1 px-3 py-1 bg-white border-2 border-industrial-maroon text-industrial-maroon text-[10px] font-black uppercase">Platinum Label</span>
-              </div>
-            </div>
-          </section>
-          <section>
-            <div class="flex items-center gap-3 mb-6">
-              <span class="material-symbols-outlined text-industrial-maroon">biotech</span>
-              <h3 class="text-xs font-black text-ebony uppercase tracking-widest">Genoma del Producto</h3>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div class="p-4 bg-white border border-gray-100 shadow-sm">
-                <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Esculpido</p>
-                <p class="text-sm font-bold text-ebony">Mackie 1991</p>
-              </div>
-              <div class="p-4 bg-white border border-gray-100 shadow-sm">
-                <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Tono Piel</p>
-                <p class="text-sm font-bold text-ebony">Bronceado</p>
-              </div>
-              <div class="p-4 bg-white border border-gray-100 shadow-sm">
-                <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Cuerpo</p>
-                <p class="text-sm font-bold text-ebony">Curvy</p>
-              </div>
-              <div class="p-4 bg-white border border-gray-100 shadow-sm">
-                <p class="text-[9px] font-black text-neutral-gray uppercase mb-2">Ojos</p>
-                <p class="text-sm font-bold text-ebony">Verde</p>
-              </div>
-            </div>
-          </section>
-          <section>
-            <div class="flex items-center gap-3 mb-6">
-              <span class="material-symbols-outlined text-industrial-maroon">inventory_2</span>
-              <h3 class="text-xs font-black text-ebony uppercase tracking-widest">Receta BOM (Bill of Materials)</h3>
-            </div>
-            <div class="p-6 bg-pink-50 border-l-4 border-vibrant-pink flex items-center justify-between">
-              <div>
-                <p class="text-sm font-bold text-industrial-maroon">3 Ítems seleccionados</p>
-                <p class="text-[10px] text-neutral-gray font-medium uppercase mt-1">Vestido Gala Pink, Bolso Ejecutivo, Zapatos Tacón Alto</p>
-              </div>
-              <span class="material-symbols-outlined text-vibrant-pink">check_circle</span>
-            </div>
-          </section>
-        </div>
-        <div class="p-8 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
-          <button type="button" routerLink="/paso3" class="px-8 py-4 text-xs font-black uppercase tracking-widest text-neutral-gray hover:text-ebony flex items-center gap-3 transition-colors">
-            <span class="material-symbols-outlined text-sm">arrow_back</span>
-            ATRÁS
-          </button>
-          <button type="button" (click)="confirmarProducto()" class="px-10 py-4 bg-vibrant-pink text-white font-black text-xs uppercase tracking-widest hover:bg-industrial-maroon shadow-lg flex items-center gap-4 transition-all">
-            CONFIRMAR Y CREAR PRODUCTO
-            <span class="material-symbols-outlined text-sm">check_circle</span>
-          </button>
-        </div>
-      </div>
-      <div class="mt-12 p-6 bg-white/50 border border-dashed border-gray-300 rounded-lg flex gap-4">
-        <span class="material-symbols-outlined text-amber-500">info</span>
-        <p class="text-xs text-neutral-gray leading-relaxed">
-          Al confirmar, el producto será registrado en el catálogo global y se iniciarán los procesos de logística y finanzas correspondientes. Asegúrese de que todos los datos sean correctos.
-        </p>
-      </div>
     </div>
-  </div>
 </div>
 
 @if (showModal) {
-  <div class="fixed inset-0 z-[100] flex items-center justify-center bg-ebony/60 backdrop-blur-sm">
-    <div class="bg-white p-12 max-w-md w-full text-center shadow-2xl">
-      <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
-        <span class="material-symbols-outlined text-5xl">check_circle</span>
-      </div>
-      <h3 class="text-2xl font-bold font-headline text-ebony mb-4 uppercase tracking-tight">¡Producto Creado!</h3>
-      <p class="text-neutral-gray mb-10 text-sm font-medium">
-        La unidad ha sido registrada exitosamente con el SKU:
-        <span class="text-industrial-maroon font-bold">MTL-BAR-9999</span>
-      </p>
-      <button type="button" routerLink="/ingenieria" (click)="showModal = false" class="w-full py-4 bg-ebony text-white font-black text-xs uppercase tracking-widest hover:bg-industrial-maroon transition-colors">
-        Volver a Ingeniería
-      </button>
+    <div class="fixed inset-0 z-[100] flex items-center justify-center bg-ebony/60 backdrop-blur-sm">
+        <div class="bg-white p-12 max-w-md w-full text-center shadow-2xl">
+            <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
+                <span class="material-symbols-outlined text-5xl">check_circle</span>
+            </div>
+            <h3 class="text-2xl font-bold font-headline text-ebony mb-4 uppercase tracking-tight">¡Genoma Creado!</h3>
+            <p class="text-neutral-gray mb-10 text-sm font-medium leading-relaxed">
+                La unidad de diseño ha sido registrada exitosamente<br>
+
+            </p>
+            <button (click)="finalizarProceso()" class="w-full bg-ebony text-white py-4 font-black text-xs uppercase tracking-widest hover:bg-neutral-gray transition-colors">
+                Finalizar e ir al Dashboard
+            </button>
+        </div>
     </div>
-  </div>
 }

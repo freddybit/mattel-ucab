@@ -1,170 +1,216 @@
-<div class="bg-white">
-  <!-- Header -->
-  <div class="px-12 py-8 border-b border-gray-100">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
-      <div>
-        <div class="flex items-center gap-3 mb-4">
-          <span class="text-[10px] font-black bg-ebony text-white px-2 py-0.5 uppercase tracking-widest">PASO 3 DE 4</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
-          <span class="text-[10px] font-black text-neutral-gray uppercase tracking-widest">Manufacturing Workflow</span>
+<div class="p-12 bg-white">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div>
+                <h1 class="text-5xl font-bold font-headline text-ebony tracking-tight mb-4 uppercase">Nuevo Diseño: Fits, BOM y QA</h1>
+                <div class="w-32 h-1 bg-primary mb-4"></div>
+                <p class="text-neutral-gray font-medium flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-vibrant animate-pulse"></span>
+                    Configuración de ingeniería, manufactura y auditoría
+                </p>
+            </div>
+            <div class="flex flex-col items-end gap-2">
+                <span class="text-xs font-black text-vibrant font-headline uppercase tracking-widest">PASO 3 DE 4</span>
+                <div class="w-48 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="w-3/4 h-full bg-vibrant"></div>
+                </div>
+            </div>
         </div>
-        <h1 class="text-5xl font-bold font-headline text-ebony tracking-tight uppercase">Nuevo Producto: Receta BOM y Fits</h1>
-        <p class="text-neutral-gray font-medium mt-4 flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-vibrant animate-pulse"></span>
-          Configuración de lista de materiales y validación de compatibilidad física
-        </p>
-      </div>
-      <div class="w-full md:w-64 space-y-2">
-        <div class="flex justify-between text-[10px] font-black text-ebony uppercase tracking-widest">
-          <span>Progreso</span>
-          <span>75%</span>
-        </div>
-        <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-          <div class="h-full bg-vibrant w-3/4"></div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Content -->
-  <div class="p-12 bg-surface">
-    <div class="max-w-6xl mx-auto grid grid-cols-12 gap-10">
-      <div class="col-span-12 lg:col-span-7 space-y-6">
-        <div class="bg-white p-8 border border-gray-200 shadow-sm">
-          <div class="flex items-center justify-between mb-8">
-            <h3 class="text-xs font-black text-ebony uppercase tracking-widest">Catálogo de Componentes</h3>
-            <div class="w-1/2 relative">
-              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">search</span>
-              <input class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-none focus:ring-1 focus:ring-vibrant focus:border-vibrant text-xs font-medium" placeholder="Buscar por nombre..." type="text"/>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="group border border-gray-200 p-4 hover:border-vibrant transition-all bg-white flex gap-4">
-              <div class="w-16 h-16 bg-gray-50 flex-shrink-0">
-                <img alt="Vestido Gala" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsOrjfXfFekMADqT65tCInrKwxTLTq4Y9tE9hn5tVkQq8ulLFHYcQALWEAHAgPJnc_4av0o0Vd8PjGPh4M36OG-DnpvH-VxlAnGkqlQ8kcao_1H7cW2Dp7kTV9CECbK2QXnbyef5FN1XwUT8q2ZI9ytLyLUvrEgqdhkq_iKAmnQPq2u-leZL1N5uq8qdFmN-_0lcdC9ne6_6E8u2xm_vBnqeo_UyqeXF9DBG3XqwwSeQyFesGvsA_CLpLsoZ_wqrCyX2oi_EY1O-w"/>
-              </div>
-              <div class="flex-1 flex flex-col justify-between">
-                <div>
-                  <h4 class="text-xs font-bold text-ebony">Vestido Gala Pink</h4>
-                  <span class="inline-block mt-1 text-[9px] font-black text-neutral-gray border border-gray-200 px-1.5 py-0.5 uppercase">FIT: ORIGINAL</span>
-                </div>
-                <div class="flex justify-end">
-                  <button type="button" class="bg-ebony text-white w-6 h-6 flex items-center justify-center hover:bg-vibrant transition-colors">
-                    <span class="material-symbols-outlined text-sm">add</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="group border border-gray-200 p-4 hover:border-vibrant transition-all bg-white flex gap-4">
-              <div class="w-16 h-16 bg-gray-50 flex-shrink-0">
-                <img alt="Zapatos" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1psHTBm4bKlYygUmArj7My1cTrWuU1mfNCgD_LtiqWLKfu7TZ6cXLs_ZBy5g2fvP8EPiVVsozUl89Ki1c4INZQ_iMooPTI9s17hvn822yKnvCfPcXUJWzvH-9Do4tHWWyRhCXqGzP3JJSKEFLRFc8wMH2cZpD7UNd3cYJ0_jkswbD7OHp2A366JKf0Mv6HpcNRT9mDgRTyLoLXi7DLye-XTLeX_nhTaQEz7jfMnyhRaQYdy4qrTVIZyGqPU9n2zof9GLwVJU9SDM"/>
-              </div>
-              <div class="flex-1 flex flex-col justify-between">
-                <div>
-                  <h4 class="text-xs font-bold text-ebony">Zapatos Tacón Alto</h4>
-                  <span class="inline-block mt-1 text-[9px] font-black text-neutral-gray border border-gray-200 px-1.5 py-0.5 uppercase">FIT: TACÓN</span>
-                </div>
-                <div class="flex justify-end">
-                  <button type="button" class="bg-ebony text-white w-6 h-6 flex items-center justify-center hover:bg-vibrant transition-colors">
-                    <span class="material-symbols-outlined text-sm">add</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="group border border-gray-200 p-4 hover:border-vibrant transition-all bg-white flex gap-4">
-              <div class="w-16 h-16 bg-gray-50 flex-shrink-0">
-                <img alt="Bolso" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhdoKe37q-tp3kwWup-cbhWIxHGVgBCkVGNPWLTloiwgfxpdA696Wz8f9RIJjEJKtK28qcrXW6LDLc34hpjKNEACiAe7dLFO-shPTvcCxh2dWBbRWJbmVjr9Ou3mwUTLZmuPsJkTldlMbtGyIQjVtfxixjW6vHZBQTqJKoWCq0BUr7eMBPTVOvPoytNKyRqfbCm96C4InjDL_6biWyzivi1QguyI82S010nxvYukziMgXItfobxzjjNCnqcNvdDyoiubZbkCPjIyQ"/>
-              </div>
-              <div class="flex-1 flex flex-col justify-between">
-                <div>
-                  <h4 class="text-xs font-bold text-ebony">Bolso Ejecutivo</h4>
-                  <span class="inline-block mt-1 text-[9px] font-black text-neutral-gray border border-gray-200 px-1.5 py-0.5 uppercase">FIT: UNIVERSAL</span>
-                </div>
-                <div class="flex justify-end">
-                  <button type="button" class="bg-ebony text-white w-6 h-6 flex items-center justify-center hover:bg-vibrant transition-colors">
-                    <span class="material-symbols-outlined text-sm">add</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="group border border-gray-200 p-4 hover:border-vibrant transition-all bg-white flex gap-4">
-              <div class="w-16 h-16 bg-gray-50 flex-shrink-0">
-                <img alt="Collar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCk_Q14vbBGfp_J0gic-7g7aVrFhkzFp-a1Pklxwhv4FrW3K3J30wBWRoiLs3oUgC3_8OvzQWhu_4sL6iY4sbss9CVAR_ewHjyMfB6Mzr5HXe73X8rF8NzJK-L_nIZLpqCi2DV7LvMoVlb5MEh7EJmrQzsKYNLvrMn0dS0DY_lvay9hyXMdCs66jxF7toQIDxlZiFHlclOjPPf23UtZ1EFPskFAJ6C_o9-GhSwAngcudROJ-TD4j2ssBkmp3gcQ-EyrK7s83NadQDU"/>
-              </div>
-              <div class="flex-1 flex flex-col justify-between">
-                <div>
-                  <h4 class="text-xs font-bold text-ebony">Collar Perlas</h4>
-                  <span class="inline-block mt-1 text-[9px] font-black text-neutral-gray border border-gray-200 px-1.5 py-0.5 uppercase">FIT: UNIVERSAL</span>
-                </div>
-                <div class="flex justify-end">
-                  <button type="button" class="bg-ebony text-white w-6 h-6 flex items-center justify-center hover:bg-vibrant transition-colors">
-                    <span class="material-symbols-outlined text-sm">add</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-span-12 lg:col-span-5 space-y-6">
-        <div class="bg-white p-8 border border-gray-200 shadow-sm h-full flex flex-col">
-          <h3 class="text-xs font-black text-ebony uppercase tracking-widest mb-8 shrink-0">BOM - Receta Activa</h3>
-          <div class="flex-1 space-y-4">
-            <div class="flex items-center justify-between p-4 bg-gray-50 border border-gray-100">
-              <div class="flex items-center gap-3">
-                <span class="material-symbols-outlined text-green-600 text-lg">check_circle</span>
-                <div>
-                  <p class="text-xs font-bold text-ebony uppercase">Vestido Gala Pink</p>
-                  <p class="text-[9px] font-bold text-neutral-gray tracking-wider">SKU: MTL-GALA-001</p>
-                </div>
-              </div>
-              <button type="button" class="material-symbols-outlined text-gray-400 hover:text-red-500 text-sm">delete</button>
-            </div>
-            <div class="flex items-center justify-between p-4 bg-gray-50 border border-gray-100">
-              <div class="flex items-center gap-3">
-                <span class="material-symbols-outlined text-green-600 text-lg">check_circle</span>
-                <div>
-                  <p class="text-xs font-bold text-ebony uppercase">Bolso Ejecutivo</p>
-                  <p class="text-[9px] font-bold text-neutral-gray tracking-wider">SKU: MTL-ACC-042</p>
-                </div>
-              </div>
-              <button type="button" class="material-symbols-outlined text-gray-400 hover:text-red-500 text-sm">delete</button>
-            </div>
-            <div class="p-5 bg-red-50 border border-red-100">
-              <div class="flex gap-4">
-                <span class="material-symbols-outlined text-vibrant-pink text-xl">warning</span>
-                <div class="flex-1">
-                  <div class="flex justify-between items-start">
-                    <p class="text-xs font-black text-red-900 uppercase tracking-tight">Advertencia: Zapatos Tacón Alto</p>
-                    <button type="button" class="material-symbols-outlined text-red-300 hover:text-red-600 text-sm">close</button>
-                  </div>
-                  <p class="text-[10px] font-medium text-red-700 mt-1 leading-relaxed">Incompatibilidad física detectada: El ítem seleccionado no es compatible con el pie plano del cuerpo base.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mt-8 pt-6 border-t border-gray-100 shrink-0">
-            <div class="flex justify-between items-center">
-              <span class="text-[10px] font-black text-neutral-gray uppercase tracking-widest">Resumen de Lista</span>
-              <span class="text-xs font-black text-ebony uppercase">3 ITEMS SELECCIONADOS</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        <div class="space-y-12" *ngIf="!cargando">
 
-  <!-- Footer -->
-  <div class="border-t border-gray-100 px-12 py-6">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <button type="button" routerLink="/paso2" class="px-8 py-4 font-black text-xs uppercase tracking-widest text-neutral-gray hover:text-ebony transition-all flex items-center gap-3">
-        <span class="material-symbols-outlined text-sm">arrow_back</span>
-        Atrás
-      </button>
-      <button type="button" routerLink="/paso4" class="px-10 py-4 bg-vibrant text-white font-black text-xs uppercase tracking-widest hover:bg-primary transition-all shadow-lg flex items-center gap-4 group">
-        Siguiente: Resumen y Confirmación
-        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-      </button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="form-field flex flex-col gap-3">
+                    <label class="text-[11px] font-black text-neutral-gray uppercase tracking-widest">Tipo de Cuerpo Base (Obligatorio)</label>
+                    <div class="relative">
+                        <select [(ngModel)]="wizardService.borrador.idTipoCuerpo"
+                            class="w-full appearance-none bg-surface/30 border border-gray-200 rounded-none p-4 pr-12 focus:ring-1 focus:ring-vibrant focus:border-vibrant text-ebony font-medium">
+                            <option [ngValue]="null" disabled>Seleccione el tipo de cuerpo...</option>
+                            @for (cuerpo of catalogos.cuerpos; track $index) {
+                                <option [ngValue]="cuerpo.id">{{ cuerpo.nombre }}</option>
+                            }
+                        </select>
+                        <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">accessibility_new</span>
+                    </div>
+                </div>
+
+                <div class="form-field flex flex-col gap-3">
+                    <label class="text-[11px] font-black text-neutral-gray uppercase tracking-widest">Asignar Profesión (CV)</label>
+                    <div class="flex gap-2">
+                        <div class="relative flex-1">
+                            <select [(ngModel)]="selProfesion" class="w-full appearance-none bg-surface/30 border border-gray-200 rounded-none p-4 pr-12 text-sm focus:ring-1 focus:ring-vibrant">
+                                <option [ngValue]="null" disabled>Añadir profesión al CV...</option>
+                                @for (prof of catalogos.profesiones; track $index) {
+                                    <option [ngValue]="prof.id">{{ prof.nombre }}</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="button" (click)="agregarProfesion()" class="bg-ebony text-white px-6 uppercase text-xs font-bold hover:bg-neutral-gray transition-colors">Añadir</button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        @for (idProf of wizardService.borrador.profesiones; track $index) {
+                            <span class="px-3 py-1 bg-surface-muted text-ebony text-xs font-bold flex items-center gap-2 border border-gray-200">
+                                {{ obtenerNombreCatalogo(idProf, catalogos.profesiones) }}
+                                <button type="button" (click)="quitarProfesion(idProf)" class="text-vibrant hover:text-red-700 font-bold material-symbols-outlined text-sm">close</button>
+                            </span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-100 pt-10">
+                <div class="form-field flex flex-col gap-3">
+                    <label class="text-[11px] font-black text-neutral-gray uppercase tracking-widest">Restricciones Físicas de Fits</label>
+                    <div class="flex gap-2 md:w-1/2">
+                        <select [(ngModel)]="selRestriccion" class="w-full bg-surface/30 border border-gray-200 p-4 text-sm focus:ring-1 focus:ring-vibrant">
+                            <option [ngValue]="null" disabled>Seleccione restricción aplicable...</option>
+                            @for (res of catalogos.restricciones; track $index) {
+                                <option [ngValue]="res.id">{{ res.nombre }}</option>
+                            }
+                        </select>
+                        <button type="button" (click)="agregarRestriccion()" class="bg-error-container text-on-error-container px-6 uppercase text-xs font-bold hover:opacity-80 transition-colors">Añadir</button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        @for (idRes of wizardService.borrador.restricciones; track $index) {
+                            <span class="px-3 py-1 bg-red-50 text-red-700 text-xs font-bold flex items-center gap-2 border border-red-200">
+                                <span class="material-symbols-outlined text-xs">warning</span>
+                                {{ obtenerNombreCatalogo(idRes, catalogos.restricciones) }}
+                                <button type="button" (click)="quitarRestriccion(idRes)" class="hover:text-red-900 font-bold material-symbols-outlined text-sm">close</button>
+                            </span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+<div class="border-t border-gray-100 pt-10">
+                <h3 class="text-lg font-bold text-ebony mb-4 uppercase tracking-widest">Lista de Materiales y Piezas (BOM)</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 bg-surface-muted/30 p-6 border border-gray-200">
+                    <div class="col-span-1">
+                        <select [(ngModel)]="formBom.idPieza" class="w-full border border-gray-200 p-3 text-sm focus:ring-1 focus:ring-vibrant">
+                            <option [ngValue]="null" disabled>Pieza...</option>
+                            @for (pieza of catalogos.piezas; track $index) {
+                                <option [ngValue]="pieza.id">{{ pieza.nombre }}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-span-1">
+                        <select [(ngModel)]="formBom.idMaterial" class="w-full border border-gray-200 p-3 text-sm focus:ring-1 focus:ring-vibrant">
+                            <option [ngValue]="null" disabled>Material...</option>
+                            @for (mat of catalogos.materiales; track $index) {
+                                <option [ngValue]="mat.id">{{ mat.nombre }}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-span-1">
+                        <input [(ngModel)]="formBom.cantidad" type="number" min="1" placeholder="Cantidad" class="w-full border border-gray-200 p-3 text-sm focus:ring-1 focus:ring-vibrant">
+                    </div>
+                    <div class="col-span-1">
+                        <button type="button" (click)="agregarBom()" class="w-full bg-industrial-maroon text-white h-[46px] text-xs font-bold uppercase tracking-widest hover:bg-vibrant transition-colors">
+                            Insertar en BOM
+                        </button>
+                    </div>
+                </div>
+
+                <table class="w-full text-left border-collapse border border-gray-200">
+                    <thead class="bg-gray-50 text-[10px] uppercase font-black tracking-widest text-neutral-gray">
+                        <tr>
+                            <th class="p-4 border-b border-gray-200">Pieza / Accesorio</th>
+                            <th class="p-4 border-b border-gray-200">Material Componente</th>
+                            <th class="p-4 border-b border-gray-200 text-center">Cantidad</th>
+                            <th class="p-4 border-b border-gray-200 text-right">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of wizardService.borrador.bom; track $index) {
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 border-b border-gray-100 text-sm font-semibold text-ebony">{{ item.nombrePieza }}</td>
+                                <td class="p-4 border-b border-gray-100 text-sm text-neutral-gray">{{ item.nombreMaterial }}</td>
+                                <td class="p-4 border-b border-gray-100 text-sm text-center font-mono font-bold">{{ item.cantidad }}</td>
+                                <td class="p-4 border-b border-gray-100 text-right">
+                                    <button type="button" (click)="quitarBom($index)" class="text-vibrant hover:text-red-700 material-symbols-outlined transition-colors">delete</button>
+                                </td>
+                            </tr>
+                        }
+                        @if (wizardService.borrador.bom.length === 0) {
+                            <tr>
+                                <td colspan="4" class="p-8 text-center text-xs text-gray-400 italic">No hay piezas asignadas a este diseño. El BOM está vacío.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="border-t border-gray-100 pt-10">
+                <h3 class="text-lg font-bold text-ebony mb-4 uppercase tracking-widest">Fases de Ingeniería</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <input [(ngModel)]="formFase.nombre" placeholder="Nombre (Ej: Prototipado)" class="border border-gray-200 p-3 text-sm">
+                    <input [(ngModel)]="formFase.descripcion" placeholder="Descripción breve" class="border border-gray-200 p-3 text-sm">
+                    <select [(ngModel)]="formFase.idEmpleado" class="border border-gray-200 p-3 text-sm">
+                        <option [ngValue]="null" disabled>Responsable...</option>
+                        @for (emp of catalogos.empleados; track $index) {
+                            <option [ngValue]="emp.id">{{ emp.nombre_completo }}</option>
+                        }
+                    </select>
+                    <button type="button" (click)="agregarFase()" class="bg-ebony text-white text-xs font-bold uppercase tracking-widest">Añadir Fase</button>
+                </div>
+                <div class="flex flex-col gap-2">
+                    @for (fase of wizardService.borrador.fases; track $index) {
+                        <div class="flex justify-between items-center bg-gray-50 p-4 border border-gray-100">
+                            <div><p class="text-sm font-bold text-ebony">{{ fase.nombre }}</p></div>
+                            <button (click)="quitarFase($index)" class="text-red-500 material-symbols-outlined">delete</button>
+                        </div>
+                    }
+                </div>
+            </div>
+
+<div class="border-t border-gray-100 pt-10">
+                <h3 class="text-lg font-bold text-ebony mb-4 uppercase tracking-widest">Pruebas de Calidad (QA)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+                    <input [(ngModel)]="formPrueba.nombre" placeholder="Nombre (Ej: Prueba de Caída)" class="border border-gray-200 p-3 text-sm">
+
+                    <input [(ngModel)]="formPrueba.tipo" placeholder="Tipo (Ej: Física, Estrés...)" class="border border-gray-200 p-3 text-sm">
+
+                    <input [(ngModel)]="formPrueba.resultado" placeholder="Resultado (Ej: Aprobado)" class="border border-gray-200 p-3 text-sm">
+
+                    <select [(ngModel)]="formPrueba.idEmpleado" class="border border-gray-200 p-3 text-sm">
+                        <option [ngValue]="null" disabled>Auditor QA...</option>
+                        @for (emp of catalogos.empleados; track $index) {
+                            <option [ngValue]="emp.id">{{ emp.nombre_completo }}</option>
+                        }
+                    </select>
+
+                    <button type="button" (click)="agregarPrueba()" class="bg-industrial-maroon text-white text-xs font-bold uppercase tracking-widest hover:bg-vibrant transition-colors">
+                        Registrar QA
+                    </button>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    @for (prueba of wizardService.borrador.pruebas; track $index) {
+                        <div class="flex justify-between items-center bg-gray-50 p-4 border border-gray-100">
+                            <div>
+                                <p class="text-sm font-bold text-ebony">
+                                    {{ prueba.nombre }}
+                                    <span class="bg-gray-200 px-2 py-0.5 rounded text-[10px]">{{ prueba.tipo }}</span>
+                                </p>
+                                <p class="text-xs text-neutral-gray">Resultado: <span class="font-bold">{{ prueba.resultado }}</span> | Auditor: {{ prueba.nombreEmpleado }}</p>
+                            </div>
+                            <button (click)="quitarPrueba($index)" class="text-red-500 hover:text-red-700 material-symbols-outlined transition-colors">delete</button>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-16 flex justify-between items-center gap-6 pb-20">
+            <button type="button" routerLink="/paso2" class="px-8 py-4 font-bold text-xs uppercase tracking-widest text-neutral-gray hover:text-ebony transition-all flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">arrow_back</span> Atrás
+            </button>
+            <button type="button" (click)="avanzarPaso4()" class="bg-vibrant text-white px-10 py-4 font-bold text-xs uppercase tracking-widest hover:bg-primary transition-all flex items-center gap-4 group">
+                Siguiente: Revisión Final
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </button>
+        </div>
     </div>
-  </div>
 </div>
