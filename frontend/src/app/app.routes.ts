@@ -9,6 +9,7 @@ import { MotorTrazabilidad } from './trazabilidad/motor-trazabilidad/motor-traza
 import { ReportesOficiales } from './trazabilidad/reportes-oficiales/reportes-oficiales';
 import { Personal } from './personal/personal';
 import { Seguridad } from './seguridad/seguridad';
+import { Clientes } from './clientes/clientes';
 import { Paso1 } from './pasos-producto/paso1/paso1';
 import { Paso2 } from './pasos-producto/paso2/paso2';
 import { Paso3 } from './pasos-producto/paso3/paso3';
@@ -34,12 +35,13 @@ export const routes: Routes = [
         canActivate: [RoleGuard],
         data: { permissions: ['CONSULTAR'] },
         children: [
-          { path: '', redirectTo: 'motor', pathMatch: 'full' },
+          { path: '', redirectTo: 'reportes', pathMatch: 'full' },
           { path: 'motor', component: MotorTrazabilidad },
           { path: 'reportes', component: ReportesOficiales },
         ],
       },
       { path: 'personal', component: Personal, canActivate: [RoleGuard], data: { permissions: ['CONSULTAR'] } },
+      { path: 'clientes', component: Clientes, canActivate: [RoleGuard], data: { permissions: ['CONSULTAR'] } },
       { path: 'seguridad', component: Seguridad, canActivate: [RoleGuard], data: { permissions: ['CONSULTAR'] } },
       { path: 'paso1', component: Paso1 },
       { path: 'paso2', component: Paso2 },

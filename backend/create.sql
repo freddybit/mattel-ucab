@@ -103,7 +103,6 @@
          pApellido                                             VARCHAR(150)  NOT NULL,
          sApellido                                             VARCHAR(150),
          direccion                                             VARCHAR(150)  NOT NULL,
-         MonitorActividadSopechosa_idMonitorActividadSopechosa NUMERIC  NOT NULL,
          Lugar_idLugar NUMERIC NOT NULL,
 
         CONSTRAINT pk_cliente_natural_01 PRIMARY KEY (idClienteNatural)
@@ -221,17 +220,15 @@
     );
 
     CREATE TABLE DetalleCompraJuridico (
-         idDetalleCompraJuridico     NUMERIC  NOT NULL,
-         precioUnitario              NUMERIC  NOT NULL,
-         cantidad                    NUMERIC  NOT NULL,
-         estado                      VARCHAR(150)  NOT NULL,
-         Departamento_idDepartamento NUMERIC  NOT NULL,
-         OrdenCompra_idOrdenCompra   NUMERIC  NOT NULL,
-         Caja_idCaja                 NUMERIC  NOT NULL,
-         BackOrder_idBackOrder       NUMERIC  NOT NULL,
+     idDetalleCompraJuridico     BIGINT NOT NULL,
+     OrdenCompra_idOrdenCompra   BIGINT NOT NULL,
+     precioUnitario              NUMERIC(12,2) NOT NULL,
+     cantidad                    INTEGER NOT NULL,
+     estado                      VARCHAR(150) NOT NULL,
+     BackOrder_idBackOrder       BIGINT,
 
-        CONSTRAINT pk_detalle_compra_juridico_01 PRIMARY KEY (idDetalleCompraJuridico, OrdenCompra_idOrdenCompra)
-    );
+    CONSTRAINT pk_detalle_compra_juridico_01 PRIMARY KEY (idDetalleCompraJuridico, OrdenCompra_idOrdenCompra)
+);
 
     CREATE UNIQUE INDEX DetalleCompraJuridico__IDX ON DetalleCompraJuridico ( BackOrder_idBackOrder ASC );
 
@@ -516,12 +513,13 @@
         CONSTRAINT pk_molde_rostro_01 PRIMARY KEY (idMoldeRostro)
     );
 
-    CREATE TABLE MonitorActividadSopechosa (
-         idMonitorActividadSopechosa NUMERIC  NOT NULL UNIQUE,
-         fechaHora                   DATE  NOT NULL,
-         ClienteNatural_idClienteNatural NUMERIC NOT NULL,
+    CREATE TABLE MonitorActividadSospechosa (
+         idMonitorActividadSospechosa    BIGINT NOT NULL,
+         fechaHora                       TIMESTAMP NOT NULL,
+         ClienteNatural_idClienteNatural BIGINT NOT NULL,
 
-        CONSTRAINT pk_monitor_actividad_sospechosa_01 PRIMARY KEY (idMonitorActividadSopechosa)
+        CONSTRAINT pk_monitor_actividad_01 PRIMARY KEY (idMonitorActividadSospechosa),
+        CONSTRAINT fk_monitor_cliente FOREIGN KEY (ClienteNatural_idClienteNatural) REFERENCES ClienteNatural (idClienteNatural)
     );
 
     CREATE TABLE ObjetivoGlobal (

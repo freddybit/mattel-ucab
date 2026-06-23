@@ -84,7 +84,7 @@ CREATE TABLE ClasificacionHistorica (
 
 CREATE TABLE ClienteJuridico (
      idClienteJuridico NUMERIC  NOT NULL ,
-     rif               NUMERIC  NOT NULL ,
+     rif               VARCHAR(15) NOT NULL,
      razonSocial       VARCHAR(150)  NOT NULL ,
      nombre            VARCHAR(150)  NOT NULL ,
      direccionJuridica VARCHAR(150)  NOT NULL ,
@@ -224,9 +224,7 @@ CREATE TABLE DetalleCompraJuridico (
      precioUnitario              NUMERIC  NOT NULL,
      cantidad                    NUMERIC  NOT NULL,
      estado                      VARCHAR(150)  NOT NULL,
-     Departamento_idDepartamento NUMERIC  NOT NULL,
      OrdenCompra_idOrdenCompra   NUMERIC  NOT NULL,
-     Caja_idCaja                 NUMERIC  NOT NULL,
      BackOrder_idBackOrder       NUMERIC  NOT NULL,
 
     CONSTRAINT pk_detalle_compra_juridico_01 PRIMARY KEY (idDetalleCompraJuridico, OrdenCompra_idOrdenCompra)

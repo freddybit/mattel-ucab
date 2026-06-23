@@ -8,8 +8,7 @@ export type SidebarItem =
   | 'trazabilidad'
   | 'personal'
   | 'seguridad'
-  | 'almacen'
-  | 'finanzas';
+  | 'clientes';
 
 interface NavEntry {
   key: SidebarItem;
@@ -35,11 +34,10 @@ export class AppSidebar {
   navItems: NavEntry[] = [
     { key: 'dashboard', label: 'Dashboard', icon: 'grid_view', route: '/dashboard', roles: [], enabled: true },
     { key: 'ingenieria', label: 'Ingeniería', icon: 'settings_input_component', route: '/ingenieria', roles: [1, 2, 11, 12], enabled: true },
-    { key: 'trazabilidad', label: 'Trazabilidad', icon: 'history', route: '/trazabilidad', roles: [1, 2, 3, 4, 5, 6, 11, 12, 13], enabled: true },
+    { key: 'trazabilidad', label: 'Trazabilidad', icon: 'history', route: '/trazabilidad/reportes', roles: [1, 2, 3, 4, 5, 6, 11, 12, 13], enabled: true },
     { key: 'personal', label: 'Personal', icon: 'badge', route: '/personal', roles: [1, 9, 11], enabled: true },
+    { key: 'clientes', label: 'Clientes', icon: 'group', route: '/clientes', roles: [1], enabled: true },
     { key: 'seguridad', label: 'Seguridad', icon: 'security', route: '/seguridad', roles: [1, 11], enabled: true },
-    { key: 'almacen', label: 'Almacén', icon: 'inventory_2', route: '#', roles: [1, 6, 11], enabled: true },
-    { key: 'finanzas', label: 'Finanzas B2B', icon: 'account_balance_wallet', route: '#', roles: [1, 7, 10, 11], enabled: true },
   ];
 
   constructor(private auth: AuthService, private router: Router) {

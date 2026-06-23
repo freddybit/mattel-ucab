@@ -19,8 +19,8 @@ export class AppLayout implements AfterViewInit {
   mainClass = 'bg-surface-muted';
 
   private validItems: SidebarItem[] = [
-    'dashboard', 'ingenieria', 'almacen', 'finanzas',
-    'personal', 'seguridad', 'trazabilidad',
+    'dashboard', 'ingenieria',
+    'personal', 'seguridad', 'trazabilidad', 'clientes',
   ];
 
   constructor(private router: Router) {}

@@ -134,6 +134,8 @@ ALTER TABLE RestriccionDiseño ADD CONSTRAINT RestriccionDiseño_Restriccion_FK 
 ALTER TABLE RestriccionDiseño ADD CONSTRAINT RestriccionDiseño_TipoCuerpo_FK FOREIGN KEY ( TipoCuerpo_idTipoCuerpo ) REFERENCES TipoCuerpo ( idTipoCuerpo );
 
 ALTER TABLE RolPermiso ADD CONSTRAINT RolPermiso_Rol_FK FOREIGN KEY ( Rol_idRol ) REFERENCES Rol ( idRol );
+ALTER TABLE RolPermiso ADD CONSTRAINT RolPermiso_Permiso_FK FOREIGN KEY ( Permisos_idPermiso ) REFERENCES Permiso ( idPermiso );
+
 ALTER TABLE Sancion ADD CONSTRAINT Sancion_ClienteNatural_FK FOREIGN KEY ( ClienteNatural_idClienteNatural ) REFERENCES ClienteNatural ( idClienteNatural );
 
 ALTER TABLE StockClienteNatural ADD CONSTRAINT StockClienteNatural_ClienteNatural_FK FOREIGN KEY ( ClienteNatural_idClienteNatural ) REFERENCES ClienteNatural ( idClienteNatural );

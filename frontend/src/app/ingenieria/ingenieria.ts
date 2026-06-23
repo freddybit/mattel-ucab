@@ -82,4 +82,5 @@ export class Ingenieria implements OnInit, OnDestroy {
     this.cdr.detectChanges();
     setTimeout(() => this.dtTrigger.next(null), 0);
   }
+
 }
