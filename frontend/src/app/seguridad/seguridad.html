@@ -1,4 +1,4 @@
-<div class="flex-1 flex flex-col min-w-0">
+<div class="flex-1 flex flex-col min-w-0" *ngIf="!cargando">
   <main class="flex-1 px-10 py-8 space-y-8">
     <div class="flex justify-between items-end mb-8">
       <div>
@@ -51,15 +51,6 @@
     </div>
   </main>
 
-  <footer class="bg-white border-t border-[#dbc0c7]/20 flex justify-between items-center px-10 py-4 mt-auto">
-    <span class="text-[12px] text-[#554248]">© 2026 MattelUCAB Dream Legacy. All rights reserved.</span>
-    <div class="flex gap-6">
-      <a class="text-[12px] text-[#554248] hover:text-[#6b003c] transition-colors" href="#">Portal PLM</a>
-      <a class="text-[12px] text-[#554248] hover:text-[#6b003c] transition-colors" href="#">Privacy Policy</a>
-      <a class="text-[12px] text-[#554248] hover:text-[#6b003c] transition-colors" href="#">Terms of Service</a>
-    </div>
-  </footer>
-
   @if (modalOpen) {
     <div class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto py-8">
       <div class="fixed inset-0 bg-black/40 backdrop-blur-sm" (click)="toggleModal(false)"></div>
@@ -76,89 +67,56 @@
           </button>
         </div>
 
-        <form (submit)="saveRole($event)">
+        <form (submit)="$event.preventDefault(); confirmCreateRole()">
           <div class="px-6 py-4 space-y-4 max-h-[70vh] overflow-y-auto">
+
             <div class="space-y-3">
               <div class="flex flex-col gap-1.5">
                 <label class="font-bold text-[13px] text-[#554248]" for="role-name">Nombre del Rol</label>
-                <input class="w-full px-4 py-2.5 border border-[#dbc0c7] rounded-lg bg-[#F8F9FA] text-[#1a1b1f] placeholder:text-[#554248]/50 transition-all outline-none focus:border-[#007BFF] focus:shadow-[0_0_0_2px_rgba(0,123,255,0.1)]" id="role-name" placeholder="Ej. Analista de Inventario Senior" required type="text" />
+                <input name="roleName" [(ngModel)]="roleForm.name" class="w-full px-4 py-2.5 border border-[#dbc0c7] rounded-lg bg-[#F8F9FA] text-[#1a1b1f] placeholder:text-[#554248]/50 transition-all outline-none focus:border-[#8B1D54] focus:shadow-[0_0_0_2px_rgba(139,29,84,0.1)]" id="role-name" placeholder="Ej. Analista de Inventario Senior" required type="text" />
               </div>
               <div class="flex flex-col gap-1.5">
                 <label class="font-bold text-[13px] text-[#554248]" for="role-desc">Descripción</label>
-                <textarea class="w-full px-4 py-2.5 border border-[#dbc0c7] rounded-lg bg-[#F8F9FA] text-[#1a1b1f] placeholder:text-[#554248]/50 transition-all outline-none resize-none focus:border-[#007BFF] focus:shadow-[0_0_0_2px_rgba(0,123,255,0.1)]" id="role-desc" placeholder="Define las responsabilidades clave de este rol..." required rows="2"></textarea>
+                <textarea name="roleDesc" [(ngModel)]="roleForm.description" class="w-full px-4 py-2.5 border border-[#dbc0c7] rounded-lg bg-[#F8F9FA] text-[#1a1b1f] placeholder:text-[#554248]/50 transition-all outline-none resize-none focus:border-[#8B1D54] focus:shadow-[0_0_0_2px_rgba(139,29,84,0.1)]" id="role-desc" placeholder="Define las responsabilidades clave de este rol..." required rows="2"></textarea>
               </div>
             </div>
 
             <div class="pt-4 border-t border-[#dbc0c7]/20">
               <div class="mb-4">
-                <h3 class="font-bold text-[13px] text-[#6b003c] tracking-widest uppercase">Privilegios Globales</h3>
-                <p class="text-[11px] text-[#554248] mt-0.5">Asigna los permisos maestros que aplicarán a todo el sistema.</p>
+                <h3 class="font-bold text-[13px] text-[#6b003c] tracking-widest uppercase">Permisos Asignados</h3>
+                <p class="text-[11px] text-[#554248] mt-0.5">Busca y selecciona los permisos desde el catálogo maestro.</p>
               </div>
 
-              <div class="grid grid-cols-2 gap-4">
-                <div class="flex items-center justify-between p-4 border border-[#dbc0c7]/40 rounded-xl bg-white hover:border-[#8B1D54]/30 transition-colors shadow-sm">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
-                      <span class="material-symbols-outlined text-[20px]">visibility</span>
-                    </div>
-                    <div>
-                      <h4 class="font-bold text-[14px] text-[#1a1b1f]">Consultar</h4>
-                      <p class="text-[10px] text-[#554248]">Ver registros</p>
-                    </div>
-                  </div>
-                  <label class="switch">
-                    <input type="checkbox" [(ngModel)]="globalPerms.consultar" name="perm_consultar"/>
-                    <span class="slider"></span>
-                  </label>
-                </div>
+              <div class="flex flex-wrap gap-2 min-h-[50px] p-3 bg-[#F8F9FA] border border-[#dbc0c7] rounded-lg mb-4">
+                @for (permiso of permisosSeleccionados; track permiso.idPermiso) {
+                  <span class="flex items-center gap-1.5 bg-[#8B1D54] text-white px-3 py-1.5 rounded-full text-[11px] font-bold tracking-wider shadow-sm animate-fade-in">
+                    {{ permiso.nombre }}
+                    <button type="button" (click)="quitarPermiso(permiso.idPermiso)" class="hover:text-red-200 flex items-center justify-center">
+                      <span class="material-symbols-outlined text-[14px]">cancel</span>
+                    </button>
+                  </span>
+                }
+                @if (permisosSeleccionados.length === 0) {
+                  <span class="text-xs text-[#554248]/60 font-medium italic mt-1">Sin permisos asignados...</span>
+                }
+              </div>
 
-                <div class="flex items-center justify-between p-4 border border-[#dbc0c7]/40 rounded-xl bg-white hover:border-[#8B1D54]/30 transition-colors shadow-sm">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-600">
-                      <span class="material-symbols-outlined text-[20px]">add_circle</span>
-                    </div>
-                    <div>
-                      <h4 class="font-bold text-[14px] text-[#1a1b1f]">Crear</h4>
-                      <p class="text-[10px] text-[#554248]">Nuevos ingresos</p>
-                    </div>
-                  </div>
-                  <label class="switch">
-                    <input type="checkbox" [(ngModel)]="globalPerms.crear" name="perm_crear"/>
-                    <span class="slider"></span>
-                  </label>
-                </div>
+              <div class="relative mb-3">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#554248]/50 text-[18px]">search</span>
+                <input type="text" name="busqueda" [(ngModel)]="textoBusqueda" (input)="filtrarPermisos()" placeholder="Buscar permiso (Ej. Ver Reportes)..." class="w-full pl-9 pr-4 py-2 rounded-lg border border-[#dbc0c7] bg-white text-sm text-[#1a1b1f] outline-none focus:border-[#8B1D54] focus:shadow-[0_0_0_2px_rgba(139,29,84,0.1)] transition-all">
+              </div>
 
-                <div class="flex items-center justify-between p-4 border border-[#dbc0c7]/40 rounded-xl bg-white hover:border-[#8B1D54]/30 transition-colors shadow-sm">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-orange-600">
-                      <span class="material-symbols-outlined text-[20px]">edit</span>
-                    </div>
-                    <div>
-                      <h4 class="font-bold text-[14px] text-[#1a1b1f]">Modificar</h4>
-                      <p class="text-[10px] text-[#554248]">Actualizar datos</p>
-                    </div>
-                  </div>
-                  <label class="switch">
-                    <input type="checkbox" [(ngModel)]="globalPerms.modificar" name="perm_modificar"/>
-                    <span class="slider"></span>
-                  </label>
-                </div>
-
-                <div class="flex items-center justify-between p-4 border border-[#dbc0c7]/40 rounded-xl bg-white hover:border-[#8B1D54]/30 transition-colors shadow-sm">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-red-600">
-                      <span class="material-symbols-outlined text-[20px]">delete</span>
-                    </div>
-                    <div>
-                      <h4 class="font-bold text-[14px] text-[#1a1b1f]">Borrar</h4>
-                      <p class="text-[10px] text-[#554248]">Eliminar filas</p>
-                    </div>
-                  </div>
-                  <label class="switch">
-                    <input type="checkbox" [(ngModel)]="globalPerms.borrar" name="perm_borrar"/>
-                    <span class="slider"></span>
-                  </label>
-                </div>
+              <div class="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-1 scrollbar-thin">
+                @for (p of permisosFiltrados; track p.idPermiso) {
+                  <button type="button" (click)="agregarPermiso(p)"
+                          [disabled]="esPermisoSeleccionado(p.idPermiso)"
+                          [class.opacity-40]="esPermisoSeleccionado(p.idPermiso)"
+                          [class.cursor-not-allowed]="esPermisoSeleccionado(p.idPermiso)"
+                          class="px-3 py-1.5 bg-white border border-[#dbc0c7] text-[#554248] rounded-full text-[11px] font-bold uppercase tracking-wider hover:border-[#8B1D54] hover:text-[#8B1D54] transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">add</span>
+                    {{ p.nombre }}
+                  </button>
+                }
               </div>
             </div>
           </div>
@@ -167,7 +125,7 @@
             <button type="button" class="px-5 py-2 font-bold text-[13px] text-[#554248] hover:text-[#1a1b1f] transition-colors rounded-lg" (click)="toggleModal(false)">
               Cancelar
             </button>
-            <button type="submit" class="px-6 py-2 bg-[#8B1D54] text-white font-bold text-[13px] rounded-lg shadow-sm hover:opacity-90 active:scale-[0.98] transition-all">
+            <button type="submit" [disabled]="!roleForm.name || permisosSeleccionados.length === 0" class="px-6 py-2 bg-[#8B1D54] text-white font-bold text-[13px] rounded-lg shadow-sm hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100 transition-all">
               Guardar Rol
             </button>
           </div>
@@ -225,3 +183,10 @@
     </div>
   }
 </div>
+
+@if (cargando) {
+  <div class="flex flex-col items-center justify-center h-full w-full gap-4 mt-20">
+    <span class="material-symbols-outlined text-[40px] text-[#8B1D54] animate-spin">progress_activity</span>
+    <span class="text-xs text-[#554248] font-bold uppercase tracking-widest">Sincronizando Matriz de Seguridad...</span>
+  </div>
+}

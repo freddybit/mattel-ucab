@@ -18,13 +18,13 @@
       </div>
     </div>
 
-    <div class="bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl border border-white/20 overflow-hidden p-4">
+    <div class="bg-white rounded-xl overflow-hidden border border-[#dbc0c7]/20 shadow-sm p-4" *ngIf="!cargando">
 
       <div *ngIf="cargando" class="text-center py-10">
         <span class="text-[#8B1D54] font-bold">Cargando datos del sistema...</span>
       </div>
 
-      <table *ngIf="!cargando" datatable [dtOptions]="dtOptions" class="w-full text-left border-collapse">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="w-full text-left border-collapse">
         <thead>
           <tr class="bg-[#8B1D54]/5 border-b border-gray-200">
             <th class="px-6 py-4 text-xs font-bold text-[#8B1D54] uppercase tracking-wider">Nombre</th>
@@ -35,52 +35,61 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
+          @for (usuario of listaUsuarios; track usuario.id_usuario) {
 
-          <tr *ngFor="let user of listaUsuarios" class="hover:bg-[#8B1D54]/5 transition-colors">
+            <tr class="hover:bg-[#8B1D54]/5 transition-colors">
 
-            <td class="px-6 py-4">
-              <div class="flex items-center gap-3">
-                <div class="h-9 w-9 rounded-full bg-[#8B1D54] text-white flex items-center justify-center text-xs font-bold">
-                  {{ user.empleado?.pnombre?.charAt(0) || 'U' }}{{ user.empleado?.papellido?.charAt(0) || '' }}
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-3">
+                  <div class="h-9 w-9 rounded-full bg-[#8B1D54] text-white flex items-center justify-center text-xs font-bold">
+                    {{ usuario.primer_nombre.charAt(0).toUpperCase() || 'U' }}{{ usuario.primer_apellido.charAt(1).toUpperCase() || '' }}
+                  </div>
+                  <span class="text-sm font-semibold text-gray-800">
+                    {{ usuario.primer_nombre }} {{ usuario.primer_apellido }}
+                  </span>
                 </div>
-                <span class="text-sm font-semibold text-gray-800">
-                  {{ user.empleado?.pnombre }} {{ user.empleado?.papellido }}
+              </td>
+
+              <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.correo_electronico }}</td>
+
+              <td class="px-6 py-4">
+                <span class="text-xs font-semibold px-3 py-1 bg-[#8B1D54]/10 text-[#8B1D54] rounded-full">
+                  {{ usuario.rol_nombre || 'Sin Rol' }}
                 </span>
-              </div>
-            </td>
+              </td>
 
-            <td class="px-6 py-4 text-sm text-gray-500">{{ user.correoelectronico }}</td>
+              <td class="px-6 py-4">
+                <span *ngIf="usuario.estado === 'Activo'" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold uppercase tracking-wider">
+                  <span class="h-1.5 w-1.5 rounded-full bg-green-700"></span> Activo
+                </span>
+                <span *ngIf="usuario.estado !== 'Activo'" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-100 text-gray-500 text-xs font-bold uppercase tracking-wider">
+                  <span class="h-1.5 w-1.5 rounded-full bg-gray-500"></span> Inactivo
+                </span>
+              </td>
 
-            <td class="px-6 py-4">
-              <span class="text-xs font-semibold px-3 py-1 bg-[#8B1D54]/10 text-[#8B1D54] rounded-full">
-                {{ user.rol?.nombre || 'Sin Rol' }}
-              </span>
-            </td>
+              <td class="px-6 py-4">
+                <div class="flex items-center justify-center gap-2">
+                  <button class="p-1.5 text-gray-400 hover:text-[#8B1D54] transition-colors hover:bg-[#8B1D54]/5 rounded-lg">
+                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                  </button>
+                  <button class="p-1.5 text-gray-400 hover:text-red-500 transition-colors hover:bg-red-50 rounded-lg">
+                    <span class="material-symbols-outlined text-[18px]">delete</span>
+                  </button>
+                </div>
+              </td>
 
-            <td class="px-6 py-4">
-              <span *ngIf="user.estado === 'Activo'" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold uppercase tracking-wider">
-                <span class="h-1.5 w-1.5 rounded-full bg-green-700"></span> Activo
-              </span>
-              <span *ngIf="user.estado !== 'Activo'" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-100 text-gray-500 text-xs font-bold uppercase tracking-wider">
-                <span class="h-1.5 w-1.5 rounded-full bg-gray-500"></span> Inactivo
-              </span>
-            </td>
+            </tr>
 
-            <td class="px-6 py-4">
-              <div class="flex items-center justify-center gap-2">
-                <button class="p-1.5 text-gray-400 hover:text-[#8B1D54] transition-colors hover:bg-[#8B1D54]/5 rounded-lg">
-                  <span class="material-symbols-outlined text-[18px]">edit</span>
-                </button>
-                <button class="p-1.5 text-gray-400 hover:text-red-500 transition-colors hover:bg-red-50 rounded-lg">
-                  <span class="material-symbols-outlined text-[18px]">delete</span>
-                </button>
-              </div>
-            </td>
-
-          </tr>
+          }
         </tbody>
       </table>
     </div>
+
+    @if (cargando) {
+      <div class="flex justify-center p-10">
+        <span class="material-symbols-outlined animate-spin text-[#8B1D54] text-4xl">progress_activity</span>
+      </div>
+    }
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       <div class="bg-white/90 backdrop-blur-sm p-5 rounded-xl border border-white/30 shadow-lg flex items-center gap-4">
@@ -98,7 +107,7 @@
         </div>
         <div>
           <p class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Sesiones Activas</p>
-          <p class="text-2xl font-extrabold text-gray-800">--</p>
+          <p class="text-2xl font-extrabold text-gray-800">{{ statusCounter }}</p>
         </div>
       </div>
       <div class="bg-white/90 backdrop-blur-sm p-5 rounded-xl border border-white/30 shadow-lg flex items-center gap-4">
@@ -107,19 +116,11 @@
         </div>
         <div>
           <p class="text-gray-500 text-xs uppercase tracking-wider font-semibold">Roles Definidos</p>
-          <p class="text-2xl font-extrabold text-gray-800">{{ listaRoles.length }}</p>
+          <p class="text-2xl font-extrabold text-gray-800">{{ listaRolesEmpleados.length }}</p>
         </div>
       </div>
     </div>
 
-    <footer class="w-full py-4 border-t border-white/20 flex justify-between items-center mt-auto">
-      <span class="text-xs text-white/60">© 2026 MattelUCAB PLM. All rights reserved.</span>
-      <div class="flex gap-6 items-center">
-        <a class="text-xs text-white/60 hover:text-white transition-colors" href="#">Privacy Policy</a>
-        <a class="text-xs text-white/60 hover:text-white transition-colors" href="#">Terms of Service</a>
-        <a class="text-xs text-white/80 hover:text-white transition-colors font-bold" href="#">Portal PLM</a>
-      </div>
-    </footer>
   </div>
 </div>
 

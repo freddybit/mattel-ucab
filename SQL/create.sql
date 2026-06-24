@@ -1140,6 +1140,38 @@
     END;
     $$ LANGUAGE plpgsql;
 
+    CREATE OR REPLACE FUNCTION obtener_personal_usuarios()
+    RETURNS TABLE (
+        id_usuario NUMERIC,
+        nombre_usuario VARCHAR,
+        correo_electronico VARCHAR,
+        estado VARCHAR,
+        fecha_registro DATE,
+        id_empleado NUMERIC,
+        primer_nombre VARCHAR,
+        primer_apellido VARCHAR,
+        rol_nombre VARCHAR
+    ) LANGUAGE plpgsql SECURITY DEFINER AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT 
+            u.idUsuario AS id_usuario,
+            u.nombreUsuario::VARCHAR AS nombre_usuario,
+            u.correoElectronico::VARCHAR AS correo_electronico,
+            u.estado::VARCHAR AS estado,
+            u.fechaRegistro AS fecha_registro,
+            e.idEmpleado AS id_empleado,
+            e.pnombre AS primer_nombre,
+            e.papellido AS primer_apellido,
+            r.nombre::VARCHAR AS rol_nombre
+        FROM Usuario u
+        JOIN Empleado e ON u.Empleado_idEmpleado = e.idEmpleado
+        JOIN Rol r ON u.Rol_idRol = r.idRol
+        WHERE u.Empleado_idEmpleado IS NOT NULL
+        ORDER BY u.idUsuario DESC;
+    END;
+    $$;
+
     /* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
     /* GESTION DE ROLES */
@@ -1198,38 +1230,38 @@
     CREATE OR REPLACE FUNCTION registrar_rol_seguridad(
         p_nombre TEXT,
         p_descripcion TEXT,
-        p_permisos JSONB
+        p_permisos JSON -- Ahora recibiremos un array de números [1, 2, 5...]
     ) RETURNS json AS $$
     DECLARE
-    v_id_rol NUMERIC;
-    v_permiso_name TEXT;
+        v_id_rol NUMERIC;
         v_id_permiso NUMERIC;
         v_id_rolpermiso NUMERIC;
     BEGIN
+        -- 1. Generamos el ID maestro para el Rol
         SELECT COALESCE(MAX(idRol), 0) + 1 INTO v_id_rol FROM Rol;
 
+        -- 2. Insertamos el Rol
         INSERT INTO Rol (idRol, nombre, descripcion)
         VALUES (v_id_rol, p_nombre, p_descripcion);
 
-        FOR v_permiso_name IN SELECT jsonb_array_elements_text(p_permisos)
-        LOOP
-            SELECT idPermiso INTO v_id_permiso 
-            FROM Permiso 
-            WHERE nombre = UPPER(v_permiso_name) 
-            LIMIT 1;
+        -- 3. Pre-calculamos la base del ID de RolPermiso para no hacer consultas dentro del bucle
+        SELECT COALESCE(MAX(idRolPermiso), 0) INTO v_id_rolpermiso FROM RolPermiso;
 
-            IF v_id_permiso IS NOT NULL THEN
-                SELECT COALESCE(MAX(idRolPermiso), 0) + 1 INTO v_id_rolpermiso FROM RolPermiso;
-                INSERT INTO RolPermiso (idRolPermiso, Rol_idRol, Permisos_idPermiso)
-                VALUES (v_id_rolpermiso, v_id_rol, v_id_permiso);
-            END IF;
+        -- 4. Iteramos sobre los IDs recibidos desde Angular
+        FOR v_id_permiso IN SELECT value::NUMERIC FROM json_array_elements_text(p_permisos)
+        LOOP
+            v_id_rolpermiso := v_id_rolpermiso + 1; -- Incremento rápido en memoria
+            
+            -- Inserción directa uniendo los IDs exactos
+            INSERT INTO RolPermiso (idRolPermiso, Rol_idRol, Permisos_idPermiso)
+            VALUES (v_id_rolpermiso, v_id_rol, v_id_permiso);
         END LOOP;
 
-        RETURN json_build_object('success', true, 'mensaje', 'Rol maestro creado exitosamente.');
+        RETURN json_build_object('success', true, 'mensaje', 'Rol maestro y permisos creados exitosamente.');
     EXCEPTION WHEN OTHERS THEN
-        RETURN json_build_object('success', false, 'mensaje', 'Error en BD: ' || SQLERRM);
+        RETURN json_build_object('success', false, 'mensaje', 'Error de Integridad en BD: ' || SQLERRM);
     END;
-    $$ LANGUAGE plpgsql;
+    $$ LANGUAGE plpgsql SECURITY DEFINER;
 
     /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 

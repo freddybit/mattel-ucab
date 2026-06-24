@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { Subject } from 'rxjs';
 export class Personal implements OnInit, OnDestroy {
   public showCreateModal = false;
   public passwordVisible = false;
+  public statusCounter = 0;
 
   public dtOptions: any = {};
   public dtTrigger: Subject<any> = new Subject<any>();
@@ -24,6 +25,7 @@ export class Personal implements OnInit, OnDestroy {
   public listaUsuarios: any[] = [];
 
   // Catálogos para el Modal
+  public listaRolesEmpleados: any[] = [];
   public listaRoles: any[] = [];
   public listaLugares: any[] = [];
   public listaPuestos: any[] = [];
@@ -51,20 +53,46 @@ export class Personal implements OnInit, OnDestroy {
     p_id_puesto: null,
     p_salario: null,
     p_id_turno: null,
-    p_id_tipo_ubicacion: 1, // Default duro asignado por requerimiento de BD, ajusta según tu modelo
+    p_id_tipo_ubicacion: 1,
   };
 
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   async ngOnInit() {
     this.dtOptions = {
+      destroy: true,
       pagingType: 'full_numbers',
-      pageLength: 5,
+      pageLength: 10,
       processing: true,
       language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
     };
 
-    await this.cargarDatos();
+    await this.cargarUsuariosPersonal();
+  }
+
+  async cargarUsuariosPersonal() {
+    this.cargando = true;
+    this.cdr.detectChanges();
+
+    const { data, error } = await this.supabaseService.client.rpc('obtener_personal_usuarios');
+
+    if (data && !error) {
+      this.listaUsuarios = data;
+      this.statusCounter = this.listaUsuarios.filter(u => u.estado === 'Activo').length;
+      this.listaRolesEmpleados.push(...new Set(this.listaUsuarios.map(u => u.rol_nombre).filter(Boolean)));
+    } else if (error) {
+      console.error('Error al cargar personal:', error);
+    }
+
+    this.cargando = false;
+
+    this.cdr.detectChanges();
+    setTimeout(() => {
+      this.dtTrigger.next(null);
+    }, 50);
   }
 
   async cargarDatos() {
@@ -75,7 +103,7 @@ export class Personal implements OnInit, OnDestroy {
         estado,
         empleado (pnombre, papellido),
         rol (nombre)
-      `);
+      `).eq('cliente_id', null);
 
     if (error) {
       console.error('Error:', error);

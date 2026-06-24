@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,11 @@ export interface Role {
   permsCount: number;
 }
 
+export interface Permiso {
+  idPermiso: number;
+  nombre: string;
+}
+
 @Component({
   selector: 'app-seguridad',
   standalone: true,
@@ -21,13 +26,8 @@ export interface Role {
   styleUrls: ['./seguridad.css'],
 })
 export class Seguridad implements OnInit, OnDestroy {
-deleteRole(arg0: number,arg1: string) {
-throw new Error('Method not implemented.');
-}
-applyTemplate(arg0: any) {
-throw new Error('Method not implemented.');
-}
   public roles: Role[] = [];
+  public cargando: boolean = true;
 
   // --- VARIABLES DE MODALES ---
   public modalOpen = false;
@@ -37,107 +37,145 @@ throw new Error('Method not implemented.');
   public roleToDelete: Role | null = null;
   public lifeguardRoleId: number | null = null;
 
+  // --- VARIABLES DEL NUEVO ROL ---
+  public roleForm = { name: '', description: '' };
+  public permisosBase: Permiso[] = [];
+  public permisosFiltrados: Permiso[] = [];
+  public permisosSeleccionados: Permiso[] = [];
+  public textoBusqueda: string = '';
+
   // --- VARIABLES DE DATATABLES ---
   public dtOptions: any = {};
   public dtTrigger: Subject<any> = new Subject<any>();
-  public cargando = true;
-
-  // --- LOS 4 PERMISOS GLOBALES SIMPLIFICADOS ---
-  public globalPerms = {
-    consultar: false,
-    crear: false,
-    modificar: false,
-    borrar: false,
-  };
-selectedTemplate: any;
-modules: any;
 
   constructor(
     private supabaseService: SupabaseService,
     private cdr: ChangeDetectorRef,
   ) {}
 
-  // --- CICLO DE VIDA ---
   async ngOnInit() {
     this.dtOptions = {
-      destroy: true, // REINICIALIZACIÓN SEGURA
+      destroy: true,
       pagingType: 'full_numbers',
-      pageLength: 5,
+      pageLength: 10,
       processing: true,
-      language: {
-        url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
-      },
+      language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
     };
-    await this.cargarRoles();
+
+    await this.cargarDatosIniciales();
   }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
 
-  // --- LECTURA A LA BASE DE DATOS ---
-  async cargarRoles() {
+  async cargarDatosIniciales() {
     this.cargando = true;
+    this.cdr.detectChanges();
 
-    const { data, error } = await this.supabaseService.client.from('rol').select(`
-            idrol,
-            nombre,
-            descripcion,
-            rolpermiso ( permisos_idpermiso )
-        `);
+    // 1. Cargamos el catálogo de permisos en minúsculas (Evita error 400)
+    const { data: permsData, error: permsError } = await this.supabaseService.client
+      .from('permiso')
+      .select('idpermiso, nombre')
+      .order('nombre', { ascending: true });
 
-    if (data) {
-      this.roles = data.map((r: any) => ({
-        id: r.idrol,
-        name: r.nombre,
-        description: r.descripcion || 'Sin descripción',
-        icon: r.nombre.toLowerCase().includes('admin') ? 'admin_panel_settings' : 'shield',
-        permsCount: r.rolpermiso ? r.rolpermiso.length : 0,
+    if (permsData && !permsError) {
+      this.permisosBase = permsData.map((p: any) => ({
+        idPermiso: Number(p.idpermiso),
+        nombre: p.nombre,
       }));
+      this.permisosFiltrados = [...this.permisosBase];
+    }
 
-      // Obliga a Angular a pintar los <tr>
-      this.cdr.detectChanges();
-      // DataTables toma el control
-      setTimeout(() => this.dtTrigger.next(null), 0);
+    // 2. Cargamos los roles reales y cruzamos con RolPermiso para contar sus permisos
+    const { data: rolesData, error: rolesError } = await this.supabaseService.client
+      .from('rol')
+      .select('idrol, nombre, descripcion');
+
+    const { data: rpData } = await this.supabaseService.client
+      .from('rolpermiso')
+      .select('rol_idrol');
+
+    if (rolesData && !rolesError) {
+      this.roles = rolesData.map((r: any) => {
+        const idActual = Number(r.idrol);
+        // Contamos cuántas veces aparece este idrol en la tabla asociativa
+        const count = rpData
+          ? rpData.filter((rp: any) => Number(rp.rol_idrol) === idActual).length
+          : 0;
+
+        return {
+          id: idActual,
+          name: r.nombre,
+          description: r.descripcion || 'Sin descripción',
+          icon: 'shield_person',
+          permsCount: count,
+        };
+      });
     }
 
     this.cargando = false;
+
+    // FORZADO DE RENDERIZADO: Despertamos a Angular y acoplamos DataTables
+    this.cdr.detectChanges();
+    setTimeout(() => {
+      this.dtTrigger.next(null);
+      this.cdr.detectChanges();
+    }, 50);
   }
 
-  // --- LÓGICA DEL MODAL DE CREAR ROL ---
-  toggleModal(show: boolean) {
-    this.modalOpen = show;
-    if (!show) {
-      this.globalPerms = { consultar: false, crear: false, modificar: false, borrar: false };
+  // --- LÓGICA DE ETIQUETAS (TAGS) ---
+  filtrarPermisos() {
+    const q = this.textoBusqueda.toLowerCase();
+    this.permisosFiltrados = this.permisosBase.filter((p) => p.nombre.toLowerCase().includes(q));
+    this.cdr.detectChanges();
+  }
+
+  agregarPermiso(permiso: Permiso) {
+    const existe = this.permisosSeleccionados.find((p) => p.idPermiso === permiso.idPermiso);
+    if (!existe) {
+      this.permisosSeleccionados.push(permiso);
     }
+    this.textoBusqueda = '';
+    this.permisosFiltrados = [...this.permisosBase];
+    this.cdr.detectChanges();
   }
 
-  private generarArrayPermisos(): string[] {
-    const lista: string[] = [];
-    if (this.globalPerms.consultar) lista.push('CONSULTAR');
-    if (this.globalPerms.modificar) lista.push('MODIFICAR');
-    if (this.globalPerms.crear) lista.push('CREAR');
-    if (this.globalPerms.borrar) lista.push('BORRAR');
-    return lista;
+  quitarPermiso(idPermiso: number) {
+    this.permisosSeleccionados = this.permisosSeleccionados.filter(
+      (p) => p.idPermiso !== idPermiso,
+    );
+    this.cdr.detectChanges();
   }
 
-  async saveRole(event: Event) {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const nameInput = form.querySelector('#role-name') as HTMLInputElement;
-    const descInput = form.querySelector('#role-desc') as HTMLTextAreaElement;
+  esPermisoSeleccionado(idPermiso: number): boolean {
+    return !!this.permisosSeleccionados.find((p) => p.idPermiso === idPermiso);
+  }
 
-    const name = nameInput?.value.trim();
-    const desc = descInput?.value.trim();
+  toggleModal(open: boolean) {
+    this.modalOpen = open;
+    if (open) {
+      this.roleForm = { name: '', description: '' };
+      this.permisosSeleccionados = [];
+      this.textoBusqueda = '';
+      this.permisosFiltrados = [...this.permisosBase];
+    }
+    this.cdr.detectChanges();
+  }
 
-    if (!name || !desc) return;
+  async confirmCreateRole() {
+    if (!this.roleForm.name || this.permisosSeleccionados.length === 0) {
+      alert('El rol debe tener nombre y al menos un permiso.');
+      return;
+    }
 
-    const p_permisos = this.generarArrayPermisos();
+    // CAMBIO TÁCTICO: Extraemos los IDs puros para evitar errores de case-sensitivity en PostgreSQL
+    const idsPermisos = this.permisosSeleccionados.map((p) => p.idPermiso);
 
     const { data, error } = await this.supabaseService.client.rpc('registrar_rol_seguridad', {
-      p_nombre: name,
-      p_descripcion: desc,
-      p_permisos: p_permisos,
+      p_nombre: this.roleForm.name,
+      p_descripcion: this.roleForm.description,
+      p_permisos: idsPermisos, // Ahora mandamos: [1, 2, 5, 8]
     });
 
     if (error) {
@@ -146,21 +184,22 @@ modules: any;
       alert('Error en BD: ' + data.mensaje);
     } else {
       this.toggleModal(false);
-      location.reload();
+      await this.cargarDatosIniciales();
     }
   }
 
-  // --- LÓGICA DE TRANSFERENCIA Y BORRADO ---
   openTransferModal(role: Role) {
     this.roleToDelete = role;
     this.lifeguardRoleId = null;
     this.transferModalOpen = true;
+    this.cdr.detectChanges();
   }
 
   closeTransferModal() {
     this.transferModalOpen = false;
     this.roleToDelete = null;
     this.lifeguardRoleId = null;
+    this.cdr.detectChanges();
   }
 
   async confirmDeleteAndTransfer() {
@@ -172,18 +211,12 @@ modules: any;
     });
 
     if (error) {
-      alert('Error crítico de red: ' + error.message);
+      alert('Error crítico: ' + error.message);
     } else if (data && !data.success) {
-      alert('Error en BD: ' + data.mensaje);
+      alert('Error BD: ' + data.mensaje);
     } else {
       this.closeTransferModal();
-      location.reload();
+      await this.cargarDatosIniciales();
     }
-  }
-
-  @HostListener('document:keydown.escape')
-  onEscape() {
-    if (this.modalOpen) this.toggleModal(false);
-    if (this.transferModalOpen) this.closeTransferModal();
   }
 }
