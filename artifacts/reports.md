@@ -10,13 +10,20 @@
 
     CREATE OR REPLACE VIEW vw_rpt_face_sculpt_hubs AS
     SELECT 
-        mr.nombre AS face_sculpt,
-        COUNT(up.idUnidadProducidad) AS total_skus_unidades
-    FROM MoldeRostro mr
-    JOIN Diseño d ON mr.idMoldeRostro = d.MoldeRostro_idMoldeRostro
-    JOIN Producto p ON d.idDiseño = p.Diseño_idDiseño
-    JOIN UnidadProducida up ON p.LoteProduccion_idLote = up.LoteProduccion_idLote
-    GROUP BY mr.idMoldeRostro, mr.nombre;
+        l.nombre AS "hubRegional", 
+        mr.nombre AS "faceSculpt", 
+        COUNT(DISTINCT p.idProducto) AS "variantesAsociadas",
+        COUNT(up.idUnidadProducidad) AS "skusUnitarios",
+        CEIL(COUNT(up.idUnidadProducidad) / 12.0) AS "cajasMaster",
+        CEIL((COUNT(up.idUnidadProducidad) / 12.0) / 40.0) AS "paletasEstimadas"
+    FROM 
+        MoldeRostro mr JOIN Diseño d ON mr.idMoldeRostro = d.MoldeRostro_idMoldeRostro
+        JOIN Producto p ON d.idDiseño = p.Diseño_idDiseño
+        JOIN UnidadProducida up ON p.LoteProduccion_idLote = up.LoteProduccion_idLote
+        JOIN TipoUbicacionStock tus ON up.idUnidadProducidad = tus.UnidadProducida_idUnidadProducidad
+        JOIN Lugar l ON tus.Lugar_idLugar = l.idLugar 
+    WHERE tus.nombre = 'Hub Regional'
+    GROUP BY l.idLugar, l.nombre, mr.idMoldeRostro, mr.nombre;
 
 ```
 

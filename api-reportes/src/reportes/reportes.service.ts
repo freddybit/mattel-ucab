@@ -46,7 +46,7 @@ export class ReportesService implements OnModuleInit {
     if (error)
       throw new Error('Error al extraer datos de la vista de Face Sculpts');
 
-    return this.generarPdfJsReport('face_sculpt_template', { filas: data });
+    return this.generarPdfJsReport('face_sculpt_template', { hubs: data });
   }
 
   private async generarPdfJsReport(
