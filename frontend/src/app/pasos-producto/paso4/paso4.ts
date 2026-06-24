@@ -65,6 +65,6 @@ export class Paso4 implements OnInit {
     this.showModal = false;
     this.wizardService.limpiarBorrador();
     this.cdr.detectChanges();
-    this.router.navigate(['/trazabilidad/motor']);
+    this.router.navigate(['/reportes/motor']);
   }
 }

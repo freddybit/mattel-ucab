@@ -30,14 +30,14 @@ export const routes: Routes = [
       { path: 'dashboard', component: Dashboard },
       { path: 'ingenieria', component: Ingenieria, canActivate: [RoleGuard], data: { permissions: ['CONSULTAR'] } },
       {
-        path: 'trazabilidad',
+        path: 'reportes',
         component: Trazabilidad,
         canActivate: [RoleGuard],
         data: { permissions: ['CONSULTAR'] },
         children: [
-          { path: '', redirectTo: 'reportes', pathMatch: 'full' },
+          { path: '', redirectTo: 'oficiales', pathMatch: 'full' },
           { path: 'motor', component: MotorTrazabilidad },
-          { path: 'reportes', component: ReportesOficiales },
+          { path: 'oficiales', component: ReportesOficiales },
         ],
       },
       { path: 'personal', component: Personal, canActivate: [RoleGuard], data: { permissions: ['CONSULTAR'] } },

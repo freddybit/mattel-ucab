@@ -20,7 +20,7 @@ export class AppLayout implements AfterViewInit {
 
   private validItems: SidebarItem[] = [
     'dashboard', 'ingenieria',
-    'personal', 'seguridad', 'trazabilidad', 'clientes',
+    'personal', 'seguridad', 'reportes', 'clientes',
   ];
 
   constructor(private router: Router) {}
