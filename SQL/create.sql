@@ -955,7 +955,7 @@
          contraseña                      VARCHAR(255)  NOT NULL ,
          estado                          VARCHAR(20)  NOT NULL ,
          fechaRegistro                   DATE  NOT NULL ,
-         Empleado_idEmpleado             NUMERIC NOT NULL,
+         Empleado_idEmpleado             NUMERIC,
          Rol_idRol NUMERIC NOT NULL,
          ClienteNatural_idClienteNatural NUMERIC,
 
@@ -1547,5 +1547,133 @@ BEGIN
     JOIN ClasificacionExclusividad ce ON d.ClasificacionExclusividad_idClasificacionExclusividad = ce.idClasificacionExclusividad
     JOIN MoldeRostro mr ON d.MoldeRostro_idMoldeRostro = mr.idMoldeRostro
     ORDER BY d.idDiseño DESC;
+END;
+$$;
+
+/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+-- GESTION DE CLIENTES NATURALES`
+
+CREATE OR REPLACE FUNCTION obtener_clientes_naturales()
+RETURNS TABLE (
+    id_cliente NUMERIC,
+    nombre_completo VARCHAR,
+    cedula NUMERIC,
+    direccion VARCHAR,
+    ubicacion VARCHAR,
+    correo_electronico VARCHAR,
+    estado VARCHAR,
+    fecha_registro DATE,
+    stats_totales JSON
+) LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE
+    v_total_clientes INT;
+    v_activos INT;
+    v_nuevos_mes INT;
+    v_stats_json JSON;
+BEGIN
+    -- 1. Calculamos las métricas en tiempo real de forma explícita
+    SELECT COUNT(*)::INT INTO v_total_clientes 
+    FROM Usuario u 
+    WHERE u.ClienteNatural_idClienteNatural IS NOT NULL;
+    
+    -- AQUÍ estaba el error: Agregamos "u." a estado para quitar la ambigüedad
+    SELECT COUNT(*)::INT INTO v_activos 
+    FROM Usuario u 
+    WHERE u.ClienteNatural_idClienteNatural IS NOT NULL AND u.estado ILIKE '%Activo%';
+    
+    -- También somos explícitos con la fechaRegistro
+    SELECT COUNT(*)::INT INTO v_nuevos_mes 
+    FROM Usuario u
+    WHERE u.ClienteNatural_idClienteNatural IS NOT NULL 
+      AND EXTRACT(MONTH FROM u.fechaRegistro) = EXTRACT(MONTH FROM CURRENT_DATE) 
+      AND EXTRACT(YEAR FROM u.fechaRegistro) = EXTRACT(YEAR FROM CURRENT_DATE);
+
+    -- 2. Empaquetamos en JSON
+    v_stats_json := json_build_object(
+        'total_clientes', v_total_clientes,
+        'activos_hoy', v_activos,
+        'nuevos_mes', v_nuevos_mes
+    );
+
+    -- 3. Devolvemos la tabla plana
+    RETURN QUERY
+    SELECT 
+        cn.idClienteNatural AS id_cliente,
+        (cn.pNombre || ' ' || cn.pApellido)::VARCHAR AS nombre_completo,
+        cn.cedula AS cedula,
+        cn.direccion::VARCHAR AS direccion,
+        l.nombre::VARCHAR AS ubicacion,
+        u.correoElectronico::VARCHAR AS correo_electronico,
+        u.estado::VARCHAR AS estado,
+        u.fechaRegistro AS fecha_registro,
+        v_stats_json AS stats_totales
+    FROM Usuario u
+    JOIN ClienteNatural cn ON u.ClienteNatural_idClienteNatural = cn.idClienteNatural
+    JOIN Lugar l ON cn.Lugar_idLugar = l.idLugar
+    ORDER BY u.fechaRegistro DESC;
+END;
+$$;
+
+-- Función para obtener los lugares jerárquicos
+
+CREATE OR REPLACE FUNCTION obtener_lugares_registro()
+RETURNS json LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE
+    v_lugares json;
+BEGIN
+    SELECT COALESCE(json_agg(row_to_json(l)), '[]'::json) INTO v_lugares FROM Lugar l;
+    RETURN json_build_object('lugares', v_lugares);
+END;
+$$;
+
+-- Función para registrar un cliente natural con todos sus datos y relaciones
+
+CREATE OR REPLACE FUNCTION registrar_cliente_natural_maestro(p_payload JSON)
+RETURNS JSON LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE
+    v_id_cliente NUMERIC;
+    v_id_usuario NUMERIC;
+    v_id_telefono NUMERIC;
+    v_id_membresia NUMERIC;
+BEGIN
+    -- Generar IDs secuenciales
+    SELECT COALESCE(MAX(idClienteNatural), 0) + 1 INTO v_id_cliente FROM ClienteNatural;
+    SELECT COALESCE(MAX(idTelefono), 0) + 1 INTO v_id_telefono FROM Telefono;
+    SELECT COALESCE(MAX(idUsuario), 0) + 1 INTO v_id_usuario FROM Usuario;
+    SELECT COALESCE(MAX(idMembresia), 0) + 1 INTO v_id_membresia FROM Membresia;
+
+    -- 1. Insertar Cliente Natural
+    INSERT INTO ClienteNatural (idClienteNatural, cedula, pNombre, sNombre, pApellido, sApellido, direccion, Lugar_idLugar)
+    VALUES (
+        v_id_cliente, (p_payload->>'cedula')::NUMERIC, p_payload->>'pNombre', 
+        p_payload->>'sNombre', p_payload->>'pApellido', p_payload->>'sApellido', 
+        p_payload->>'direccion', (p_payload->>'Lugar_idLugar')::NUMERIC
+    );
+
+    -- 2. Insertar Teléfono
+    INSERT INTO Telefono (idTelefono, codigoPais, codigoOperadora, numeroAbonado, ClienteNatural_idClienteNatural)
+    VALUES (
+        v_id_telefono, 58, (p_payload->>'codigoOperadora')::NUMERIC, 
+        (p_payload->>'numeroAbonado')::NUMERIC, v_id_cliente
+    );
+
+    -- 3. Insertar Membresía
+    INSERT INTO Membresia (idMembresia, nombre, descripcion, ClienteNatural_idClienteNatural)
+    VALUES (v_id_membresia, 'Membresía Estándar', 'Asignada automáticamente al registro web', v_id_cliente);
+
+    -- 4. Insertar Usuario (Empleado_idEmpleado es ahora NULLABLE)
+    INSERT INTO Usuario (
+        idUsuario, nombreUsuario, correoElectronico, contraseña, estado, fechaRegistro,
+        Empleado_idEmpleado, Rol_idRol, ClienteNatural_idClienteNatural
+    ) VALUES (
+        v_id_usuario, p_payload->>'nombreUsuario', p_payload->>'correoElectronico',
+        p_payload->>'password', 'Activo', CURRENT_DATE, NULL, 
+        3, v_id_cliente
+    );
+
+    RETURN json_build_object('success', true, 'id_generado', v_id_cliente);
+EXCEPTION WHEN OTHERS THEN
+    RETURN json_build_object('success', false, 'mensaje', SQLERRM);
 END;
 $$;

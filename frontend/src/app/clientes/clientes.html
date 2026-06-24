@@ -1,114 +1,78 @@
 <div class="max-w-7xl mx-auto p-8 flex flex-col gap-8 pb-12">
 
-
     <div>
-      <h1 class="text-3xl font-extrabold text-on-background leading-tight">Gestión de Clientes Naturales</h1>
-      <p class="text-on-surface-variant mt-1">Administración y auditoría de la base de clientes</p>
+        <h1 class="text-3xl font-extrabold text-on-background leading-tight">Gestión de Clientes Naturales</h1>
+        <p class="text-on-surface-variant mt-1">Administración y auditoría de la base de clientes y usuarios</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-      <div class="glass-card p-6 border-l-4 border-vibrant-pink">
-        <p class="text-[10px] font-black text-on-surface-variant uppercase tracking-tighter">Total Clientes</p>
-        <p class="text-3xl font-extrabold text-industrial-maroon mt-1">{{ totalClientes }}</p>
-      </div>
-      <div class="glass-card p-6 border-l-4 border-vibrant-pink">
-        <p class="text-[10px] font-black text-on-surface-variant uppercase tracking-tighter">Registrados</p>
-        <p class="text-3xl font-extrabold text-industrial-maroon mt-1">{{ activosHoy }}</p>
-      </div>
-      <div class="glass-card p-6 border-l-4 border-vibrant-pink">
-        <p class="text-[10px] font-black text-on-surface-variant uppercase tracking-tighter">Nuevos (Mes)</p>
-        <p class="text-3xl font-extrabold text-industrial-maroon mt-1">{{ nuevosMes }}</p>
-      </div>
-      <div class="glass-card p-6 border-l-4 border-vibrant-pink">
-        <p class="text-[10px] font-black text-on-surface-variant uppercase tracking-tighter">Cobertura</p>
-        <div class="flex items-center gap-2 mt-1">
-          <p class="text-3xl font-extrabold text-industrial-maroon">100%</p>
+        <div class="glass-card p-6 border-l-4 border-vibrant-pink bg-white shadow-sm">
+            <p class="text-[10px] font-black text-on-surface-variant uppercase tracking-tighter">Total Clientes</p>
+            <p class="text-3xl font-extrabold text-industrial-maroon mt-1">{{ totalClientes }}</p>
         </div>
-      </div>
+        <div class="glass-card p-6 border-l-4 border-vibrant-pink bg-white shadow-sm">
+            <p class="text-[10px] font-black text-on-surface-variant uppercase tracking-tighter">Usuarios Activos</p>
+            <p class="text-3xl font-extrabold text-industrial-maroon mt-1">{{ activosHoy }}</p>
+        </div>
+        <div class="glass-card p-6 border-l-4 border-vibrant-pink bg-white shadow-sm">
+            <p class="text-[10px] font-black text-on-surface-variant uppercase tracking-tighter">Nuevos (Mes)</p>
+            <p class="text-3xl font-extrabold text-industrial-maroon mt-1">+{{ nuevosMes }}</p>
+        </div>
     </div>
 
-    <div class="bg-white rounded-none border border-border-subtle shadow-sm overflow-hidden">
-      <div class="p-6 border-b border-border-subtle flex flex-wrap items-center justify-between gap-4 bg-surface-muted/30">
-        <div class="flex items-center gap-4 flex-1 max-w-xl">
-          <div class="relative flex-1">
-            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-gray text-lg pointer-events-none">search</span>
-            <input
-              [(ngModel)]="busqueda"
-              (input)="onBuscar()"
-              class="w-full border border-border-subtle rounded pl-10 pr-4 py-2.5 text-sm focus:ring-2 focus:ring-vibrant-pink/30 focus:border-vibrant-pink outline-none"
-              placeholder="Buscar por nombre, cédula o ubicación..."
-              type="text"
-            />
-          </div>
+    <div class="bg-white rounded-none border border-border-subtle shadow-sm overflow-hidden" *ngIf="!cargando">
+        <div class="p-6 border-b border-border-subtle bg-surface-muted/30">
+            <h3 class="text-lg font-bold text-on-surface">Directorio de Clientes</h3>
         </div>
-        <button class="bg-industrial-maroon hover:bg-vibrant-pink text-white px-5 py-2.5 rounded-none text-[11px] font-black flex items-center gap-2 transition-all duration-300 uppercase tracking-widest">
-          <span class="material-symbols-outlined text-[18px]">person_add</span>
-          Nuevo Cliente
-        </button>
-      </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead class="bg-surface-muted text-on-surface-variant font-label-caps text-[10px] uppercase">
-            <tr>
-              <th class="px-6 py-4">Nombre Completo</th>
-              <th class="px-6 py-4">Cédula</th>
-              <th class="px-6 py-4">Dirección</th>
-              <th class="px-6 py-4">Ubicación</th>
-              <th class="px-6 py-4 text-center">Acciones</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-border-subtle">
-            @for (c of paginados; track c.id) {
-              <tr class="hover:bg-surface-muted/50 transition-colors">
-                <td class="px-6 py-4">
-                  <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-full bg-industrial-maroon text-white flex items-center justify-center text-xs font-bold">
-                      {{ c.pnombre?.charAt(0) || '?' }}{{ c.papellido?.charAt(0) || '' }}
-                    </div>
-                    <span class="text-sm font-semibold text-ebony">{{ c.nombreCompleto }}</span>
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-sm text-neutral-gray font-mono">V-{{ c.cedula?.toLocaleString()?.replace(/,/g, '.') }}</td>
-                <td class="px-6 py-4 text-sm text-neutral-gray max-w-[200px] truncate">{{ c.direccion }}</td>
-                <td class="px-6 py-4">
-                  <span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] rounded font-bold uppercase tracking-widest border border-gray-200">
-                    {{ c.ubicacion }}
-                  </span>
-                </td>
-                <td class="px-6 py-4">
-                  <div class="flex items-center justify-center gap-2">
-                    <button class="material-symbols-outlined text-neutral-gray hover:text-vibrant-pink transition-colors text-lg" title="Ver Perfil">visibility</button>
-                    <button class="material-symbols-outlined text-neutral-gray hover:text-vibrant-pink transition-colors text-lg" title="Editar">edit</button>
-                    <button class="material-symbols-outlined text-neutral-gray hover:text-red-500 transition-colors text-lg" title="Eliminar">delete</button>
-                  </div>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
-
-      <div class="px-6 py-4 flex items-center justify-between border-t border-border-subtle bg-surface-muted/20">
-        <span class="text-xs text-neutral-gray">
-          Mostrando {{ (pagina - 1) * porPagina + 1 }}-{{ Math.min(pagina * porPagina, filtrados.length) }} de {{ filtrados.length }} clientes
-        </span>
-        <div class="flex items-center gap-2">
-          <button (click)="irPagina(pagina - 1)" [class.opacity-30]="pagina === 1" class="p-1.5 hover:bg-border-subtle rounded transition-colors">
-            <span class="material-symbols-outlined text-lg">chevron_left</span>
-          </button>
-          @for (p of paginas; track p; let i = $index) {
-            @if (mostrarPuntos(i, paginas)) {
-              <span class="text-neutral-gray px-1">...</span>
-            }
-            <button (click)="irPagina(p)" [class.bg-industrial-maroon]="p === pagina" [class.text-white]="p === pagina" [class.text-neutral-gray]="p !== pagina" class="w-8 h-8 flex items-center justify-center rounded text-xs font-bold hover:bg-border-subtle transition-colors">
-              {{ p }}
-            </button>
-          }
-          <button (click)="irPagina(pagina + 1)" [class.opacity-30]="pagina === totalPaginas" class="p-1.5 hover:bg-border-subtle rounded transition-colors">
-            <span class="material-symbols-outlined text-lg">chevron_right</span>
-          </button>
+        <div class="p-6 overflow-x-auto">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="w-full text-left border-collapse">
+                <thead class="bg-surface-muted text-on-surface-variant font-label-caps text-[10px] uppercase tracking-widest">
+                    <tr>
+                        <th class="px-6 py-4">ID Cliente</th>
+                        <th class="px-6 py-4">Nombre y Cédula</th>
+                        <th class="px-6 py-4">Ubicación y Dirección</th>
+                        <th class="px-6 py-4">Credenciales Usuario</th>
+                        <th class="px-6 py-4">Estado</th>
+                        <th class="px-6 py-4 text-right">Acción</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-border-subtle">
+                    @for (cliente of clientes; track cliente.id) {
+                        <tr class="hover:bg-surface-muted/50 transition-colors">
+                            <td class="px-6 py-4 font-mono text-[13px] font-semibold text-industrial-maroon">
+                                CLN-{{ cliente.id }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <p class="text-sm font-bold text-ebony">{{ cliente.nombreCompleto }}</p>
+                                <p class="text-xs text-neutral-gray mt-1">C.I: {{ cliente.cedula }}</p>
+                            </td>
+                            <td class="px-6 py-4">
+                                <p class="text-sm font-semibold text-ebony">{{ cliente.ubicacion }}</p>
+                                <p class="text-[11px] text-neutral-gray mt-1 max-w-[200px] truncate" [title]="cliente.direccion">{{ cliente.direccion }}</p>
+                            </td>
+                            <td class="px-6 py-4">
+                                <p class="text-sm text-ebony">{{ cliente.correo }}</p>
+                                <p class="text-[10px] text-neutral-gray mt-1 uppercase">Reg: {{ cliente.fechaRegistro | date:'mediumDate' }}</p>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 text-[10px] font-bold uppercase tracking-widest rounded border"
+                                      [ngClass]="{
+                                        'bg-green-50 text-green-700 border-green-200': cliente.estado === 'Activo',
+                                        'bg-red-50 text-red-700 border-red-200': cliente.estado !== 'Activo'
+                                      }">
+                                    {{ cliente.estado }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right space-x-2">
+                                <button class="material-symbols-outlined text-neutral-gray hover:text-vibrant-pink transition-colors" title="Ver Detalles">
+                                    visibility
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-      </div>
     </div>
 </div>

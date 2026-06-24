@@ -1,16 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SupabaseService } from '../services/supabase.service';
 
+export interface Lugar {
+  idLugar: number;
+  nombre: string;
+  tipo: string;
+  Lugar_idLugar: number | null; // ID del lugar padre
+}
+
 @Component({
   selector: 'app-registro-cliente-natural',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './registro-cliente-natural.html',
   styleUrls: ['./registro-cliente-natural.css'],
 })
-export class RegistroClienteNatural {
+export class RegistroClienteNatural implements OnInit {
   form = {
     nombreUsuario: '',
     correoElectronico: '',
@@ -18,32 +26,80 @@ export class RegistroClienteNatural {
     confirmPassword: '',
     tipoCedula: 'V',
     cedula: '',
-    genero: 'Masculino',
     pNombre: '',
     sNombre: '',
     pApellido: '',
     sApellido: '',
-    codigoOperadora: '0414',
+    codigoOperadora: '414',
     numeroAbonado: '',
-    fechaNacimiento: '',
-    estado: '',
-    municipio: '',
-    parroquia: '',
+    idEstado: null as number | null,
+    idMunicipio: null as number | null,
+    idParroquia: null as number | null,
     direccion: '',
   };
 
   loading = false;
   errorMsg = '';
 
-  constructor(private supabase: SupabaseService, private router: Router) {}
+  // Catálogos de Lugares
+  lugaresBrutos: Lugar[] = [];
+  estados: Lugar[] = [];
+  municipios: Lugar[] = [];
+  parroquias: Lugar[] = [];
+
+  constructor(
+    private supabase: SupabaseService,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+  ) {}
+
+  async ngOnInit() {
+    await this.cargarLugares();
+  }
+
+  async cargarLugares() {
+    // 1. Cambiamos 'Lugar' por 'lugar' en minúsculas
+    // 2. Agregamos 'Lugar_idLugar, tipo' al select para que funcionen tus dropdowns en cadena
+    const { data, error } = await this.supabase.client
+      .from('lugar')
+      .select('idlugar, nombre, tipo, lugar_idlugar'); // Usamos minúsculas para las columnas también por seguridad
+
+    if (data && !error) {
+      // Guardamos TODOS los lugares brutos primero para que los filtros funcionen
+      this.lugaresBrutos = data.map((l: any) => ({
+        idLugar: l.idlugar || l.idLugar,
+        nombre: l.nombre,
+        tipo: l.tipo,
+        Lugar_idLugar: l.lugar_idlugar || l.Lugar_idLugar,
+      }));
+
+      // Filtramos solo los estados para llenar el primer dropdown
+      this.estados = this.lugaresBrutos.filter((l) => l.tipo === 'Estado');
+    } else {
+      console.error('Error cargando lugares:', error);
+    }
+    this.cdr.detectChanges();
+  }
+
+  onEstadoChange() {
+    this.form.idMunicipio = null;
+    this.form.idParroquia = null;
+    this.parroquias = [];
+    this.municipios = this.lugaresBrutos.filter((l) => l.Lugar_idLugar === this.form.idEstado);
+  }
+
+  onMunicipioChange() {
+    this.form.idParroquia = null;
+    this.parroquias = this.lugaresBrutos.filter((l) => l.Lugar_idLugar === this.form.idMunicipio);
+  }
 
   async submit() {
     if (this.loading) return;
-
     this.errorMsg = '';
 
+    // Validaciones locales
     if (!this.form.nombreUsuario || !this.form.correoElectronico || !this.form.password) {
-      this.errorMsg = 'Completa los campos obligatorios de la cuenta.';
+      this.errorMsg = 'Los datos de la cuenta son obligatorios.';
       return;
     }
     if (this.form.password !== this.form.confirmPassword) {
@@ -51,57 +107,41 @@ export class RegistroClienteNatural {
       return;
     }
     if (!this.form.cedula || !this.form.pNombre || !this.form.pApellido) {
-      this.errorMsg = 'Completa los campos obligatorios del perfil personal.';
+      this.errorMsg = 'Los datos personales primarios son obligatorios.';
+      return;
+    }
+    if (!this.form.numeroAbonado) {
+      this.errorMsg = 'El número de teléfono es obligatorio.';
+      return;
+    }
+    if (!this.form.idParroquia || !this.form.direccion) {
+      this.errorMsg = 'Debe seleccionar la ubicación completa y agregar la dirección detallada.';
       return;
     }
 
     this.loading = true;
+    this.cdr.detectChanges();
 
-    try {
-      const { data: clientes, error: ce } = await this.supabase.client
-        .from('clientenatural')
-        .insert({
-          cedula: parseInt(this.form.cedula, 10),
-          pnombre: this.form.pNombre,
-          snombre: this.form.sNombre || null,
-          papellido: this.form.pApellido,
-          sapellido: this.form.sApellido || null,
-          direccion: this.form.direccion || null,
-        })
-        .select('idclientenatural')
-        .single();
+    // Armamos el payload final
+    const payload = {
+      ...this.form,
+      Lugar_idLugar: this.form.idParroquia,
+    };
 
-      if (ce) {
-        console.error('ClienteNatural insert error:', ce);
-        this.errorMsg = 'Error al crear el perfil personal.';
-        this.loading = false;
-        return;
-      }
+    const { data, error } = await this.supabase.client.rpc('registrar_cliente_natural_maestro', {
+      p_payload: payload,
+    });
 
-      const { error: ue } = await this.supabase.client
-        .from('usuario')
-        .insert({
-          nombreusuario: this.form.nombreUsuario,
-          correoelectronico: this.form.correoElectronico,
-          contraseña: this.form.password,
-          estado: 'Activo',
-          fecharegistro: new Date().toISOString().split('T')[0],
-          rol_idrol: 3,
-          clientenatural_idclientenatural: clientes!.idclientenatural,
-        });
+    this.loading = false;
+    this.cdr.detectChanges();
 
-      if (ue) {
-        console.error('Usuario insert error:', ue);
-        this.errorMsg = 'Error al crear la cuenta de usuario.';
-        this.loading = false;
-        return;
-      }
-
-      this.router.navigate(['/login'], { queryParams: { registrado: 'true' } });
-    } catch (err: any) {
-      console.error('Registration error:', err);
-      this.errorMsg = err?.message || 'Error inesperado al registrar.';
-      this.loading = false;
+    if (error) {
+      this.errorMsg = 'Error crítico: ' + error.message;
+    } else if (data && !data.success) {
+      this.errorMsg = 'Error en BD: ' + data.mensaje;
+    } else {
+      alert('Registro exitoso. Ahora puede iniciar sesión.');
+      this.router.navigate(['/login']);
     }
   }
 }

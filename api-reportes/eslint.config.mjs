@@ -26,13 +26,20 @@ export default tseslint.config(
   },
   {
     rules: {
+      // 1. APAGAR EL INFIERNO DE LF / CRLF
+      'prettier/prettier': ['error', { endOfLine: 'auto' }],
+
+      // 2. Control del 'any' y los "unsafe"
       '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-assignment': 'off', 
-      '@typescript-eslint/no-unsafe-member-access': 'off', 
-      '@typescript-eslint/no-unsafe-call': 'off', 
-      '@typescript-eslint/no-unsafe-return': 'off', 
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
+
+      // 3. Otras reglas molestas
+      '@typescript-eslint/restrict-template-expressions': 'off',
+      '@typescript-eslint/no-floating-promises': 'warn',
     },
   },
 );

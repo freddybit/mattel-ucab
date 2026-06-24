@@ -1,95 +1,97 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { DataTablesModule } from 'angular-datatables';
+import { SupabaseService } from '../services/supabase.service';
+import { Subject } from 'rxjs';
+
+export interface ClienteItem {
+  id: number;
+  nombreCompleto: string;
+  cedula: number;
+  direccion: string;
+  ubicacion: string;
+  correo: string;
+  estado: string;
+  fechaRegistro: Date;
+}
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, DataTablesModule],
   templateUrl: './clientes.html',
   styleUrls: ['../layout/layout.css'],
   styles: [':host { display: block; }'],
 })
-export class Clientes {
-  public clientes: any[] = [];
-  public filtrados: any[] = [];
-  public busqueda = '';
+export class Clientes implements OnInit, OnDestroy {
+  public clientes: ClienteItem[] = [];
+  public cargando: boolean = true;
 
-  public totalClientes = 24;
-  public activosHoy = 8;
-  public nuevosMes = 3;
+  // KPIs Dinámicos
+  public totalClientes: number = 0;
+  public activosHoy: number = 0;
+  public nuevosMes: number = 0;
 
-  public pagina = 1;
-  public porPagina = 10;
+  // Controladores de DataTables
+  public dtOptions: any = {};
+  public dtTrigger: Subject<any> = new Subject<any>();
 
-  private mockData = [
-    { id: 1, nombreCompleto: 'Alejandro Castillo', pnombre: 'Alejandro', papellido: 'Castillo', cedula: 12345678, direccion: 'Av. Principal, Edif. 42', ubicacion: 'Distrito Capital' },
-    { id: 2, nombreCompleto: 'Valentina Márquez', pnombre: 'Valentina', papellido: 'Márquez', cedula: 24890112, direccion: 'Calle 5, Casa 30', ubicacion: 'Miranda' },
-    { id: 3, nombreCompleto: 'Ricardo Pérez', pnombre: 'Ricardo', papellido: 'Pérez', cedula: 18223445, direccion: 'Urb. Las Flores, Bloque 7', ubicacion: 'Zulia' },
-    { id: 4, nombreCompleto: 'Elena Lozano', pnombre: 'Elena', papellido: 'Lozano', cedula: 20556778, direccion: 'Calle 10, Edif. 15', ubicacion: 'Distrito Capital' },
-    { id: 5, nombreCompleto: 'Manuel Herrera', pnombre: 'Manuel', papellido: 'Herrera', cedula: 9554210, direccion: 'Av. Bolívar, Torre 8', ubicacion: 'Carabobo' },
-    { id: 6, nombreCompleto: 'Ana Medina', pnombre: 'Ana', papellido: 'Medina', cedula: 10000023, direccion: 'Calle 24, Casa 42', ubicacion: 'Lara' },
-    { id: 7, nombreCompleto: 'Viviana Morales', pnombre: 'Viviana', papellido: 'Morales', cedula: 10000001, direccion: 'Calle 6, Casa 9', ubicacion: 'Miranda' },
-    { id: 8, nombreCompleto: 'Verónica Castro', pnombre: 'Verónica', papellido: 'Castro', cedula: 10000002, direccion: 'Calle 65, Casa 9', ubicacion: 'Zulia' },
-    { id: 9, nombreCompleto: 'Carlos Mendoza', pnombre: 'Carlos', papellido: 'Mendoza', cedula: 11223344, direccion: 'Av. Universidad, Edif. 3', ubicacion: 'Distrito Capital' },
-    { id: 10, nombreCompleto: 'María Rodríguez', pnombre: 'María', papellido: 'Rodríguez', cedula: 99887766, direccion: 'Calle 12, Quinta 7', ubicacion: 'Carabobo' },
-    { id: 11, nombreCompleto: 'José Contreras', pnombre: 'José', papellido: 'Contreras', cedula: 55443322, direccion: 'Urb. El Paraíso, Casa 15', ubicacion: 'Miranda' },
-    { id: 12, nombreCompleto: 'Laura Jiménez', pnombre: 'Laura', papellido: 'Jiménez', cedula: 77665544, direccion: 'Av. Libertador, Torre 12', ubicacion: 'Distrito Capital' },
-    { id: 13, nombreCompleto: 'Pedro Rivas', pnombre: 'Pedro', papellido: 'Rivas', cedula: 33221100, direccion: 'Calle 8, Edif. 22', ubicacion: 'Lara' },
-    { id: 14, nombreCompleto: 'Sofía Torres', pnombre: 'Sofía', papellido: 'Torres', cedula: 88776655, direccion: 'Av. Las Américas, Casa 5', ubicacion: 'Zulia' },
-    { id: 15, nombreCompleto: 'Diego Vargas', pnombre: 'Diego', papellido: 'Vargas', cedula: 44332211, direccion: 'Calle 15, Quinta 20', ubicacion: 'Carabobo' },
-    { id: 16, nombreCompleto: 'Camila Rangel', pnombre: 'Camila', papellido: 'Rangel', cedula: 66778899, direccion: 'Urb. La Floresta, Casa 8', ubicacion: 'Miranda' },
-    { id: 17, nombreCompleto: 'Andrés Silva', pnombre: 'Andrés', papellido: 'Silva', cedula: 22110099, direccion: 'Av. Andrés Bello, Edif. 6', ubicacion: 'Distrito Capital' },
-    { id: 18, nombreCompleto: 'Isabel Peña', pnombre: 'Isabel', papellido: 'Peña', cedula: 55446677, direccion: 'Calle 3, Casa 12', ubicacion: 'Lara' },
-    { id: 19, nombreCompleto: 'Luis Salazar', pnombre: 'Luis', papellido: 'Salazar', cedula: 88990011, direccion: 'Av. Principal, Edif. 30', ubicacion: 'Zulia' },
-    { id: 20, nombreCompleto: 'Patricia Medina', pnombre: 'Patricia', papellido: 'Medina', cedula: 33112244, direccion: 'Calle 20, Casa 7', ubicacion: 'Carabobo' },
-    { id: 21, nombreCompleto: 'Fernando Díaz', pnombre: 'Fernando', papellido: 'Díaz', cedula: 77118822, direccion: 'Urb. Los Jardines, Bloque 3', ubicacion: 'Miranda' },
-    { id: 22, nombreCompleto: 'Gabriela Paz', pnombre: 'Gabriela', papellido: 'Paz', cedula: 11557799, direccion: 'Av. Francisco Miranda, Torre 9', ubicacion: 'Distrito Capital' },
-    { id: 23, nombreCompleto: 'Roberto Campos', pnombre: 'Roberto', papellido: 'Campos', cedula: 99335577, direccion: 'Calle 18, Casa 25', ubicacion: 'Lara' },
-    { id: 24, nombreCompleto: 'Mónica Suárez', pnombre: 'Mónica', papellido: 'Suárez', cedula: 44668800, direccion: 'Av. Las Industrias, Edif. 4', ubicacion: 'Carabobo' },
-  ];
+  constructor(
+    private supabaseService: SupabaseService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
-  constructor() {
-    this.clientes = [...this.mockData];
-    this.filtrados = [...this.clientes];
+  async ngOnInit() {
+    this.dtOptions = {
+      destroy: true,
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      processing: true,
+      language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+      },
+    };
+
+    await this.cargarClientes();
   }
 
-  get paginados(): any[] {
-    const inicio = (this.pagina - 1) * this.porPagina;
-    return this.filtrados.slice(inicio, inicio + this.porPagina);
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
 
-  get totalPaginas(): number {
-    return Math.ceil(this.filtrados.length / this.porPagina);
-  }
+  async cargarClientes() {
+    this.cargando = true;
 
-  onBuscar() {
-    const t = this.busqueda.toLowerCase();
-    this.filtrados = this.clientes.filter(c =>
-      c.nombreCompleto.toLowerCase().includes(t) ||
-      c.cedula.toString().includes(t) ||
-      c.ubicacion.toLowerCase().includes(t)
-    );
-    this.pagina = 1;
-  }
+    const { data, error } = await this.supabaseService.client.rpc('obtener_clientes_naturales');
 
-  irPagina(p: number) {
-    if (p >= 1 && p <= this.totalPaginas) this.pagina = p;
-  }
+    if (data && data.length > 0 && !error) {
+      // Mapeo defensivo de propiedades desde PostgreSQL
+      this.clientes = data.map((c: any) => ({
+        id: c.id_cliente,
+        nombreCompleto: c.nombre_completo,
+        cedula: c.cedula,
+        direccion: c.direccion,
+        ubicacion: c.ubicacion,
+        correo: c.correo_electronico,
+        estado: c.estado,
+        fechaRegistro: c.fecha_registro,
+      }));
 
-  get paginas(): number[] {
-    const arr: number[] = [];
-    const t = this.totalPaginas;
-    const p = this.pagina;
-    for (let i = 1; i <= t; i++) {
-      if (i === 1 || i === t || (i >= p - 1 && i <= p + 1)) arr.push(i);
+      // Extracción de KPIs desde la primera fila
+      const stats = data[0].stats_totales;
+      if (stats) {
+        this.totalClientes = stats.total_clientes || 0;
+        this.activosHoy = stats.activos_hoy || 0;
+        this.nuevosMes = stats.nuevos_mes || 0;
+      }
+    } else if (error) {
+      console.error('Error al cargar la cartera de clientes:', error);
     }
-    return arr;
-  }
 
-  mostrarPuntos(index: number, pagArray: number[]): boolean {
-    return index > 0 && pagArray[index] - pagArray[index - 1] > 1;
+    this.cargando = false;
+    // Obligamos a Angular a redibujar el DOM antes de disparar DataTables
+    this.cdr.detectChanges();
+    setTimeout(() => this.dtTrigger.next(null), 0);
   }
-
-  protected readonly Math = Math;
 }
